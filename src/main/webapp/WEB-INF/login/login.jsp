@@ -10,17 +10,17 @@
 <%
     //request.setCharacterEncoding("UTF-8");
     String path = request.getContextPath();
-    String basepath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    String basepath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
 %>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <title>用户登录</title>
-    <link rel="stylesheet" type="text/css" href="/static/style/weui.css"/>
-    <link rel="stylesheet" type="text/css" href="/static/style/example.css"/>
-    <script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="/static/js/user/user.js"></script>
+    <link rel="stylesheet" type="text/css" href="<%=basepath%>/static/style/weui.css"/>
+    <link rel="stylesheet" type="text/css" href="<%=basepath%>/static/style/example.css"/>
+    <script type="text/javascript" src="<%=basepath%>/static/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="<%=basepath%>/static/js/user/user.js"></script>
     <script type="text/javascript">
         function login() {
             $("#loginTable").submit();
@@ -33,7 +33,7 @@
 
 <!--页面顶部logo-->
 <div class="page__hd" style="text-align: center">
-    <img src="/static/images/goyo1.png" height="13%"/>
+    <img src="<%=basepath%>/static/images/goyo.png" height="13%"/>
 </div>
 
 <!--用户登录-->
