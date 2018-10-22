@@ -46,7 +46,7 @@ public class SystemController {
     @RequestMapping("zhengfufuwu")
     public String zhengfufuwu(HttpServletRequest request, Model model) {
         User existUser1 = (User) request.getSession().getAttribute("existUser1");
-        model.addAttribute(existUser1);
+        model.addAttribute("existUser1",existUser1);
         String discode = "330727 ";
         //显示政府服务分类
         List<String> deptName = systemService.selectDeptNamebuDisCode(discode);
@@ -257,5 +257,18 @@ public class SystemController {
         return modelAndView;
     }
 
+    /**
+     * 跳转外网链接页面
+     * @param url 链接网址
+     * @param name 服务项名称
+     * @param model
+     * @return
+     */
+    @RequestMapping("skip")
+    public String skip(String url,String name, Model model){
+        model.addAttribute("url",url);
+        model.addAttribute("name",name);
+        return "WEB-INF/a/skip";
+    }
 
 }

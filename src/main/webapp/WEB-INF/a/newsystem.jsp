@@ -125,7 +125,6 @@
                 <%--<a href="xiangguanlianjie" class="col-xs-3" id="ngguan">--%>
                 <%--<div class="weui-grid__icon">--%>
                 <%--<img src="/static/images/menpai/xiangguan.png" style="" alt="">--%>
-
                 <%--</div>--%>
                 <%--<p class="weui-grid__label">相关连接</p>--%>
                 <%--</a>--%>
@@ -141,14 +140,9 @@
             </div>
         </div>
 
-
         <%--农户信息--%>
         <div class="weui-panel weui-panel_access" id="fangwuinfo" style="display: none">
             <div class="weui-form-preview">
-                <%--<h2 class="poiname">安福寺</h2>--%>
-                <%--<div class="weui-form-preview__bd" style="text-align:left">--%>
-                <%--<span class="weui-form-preview__value">安福寺位于浙江省金华市磐安县城南独秀屏下，为花台山公园风景区的主要景点。</span>--%>
-                <%--</div>--%>
                 <div class="weui-form-preview__bd">
                     <div class="weui-form-preview__item">
                         <label class="weui-form-preview__label">户主姓名</label>
