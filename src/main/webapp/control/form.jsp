@@ -147,7 +147,7 @@
 <div id="box">
     <div class="con">
         <p id="txt">${status}</p>
-        <button onclick="ifhide()" class="btn">知道了</button>
+        <button onclick="ifhide()" class="but">知道了</button>
     </div>
 </div>
 

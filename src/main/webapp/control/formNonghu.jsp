@@ -187,7 +187,7 @@
     <div id="box">
         <div class="con">
             <p id="txt">电话输入有误！</p>
-            <button onclick="ifhide()" class="btn">知道了</button>
+            <button onclick="ifhide()" class="but">知道了</button>
         </div>
     </div>
     <%--<button id="show" onclick="ifshow()">显示隐藏</button>--%>

@@ -71,9 +71,9 @@ public class UserLoginController {
      * @return
      */
     @RequestMapping("/usersLogin")
-    public String usersLogin(String name, String password, HttpSession session, Model model,HttpServletRequest request) {
+    public String usersLogin(String name, String password, HttpSession session, Model model, HttpServletRequest request) {
         String s1 = request.getRequestURL().toString();
-        System.out.println("路径:"+s1);
+        System.out.println("路径:" + s1);
         User user = new User();
         user.setPassword(MD5Utils.md5(password));
         user.setName(name);
@@ -114,11 +114,13 @@ public class UserLoginController {
         model.addAttribute("building", cbuilding);
         session.setAttribute("existUser1", existUser1);
         model.addAttribute("existUser1", existUser1);
+        //清空服务器端令牌的session
+        request.getSession().removeAttribute("token");
         return "WEB-INF/a/newsystem";
     }
 
     @RequestMapping("/loginOut")
-    public String loginOut(HttpServletRequest request){
+    public String loginOut(HttpServletRequest request) {
         request.getSession().removeAttribute("existUser1");
         return "WEB-INF/a/newsystem";
     }

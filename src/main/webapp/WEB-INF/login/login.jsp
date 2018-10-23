@@ -1,10 +1,14 @@
 <%--
-  手机页面端登录
+  Created by IntelliJ IDEA.
+  User: shenbiao
+  Date: 2017/3/1
+  Time: 15:17
+  To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    request.setCharacterEncoding("UTF-8");
+    //request.setCharacterEncoding("UTF-8");
     String path = request.getContextPath();
     String basepath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
 %>
@@ -13,6 +17,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <title>用户登录</title>
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="<%=basepath%>/control/plugins/layui/css/check.css" media="all">
     <link rel="stylesheet" type="text/css" href="<%=basepath%>/static/style/weui.css"/>
     <link rel="stylesheet" type="text/css" href="<%=basepath%>/static/style/example.css"/>
     <script type="text/javascript" src="<%=basepath%>/static/js/jquery-1.10.2.min.js"></script>
@@ -54,7 +60,7 @@
         </form>
     </div>
     <div class="weui-btn-area">
-        <a class="weui-btn weui-btn_primary" onclick="userLoginConfirm();login()">确定</a>
+        <a class="btn btn-success btn-block btn-lg" onclick="userLoginConfirm();login()">确定</a>
     </div>
     <div class="page__bd page__bd_spacing">
         <div class="weui-flex">
@@ -63,7 +69,7 @@
             </div>
             <c:if test="${error!=null}">
                 <div class="weui-flex__item">
-                    <div class="weui-agree"><a href="javascript:;"><var style="color: red">${error}</var></a></div>
+                    <div class="weui-agree"><a href="javascript:;"><var style="color: red"></var></a></div>
                 </div>
             </c:if>
             <div class="weui-flex__item" style="text-align: right">
@@ -82,6 +88,25 @@
             </span>
     </label>
 </div>
+<%--提示层--%>
+<div id="box">
+    <div class="con">
+        <p id="txt">${error}</p>
+        <button onclick="ifhide()" class="but">知道了</button>
+    </div>
+</div>
+
+<script>
+    var msg = '${error}';
+    if (msg.length > 0) {
+        console.log(msg)
+        $("#box").show(500)
+    }
+
+    function ifhide() {
+        $("#box").hide(500)
+    }
+</script>
 
 </body>
 </html>

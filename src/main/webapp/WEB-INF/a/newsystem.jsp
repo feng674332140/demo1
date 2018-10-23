@@ -9,7 +9,7 @@
 <%
     //request.setCharacterEncoding("UTF-8");
     String path = request.getContextPath();
-    String basepath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path ;
+    String basepath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
     String userID = (String) session.getAttribute("userID");
 %>
 <html>
@@ -17,15 +17,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <title>智慧门牌服务管理</title>
-    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/static/style/weui.css"/>
-    <link rel="stylesheet" type="text/css" href="/static/style/example.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/style/weui.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/style/example.css"/>
     <%--<script type="text/javascript" src="/static/js/zepto.min.js"></script>--%>
-    <script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="/static/js/common/common.js"></script>
-    <script type="text/javascript" src="/static/js/common/Sortable.min.js"></script>
-    <script type="text/javascript" src="/static/js/service/bigservice.js"></script>
-    <script type="text/javascript" src="/static/js/navigation/navigation.js"></script>
+    <script type="text/javascript" src="../static/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="../static/js/common/common.js"></script>
+    <script type="text/javascript" src="../static/js/common/Sortable.min.js"></script>
+    <script type="text/javascript" src="../static/js/service/bigservice.js"></script>
+    <script type="text/javascript" src="../static/js/navigation/navigation.js"></script>
     <style type="text/css">
         body, html, #container {
             height: 100%;
@@ -109,16 +109,14 @@
 
                 <a href="javascript:void(0);" id="fangwu" class="col-xs-4">
                     <div class="weui-grid__icon">
-                        <img src="/static/images/panan/diming.png" style="" alt="">
-
+                        <img src="../static/images/panan/diming.png" style="" alt="">
                     </div>
                     <p class="weui-grid__label">地名信息</p>
                 </a>
 
                 <a href="zhengfufuwu" class="col-xs-4" id="engfu">
                     <div class="weui-grid__icon">
-                        <img src="/static/images/zhengfu2.png" style="" alt="">
-
+                        <img src="../static/images/zhengfu2.png" style="" alt="">
                     </div>
                     <p class="weui-grid__label">政府服务</p>
                 </a>
@@ -130,18 +128,22 @@
                 <%--</a>--%>
                 <a href="zhoubianfankui" class="col-xs-4" id="kl">
                     <div class="weui-grid__icon">
-                        <img src="/static/images/menpai/zhoubian.png" style="" alt="">
-
+                        <img src="../static/images/menpai/zhoubian.png" style="" alt="">
                     </div>
                     <p class="weui-grid__label">周边反馈</p>
                 </a>
+            </div>
+        </div>
 
-
+        <div class="weui-panel weui-panel_access" style="text-align: center;font-size: 15px">
+            <div class="weui-form-preview">
+                <div class="weui-form-preview__bd" id="fangwuinfo">
+                </div>
             </div>
         </div>
 
         <%--农户信息--%>
-        <div class="weui-panel weui-panel_access" id="fangwuinfo" style="display: none">
+        <%--<div class="weui-panel weui-panel_access" id="fangwuinfo" style="display: none">
             <div class="weui-form-preview">
                 <div class="weui-form-preview__bd">
                     <div class="weui-form-preview__item">
@@ -249,7 +251,7 @@
                 </div>
             </div>
 
-        </div>
+        </div>--%>
 
         <br><br><br><br>
 
@@ -294,14 +296,40 @@
         }
     });
 
-    $("#fangwu").click(function () {
+    /*$("#fangwu").click(function () {
         if ($("#fangwuinfo").css("display") == "none") {
             $("#fangwuinfo").show();
         } else {
             $("#fangwuinfo").hide();
         }
-    });
+    });*/
 
+    $("#fangwu").click(function () {
+        if (${not empty existUser1}) {
+            $.ajax({
+                type: "POST",
+                url: "${pageContext.request.contextPath}/fangwuInfo",
+                data: {discode: "33072700000000000"},
+                dataType: "json",
+                success: function (data) {
+                    var json = eval(data);
+                    var html = '';
+                    for (var key in json) {
+                        html += "<div class='weui-form-preview__item'>\n" +
+                            "<label class='weui-form-preview__label'>" + key + "</label>\n" +
+                            "<span class='weui-form-preview__value'>" + json[key] + "</span>\n" +
+                            "</div>";
+                    };
+                    $('#fangwuinfo').html(html);
+                }
+            });
+        }else{
+            var html="<div class='weui-form-preview__item' style='text-align: center;font-size: 15px'>\n" +
+                "请登录查后看信息\n"+
+                "</div>";
+            $('#fangwuinfo').html(html);
+        }
+    });
 
     function showXiangGuan() {
         $(".pageContent").css("display", "none");
@@ -367,7 +395,6 @@
 
 
 <script type="text/javascript">
-    var basepath = "/static";
     /**
      * 开始自动加载find
      */

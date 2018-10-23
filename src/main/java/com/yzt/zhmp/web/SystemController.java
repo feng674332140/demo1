@@ -6,15 +6,19 @@ import com.yzt.zhmp.beans.User;
 import com.yzt.zhmp.service.CollectionSystemService;
 import com.yzt.zhmp.service.SystemService;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +50,7 @@ public class SystemController {
     @RequestMapping("zhengfufuwu")
     public String zhengfufuwu(HttpServletRequest request, Model model) {
         User existUser1 = (User) request.getSession().getAttribute("existUser1");
-        model.addAttribute("existUser1",existUser1);
+        model.addAttribute("existUser1", existUser1);
         String discode = "330727 ";
         //显示政府服务分类
         List<String> deptName = systemService.selectDeptNamebuDisCode(discode);
@@ -140,6 +144,7 @@ public class SystemController {
 
     /**
      * 显示禁用民政模块功能页面
+     *
      * @return
      */
     @RequestMapping("deleteOrgmicroserviceVie")
@@ -153,6 +158,7 @@ public class SystemController {
 
     /**
      * 添加民政功能模块
+     *
      * @param link_id
      * @return
      */
@@ -171,6 +177,7 @@ public class SystemController {
 
     /**
      * 禁用模块功能
+     *
      * @param link_id
      * @return
      */
@@ -189,6 +196,7 @@ public class SystemController {
 
     /**
      * 添加功能模块
+     *
      * @param urlname
      * @param headico
      * @param ifvial
@@ -216,6 +224,7 @@ public class SystemController {
 
     /**
      * 显示添加功能模块页面
+     *
      * @return
      */
     @RequestMapping("addPoliceVie")
@@ -229,6 +238,7 @@ public class SystemController {
 
     /**
      * 查询所有的公安部门
+     *
      * @return
      */
     @RequestMapping("deletePoliceVie")
@@ -242,6 +252,7 @@ public class SystemController {
 
     /**
      * 添加公安功能模块
+     *
      * @param urlname
      * @param headico
      * @param ifvial
@@ -259,16 +270,41 @@ public class SystemController {
 
     /**
      * 跳转外网链接页面
-     * @param url 链接网址
-     * @param name 服务项名称
+     *
+     * @param url   链接网址
+     * @param name  服务项名称
      * @param model
      * @return
      */
     @RequestMapping("skip")
-    public String skip(String url,String name, Model model){
-        model.addAttribute("url",url);
-        model.addAttribute("name",name);
+    public String skip(String url, String name, Model model) {
+        model.addAttribute("url", url);
+        model.addAttribute("name", name);
         return "WEB-INF/a/skip";
+    }
+
+    /**
+     * json返回地名信息
+     *
+     * @param discode
+     * @param response
+     * @throws IOException
+     */
+    @ResponseBody
+    @RequestMapping("fangwuInfo")
+    public void fangwuInfo(String discode, HttpServletResponse response) throws IOException {
+        response.setContentType("text/json;charset=UTF-8");
+        JSONObject json = new JSONObject();
+        json.put("户主姓名", "张三");
+        json.put("联系电话", "13900000000");
+        json.put("房主竣工日期", "1999");
+        json.put("门牌编号", "00000000000");
+        json.put("家庭类别", "农家乐");
+        json.put("经营特色", "价格实惠");
+        json.put("客房数量", "10");
+        json.put("床位数量", "10");
+        json.put("餐位数量", "10");
+        response.getWriter().write(json.toString());
     }
 
 }
