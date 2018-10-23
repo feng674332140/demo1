@@ -60,6 +60,11 @@
         </div>
     </div>
     <%--周边反馈--%>
+    <c:if test="${not empty existUser1}">
+        <div class="weui-form-preview__ft">
+            <a class="weui-form-preview__btn weui-form-preview__btn_primary" style="font-size: 18px" href="javascript:">反馈信息</a>
+        </div>
+    </c:if>
     <div class="page__bd page__bd_spacing">
         <br>
         <div class="weui-form-preview">

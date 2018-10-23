@@ -13,10 +13,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author .
+ */
 @Service
 public class CollectionSystemServiceImpl implements CollectionSystemService {
 
-    //这里的单引号不能少，否则会报错，被识别是一个对象
+    /**
+     * 这里的单引号不能少，否则会报错，被识别是一个对象
+     */
     private static final String CACHE_KEY = "'cbuilding'";
     private static final String DEMO_CACHE_NAME = "cbuilding";
 

@@ -69,7 +69,7 @@
             </div>
             <div class="col-xs-6 text-center heig"><b>政府服务</b></div>
             <div class="col-xs-3 text-center heig" >
-                <c:if test="${not empty existUser}">
+                <c:if test="${not empty existUser1}">
                 <a href="pananHouTai">
                 <%--<span class="glyphicon glyphicon-cog"></span><br>--%>
                 后台管理

@@ -10,8 +10,10 @@ import java.util.List;
 
 @Service
 public class SystemServiceImpl implements SystemService {
+
     @Autowired
     private SystemDao systemDao;
+
     @Override
     public List selectSystem() {
         return systemDao.selectSystem();

@@ -15,29 +15,60 @@ import java.util.Map;
 @Mapper
 @Component(value = "systemDao")
 public interface SystemDao {
-    //查询部门模块功能信息
+    /**
+     * 查询部门模块功能信息
+     * @return
+     */
     @Select("SELECT * FROM d_system where deptID=111")
-    public List<System> selectSystem();
-    //查询公安部门模块信息
+    List<System> selectSystem();
+
+    /**
+     * 查询公安部门模块信息
+     * @return
+     */
     @Select("SELECT * FROM d_system where deptID=222")
-    public List<System> selectPliceSystem();
-    //根据传入县区码查询部门功能模块
+    List<System> selectPliceSystem();
+
+    /**
+     * 根据传入县区码查询部门功能模块
+     * @param code
+     * @return
+     */
     @Select("SELECT * FROM d_system, d_disDept WHERE d_disDept.deptID=d_system.deptID AND disCode=#{code};")
-    public List<System> selectAll(String code);
-    //添加民政子功能模块
+    List<System> selectAll(String code);
+
+    /**
+     * 添加民政子功能模块
+     * @param list
+     * @return
+     */
     @UpdateProvider(type = OrgProvider.class,method = "addOrgmicroservice")
-    public int addOrgmicroservice(List list);
-    //禁用民政子功能模块
+    int addOrgmicroservice(List list);
+
+    /**
+     * 禁用民政子功能模块
+     * @param list
+     * @return
+     */
     @UpdateProvider(type = OrgProvider.class,method ="deleteOrgmicroservice" )
-    public int deleteOrgmicroservice(List list);
-    //添加新增模块
+    int deleteOrgmicroservice(List list);
+
+    /**
+     * 添加新增模块
+     * @param system
+     * @return
+     */
     @InsertProvider(type = OrgProvider.class,method = "addnewFeatures")
-    public int addnewFeatures(System system);
+    int addnewFeatures(System system);
 
 
-    //查询首页显示服务有几大类
+    /**
+     * 查询首页显示服务有几大类
+     * @param disCode
+     * @return
+     */
     @Select("SELECT deptName FROM d_disDept WHERE disCode=#{disCode}")
-    public List<String> selectDeptNamebuDisCode(String disCode);
+    List<String> selectDeptNamebuDisCode(String disCode);
 
 
 
@@ -49,9 +80,10 @@ public interface SystemDao {
                 UPDATE("d_system");
                 SET("ifValid='1'");
                 for (int i=0;i<list.size();i++){
-
                     WHERE("showName= '"+list.get(i)+"' ");
-                    if (i==list.size()-1)break;
+                    if (i==list.size()-1){
+                        break;
+                    }
                     OR();
                 }
             }}.toString();
@@ -63,9 +95,10 @@ public interface SystemDao {
                 UPDATE("d_system");
                 SET("ifValid='0'");
                 for (int i=0;i<list.size();i++){
-
                     WHERE("showName= '"+list.get(i)+"' ");
-                    if (i==list.size()-1)break;
+                    if (i==list.size()-1){
+                        break;
+                    }
                     OR();
                 }
             }}.toString();

@@ -1,4 +1,4 @@
-package com.yzt.zhmp.dao.UserDao;
+package com.yzt.zhmp.dao;
 
 import com.yzt.zhmp.beans.UserCounty;
 import org.apache.ibatis.annotations.InsertProvider;
@@ -9,7 +9,11 @@ import org.apache.ibatis.jdbc.SQL;
 @Mapper
 @Component("userCountyDao")
 public interface UserCountyDao {
-    //存入县区管理员的账号
+    /**
+     * 存入县区管理员的账号
+     * @param userCounty
+     * @return
+     */
     @InsertProvider(type = UserCountySqlProvider.class,method = "insertUserCounty")
     public int insertUserCounty(UserCounty userCounty);
 

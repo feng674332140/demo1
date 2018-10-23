@@ -5,7 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
-//实现jsp中转
+/**
+ * 实现jsp中转
+ * @author .
+ */
 @Controller
 public class Transfer {
 
@@ -19,19 +22,14 @@ public class Transfer {
         return "WEB-INF/login/pananHouTailogin";
     }
 
-    @RequestMapping("ShangRaologin")
-    public String ShangRaologin(){
-        return "WEB-INF/login/ShangRaologin";
-    }
-
-    //注册中转
+    /**
+     * 注册中转
+     * @return 注册页面
+     */
     @RequestMapping("regist")
     public String regist(){
         return "WEB-INF/login/regist";
     }
-    //test
-    @RequestMapping("test")
-    public String tst(){return "WEB-INF/microservice/addnewfeaures";}
 
     @RequestMapping("newsystem")
     public String testa(){return "WEB-INF/a/newsystem";}

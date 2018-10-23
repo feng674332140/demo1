@@ -19,7 +19,6 @@ public class BackstageServiceImpl implements BackstageService {
     @Autowired
     BackstageDao backstageDao;
 
-
     @Override
     public User login(User user) {
         return backstageDao.login(user);
