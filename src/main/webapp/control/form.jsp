@@ -49,6 +49,7 @@
             <li onClick="msgbox(0)" class="layui-this">添加部门用户</li>
             <li onClick="msgbox(0)">添加行政用户</li>
         </ul>
+        <%--内容--%>
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
                 <table class="layui-table" style="width: 400px">

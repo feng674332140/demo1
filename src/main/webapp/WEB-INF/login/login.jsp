@@ -30,6 +30,14 @@
     </script>
 </head>
 <body ontouchstart>
+<div class="row top">
+    <div class="col-xs-3 heig" onClick="history.back(-1);">
+        <span class="glyphicon glyphicon-arrow-left"></span>
+    </div>
+    <div class="col-xs-6 text-center heig"><b>登录</b></div>
+    <div class="col-xs-3 text-center heig">
+    </div>
+</div>
 <!--错误提示-->
 <div class="weui-toptips weui-toptips_warn " id="js_tooltips">错误提示</div>
 
@@ -40,6 +48,7 @@
 
 <!--用户登录-->
 <div class="page__bd">
+
     <div class="weui-cells weui-cells_form">
         <form id="loginTable" action="${pageContext.request.contextPath}/usersLogin" method="post">
             <div class="weui-cell">

@@ -1,5 +1,6 @@
 package com.yzt.zhmp.service;
 
+import com.yzt.zhmp.beans.Feedback;
 import com.yzt.zhmp.beans.System;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public interface SystemService {
      * 查询公安模块
      * @return
      */
-    public List selectPliceSystem();
+    public List selectPoliceSystem();
 
 
     /**
@@ -55,4 +56,19 @@ public interface SystemService {
      * @return
      */
     public List<System> selectAll(String code);
+
+    /**
+     * 添加反馈信息
+     * @param feedback
+     */
+    void addFeedback(Feedback feedback);
+
+    /**
+     * 查询用户名或手机号有没有提交过信息
+     * @param feedback
+     * @return
+     */
+    Feedback findFeedbackByUsernameOrPhone(Feedback feedback);
+
+    List<Feedback> selectAllFeedback();
 }

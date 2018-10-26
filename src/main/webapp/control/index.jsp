@@ -64,7 +64,7 @@
 
                         <c:if test="${dis==1}">
                             <dd>
-                                <a href="javascript:;" data-url="formUpadteXianqu" data-icon="&#xe614;" data-title="修改当前行政区信息" kit-target data-id='5'><i class="layui-icon">&#xe614;</i><span> 修改当前行政区信息</span></a>
+                                <a href="javascript:;" data-url="XianquInfo.jsp" data-icon="&#xe614;" data-title="修改当前行政区信息" kit-target data-id='5'><i class="layui-icon">&#xe614;</i><span> 修改当前行政区信息</span></a>
                             </dd>
                         </c:if>
                         <c:if test="${msg=='村'}">
@@ -73,7 +73,7 @@
                             </dd>
                             <dd>
                                 <a href="javascript:;" kit-target data-options="{url:'buildingList.jsp',icon:'&#xe6c6;',title:'修改门牌信息',id:'7'}">
-                                    <%--<i class="layui-icon">&#xe6c6;</i>--%><span> 修改门牌信息</span></a>
+                                    <i class="layui-icon">&#xe6c6;</i><span> 修改门牌信息</span></a>
                             </dd>
                         </c:if>
                     </dl>

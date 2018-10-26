@@ -120,13 +120,6 @@
                 <input type="radio" name="ifOpen" value="2" title="私密">
             </div>
         </div>
-        <%--<div class="layui-form-item">--%>
-            <%--<label class="layui-form-label">农户信息是否公开</label>--%>
-            <%--<div class="layui-input-block">--%>
-                <%--<input type="radio" name="ifOpen" value="1" title="公开" checked="">--%>
-                <%--<input type="radio" name="ifOpen" value="2" title="私密">--%>
-            <%--</div>--%>
-        <%--</div>--%>
     </div>
     <%--农家乐,民宿的时候显示以下内容--%>
     <div class="layui-form-item layui-hide" id="inputBox1">
@@ -190,13 +183,6 @@
             <button onclick="ifhide()" class="but">知道了</button>
         </div>
     </div>
-    <%--<button id="show" onclick="ifshow()">显示隐藏</button>--%>
-<%--<div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">--%>
-
-
-    <%--<button data-method="confirmTrans" class="layui-btn">配置一个透明的询问框</button>--%>
-
-<%--</div>--%>
 
 <script>
     var category = 0;
@@ -208,17 +194,6 @@
             alert(msg);
         }
     };
-
-    // function checkPhoneNum() {
-    //     var phoneNum = $("#phoneNum").val();
-    //     if (phoneNum.length!=11&&phoneNum.length!=0){
-    //         $("#phoneNum1").text("手机号格式错误");
-    //     }else if (phoneNum.length==0) {
-    //         $("#phoneNum1").text("");
-    //     }else{
-    //         $("#phoneNum1").text("");
-    //     }
-    // };
 
     layui.use(['form', 'layedit', 'laydate'], function () {
         var form = layui.form,
@@ -271,7 +246,7 @@
     function check(){
         var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
         if(myreg.test($("#phoneNum").val())){
-            if($("#buildingYear").length==4){
+            if($("#buildingYear").val().length==4){
                 return true;
             }else {
                 $("#box").show(500)
@@ -288,27 +263,6 @@
     function ifhide(){
         $("#box").hide(500)
     }
-    // function ifshow(){
-    //     $("#box").hide(1000)
-    // }
-
-
-        // //触发事件
-        // var active = {
-        //
-        //     confirmTrans: function(){
-        //         //配置一个透明的询问框
-        //         layer.msg('大部分参数都是可以公用的<br>合理搭配，展示不一样的风格', {
-        //             time: 20000, //20s后自动关闭
-        //             btn: ['知道了','我懂了']
-        //         });
-        //     }
-        // };
-        //
-        // $('#layerDemo .layui-btn').on('click', function(){
-        //     var othis = $(this), method = othis.data('method');
-        //     active[method] ? active[method].call(this, othis) : '';
-        // });
 
 </script>
 

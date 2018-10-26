@@ -1,37 +1,50 @@
 package com.yzt.zhmp.web;
 
 
+import com.yzt.zhmp.beans.Department;
+import com.yzt.zhmp.service.BackstageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 
 /**
  * 实现jsp中转
+ *
  * @author .
  */
 @Controller
 public class Transfer {
 
+    @Autowired
+    private BackstageService backstageService;
+
     @RequestMapping("login")
-    public String login(){
+    public String login() {
         return "WEB-INF/login/login";
     }
 
     @RequestMapping("pananlogin")
-    public String pananlogin(){
+    public String pananlogin() {
         return "WEB-INF/login/pananHouTailogin";
     }
 
-    /**
-     * 注册中转
-     * @return 注册页面
-     */
     @RequestMapping("regist")
-    public String regist(){
+    public String regist() {
         return "WEB-INF/login/regist";
     }
 
-    @RequestMapping("newsystem")
-    public String testa(){return "WEB-INF/a/newsystem";}
+    @RequestMapping("addFeedbackPage")
+    public String addFeedback(Model model) {
+        List<Department> departmentList = backstageService.selectAllDepartment();
+        model.addAttribute("departmentList",departmentList);
+        return "WEB-INF/a/addFeedback";
+    }
+
+    @RequestMapping("newPoliceVie")
+    public String tst(){return "WEB-INF/microservice/addnewfeaures";}
 
 }

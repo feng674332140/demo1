@@ -47,7 +47,7 @@ public class UserLoginController {
             List systemList = systemService.selectSystem();
             model.addAttribute("systemList", systemList);
         } else {
-            List policeSystem = systemService.selectPliceSystem();
+            List policeSystem = systemService.selectPoliceSystem();
             model.addAttribute("policeSystem", policeSystem);
         }
         model.addAttribute("deptid", deptId);
@@ -89,27 +89,40 @@ public class UserLoginController {
             }
         }
         session.setAttribute("bfid", bfid);
-        //暂未用到
-        //查看用户角色id
+
+        //暂未用到  查看用户角色id
         List<String> fildId = userLoginService.selectFileIdByUserid(usrId);
         session.setAttribute("fildId", fildId);
-        try {
-            //查找用户对应的部门id
-            int deptid = userLoginService.selectByUserid(usrId);
-            session.setAttribute("deptid", deptid);
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        //查找用户对应的部门id
+        Integer deptid = userLoginService.selectByUserid(usrId);
+        if (deptid == null) {
+            model.addAttribute("error", "请使用部门账号登录");
+            return "WEB-INF/login/login";
         }
-        //暂定为330727
-        List allList = systemService.selectAll("330727");
-        model.addAttribute("allList", allList);
+        String deptName;
+        switch (deptid) {
+            case 111:
+                deptName = "民政";
+                break;
+            case 222:
+                deptName = "公安";
+                break;
+            case 333:
+                deptName = "教育";
+                break;
+            default:
+                deptName = "";
+                break;
+        }
+        model.addAttribute("deptName", deptName);
+        model.addAttribute("deptid", deptid);
+
         //显示农户信息
-        Cbuilding cbuilding = collectionSystemService.selectBuildingByid(17);
-        model.addAttribute("building", cbuilding);
+        //Cbuilding cbuilding = collectionSystemService.selectBuildingByid(17);
+        //model.addAttribute("building", cbuilding);
         session.setAttribute("existUser1", existUser1);
-        model.addAttribute("existUser1", existUser1);
-        //清空服务器端令牌的session
-        request.getSession().removeAttribute("token");
+
         return "WEB-INF/a/newsystem";
     }
 

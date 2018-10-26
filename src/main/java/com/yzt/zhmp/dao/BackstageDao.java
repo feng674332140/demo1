@@ -50,6 +50,13 @@ public interface BackstageDao {
     @SelectProvider(type = SelectAllCounty.class, method = "selectAllCounty")
     List<District> selectAllCounty(String discode);
 
+    /**
+     * 查询所有的部门
+     * @return
+     */
+    @Select("select * from d_department")
+    List<Department> selectAllDepartment();
+
 
     class SelectAllCounty {
 

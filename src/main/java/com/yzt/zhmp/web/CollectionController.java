@@ -4,8 +4,10 @@ import com.yzt.zhmp.beans.Cbuilding;
 import com.yzt.zhmp.beans.Cdistrict;
 import com.yzt.zhmp.service.CollectionSystemService;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -55,21 +57,19 @@ public class CollectionController {
      * @return
      */
     @RequestMapping("/control/addCounty")
-    public ModelAndView addCountry(HttpServletRequest request, Cdistrict cdistrict) {
-        ModelAndView modelAndView = new ModelAndView();
-
+    public String addCountry(HttpServletRequest request, Cdistrict cdistrict, Model model) {
         String discode = (String) request.getSession().getAttribute("discode");
         cdistrict.setDisCode(discode);
-        int i = collectionSystemService.addCountyInfo(cdistrict);
-        if (i == 1) {
+        try {
+            collectionSystemService.addCountyInfo(cdistrict);
             String msg = "添加成功";
-            int dis = 1;
-            modelAndView.addObject("dis", dis);
-            modelAndView.addObject("msg", msg);
-            modelAndView.addObject("cdistrict", cdistrict);
+            model.addAttribute("msg", msg);
+            model.addAttribute("cdistrict", cdistrict);
+        } catch (Exception e) {
+            //捕获sql异常
+            e.printStackTrace();
         }
-        modelAndView.setViewName("control/formUpadteXianqu");
-        return modelAndView;
+        return "control/XianquInfo";
     }
 
     /**
@@ -110,8 +110,7 @@ public class CollectionController {
      * @return
      */
     @RequestMapping("/control/uptadeCbuilding")
-    public ModelAndView uptadeCbuilding(Cbuilding cbuilding, HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView();
+    public String uptadeCbuilding(Cbuilding cbuilding, HttpServletRequest request, Model model) {
         String discode = (String) request.getSession().getAttribute("discode");
         cbuilding.setDisCode(discode);
         int i = collectionSystemService.updateCbuidingByfamilyType(cbuilding);
@@ -121,13 +120,9 @@ public class CollectionController {
         } else {
             msg = "更新失败";
         }
-        modelAndView.addObject("msg", msg);
-        modelAndView.setViewName("control/buildingList");
-
-        return modelAndView;
-
+        model.addAttribute("msg", msg);
+        return "control/buildingList";
     }
-
 
     /**
      * 显示需要更新的行政区信息
@@ -153,20 +148,31 @@ public class CollectionController {
      * @return
      */
     @RequestMapping("/control/uptadeCdisture")
-    public ModelAndView updateCdistrict(HttpServletRequest request, Cdistrict cdistrict) {
-        ModelAndView modelAndView = new ModelAndView();
+    public String updateCdistrict(HttpServletRequest request, Cdistrict cdistrict,Model model) {
         String discode = (String) request.getSession().getAttribute("discode");
         cdistrict.setDisCode(discode);
         int i = collectionSystemService.updateCdistrict(cdistrict);
         if (i == 1) {
             String msg = "更新成功";
-            modelAndView.addObject("msg", msg);
+            model.addAttribute("msg", msg);
         } else {
             String msg = "更新失败";
-            modelAndView.addObject("msg", msg);
+            model.addAttribute("msg", msg);
         }
-
-        modelAndView.setViewName("control/formUpadteXianqu");
-        return modelAndView;
+        return "control/XianquInfo";
     }
+
+    /**
+     * 页面初始化加载数据
+     * @param response
+     */
+    @RequestMapping("/xianquData")
+    public void xianquData(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        String discode = (String) request.getSession().getAttribute("discode");
+        Cdistrict cdistrict = collectionSystemService.selectCdistrict(discode);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("cdistrict",cdistrict);
+        response.getWriter().write(jsonObject.toString());
+    }
+
 }

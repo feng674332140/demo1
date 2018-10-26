@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>智慧门牌服务管理</title>
+    <title>智慧门牌</title>
     <link rel="stylesheet" type="text/css" href="/static/style/weui.css"/>
     <link rel="stylesheet" type="text/css" href="/static/style/example.css"/>
     <%--<script type="text/javascript" src="/static/js/zepto.min.js"></script>--%>

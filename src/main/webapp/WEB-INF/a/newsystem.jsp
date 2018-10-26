@@ -16,7 +16,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>智慧门牌服务管理</title>
+    <title>智慧门牌</title>
     <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="../static/style/weui.css"/>
     <link rel="stylesheet" type="text/css" href="../static/style/example.css"/>
@@ -58,7 +58,8 @@
 
     <div class="pageContent" id="tpl_qrcode" style="display:block;">
         <div class="weui-panel weui-panel_access">
-            <p style="text-align: center;font-family: 华文隶书;font-size: 22px">群山之祖，诸水之源，大美磐安</p>
+            <p style="text-align: center;height: 38px;line-height: 45px;font-family: 华文隶书;font-size: 17px">
+                群山之祖，诸水之源，大美磐安</p>
         </div>
         <div class="weui-panel weui-panel_access">
             <%--<div class="weui-panel__hd">门牌信息</div>--%>
@@ -66,7 +67,7 @@
                 <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
                     <div class="weui-media-box__hd">
                         <img class="weui-media-box__thumb"
-                             src="/static/images/menpai/2c1c1576b4fc5268fd89f17288d1b868.gif" alt="">
+                             src="../static/images/menpai/2c1c1576b4fc5268fd89f17288d1b868.gif" alt="">
                     </div>
                     <div class="weui-media-box__bd">
                         <h4 class="weui-media-box__title ">磐安县螺山路13号</h4>
@@ -93,20 +94,20 @@
                 <tr>
                     <td>
                         <div class="layui-inline">
-                            <img src="/static/images/219226629aa.jpg" style="width: 48px;height: 55px"
+                            <img src="../static/images/219226629aa.jpg" style="width: 48px;height: 55px"
                                  class="layui-circle">
                         </div>
                     </td>
-                    <td style="font-size: 15px">
-                        <p class="weui-panel__hd">民警姓名：厉韬</p>
-                        <p class="weui-panel__hd">一键报警：<a href="tel:15179788823">15156257489</a></p>
+                    <td style="font-size: 15px ">
+                        <p class=" tit">所属部门：公安</p>
+                        <p class=" tit">民警姓名：厉韬</p>
+                        <p class=" tit">一键报警：<a href="tel:15179788823">15156257489</a></p>
                     </td>
                 </tr>
             </table>
         </div>
-        <div class="weui-panel weui-panel_access" style="padding-top: 10px">
+        <div class="weui-panel weui-panel_access" style="padding-top: 10px;margin-bottom: 10px">
             <div class="row">
-
                 <a href="javascript:void(0);" id="fangwu" class="col-xs-4">
                     <div class="weui-grid__icon">
                         <img src="../static/images/panan/diming.png" style="" alt="">
@@ -120,12 +121,6 @@
                     </div>
                     <p class="weui-grid__label">政府服务</p>
                 </a>
-                <%--<a href="xiangguanlianjie" class="col-xs-3" id="ngguan">--%>
-                <%--<div class="weui-grid__icon">--%>
-                <%--<img src="/static/images/menpai/xiangguan.png" style="" alt="">--%>
-                <%--</div>--%>
-                <%--<p class="weui-grid__label">相关连接</p>--%>
-                <%--</a>--%>
                 <a href="zhoubianfankui" class="col-xs-4" id="kl">
                     <div class="weui-grid__icon">
                         <img src="../static/images/menpai/zhoubian.png" style="" alt="">
@@ -134,127 +129,19 @@
                 </a>
             </div>
         </div>
-
-        <div class="weui-panel weui-panel_access" style="text-align: center;font-size: 15px">
-            <div class="weui-form-preview">
-                <div class="weui-form-preview__bd" id="fangwuinfo">
+        <c:if test="${empty existUser1}">
+            <div class="row look">
+                <div class="col-xs-12 text-center text-muted">请登录查后看信息!</div>
+            </div>
+        </c:if>
+        <c:if test="${not empty existUser1}">
+            <div class="row look">
+                <div class="col-xs-12">
+                    <span class="pull-right"></span>
                 </div>
             </div>
-        </div>
-
-        <%--农户信息--%>
-        <%--<div class="weui-panel weui-panel_access" id="fangwuinfo" style="display: none">
-            <div class="weui-form-preview">
-                <div class="weui-form-preview__bd">
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">户主姓名</label>
-                        <span class="weui-form-preview__value">${building.name}</span>
-                    </div>
-
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">联系电话</label>
-                        <span class="weui-form-preview__value">${building.phoneNum}</span>
-                    </div>
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">建筑年份</label>
-                        <span class="weui-form-preview__value">${building.buildingYear}</span>
-                    </div>
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">门牌编号</label>
-                        <span class="weui-form-preview__value">${building.familyType}</span>
-                    </div>
-                    <div class="weui-form-preview__item">
-                        <label class="weui-form-preview__label">家庭类别</label>
-                        <c:if test="${building.busiType==1}">
-                            <span class="weui-form-preview__value">普通房屋</span>
-                        </c:if>
-                        <c:if test="${building.busiType==2}">
-                            <span class="weui-form-preview__value">农家乐</span>
-                        </c:if>
-                        <c:if test="${building.busiType==3}">
-                            <span class="weui-form-preview__value">民宿</span>
-                        </c:if>
-                        <c:if test="${building.busiType==4}">
-                            <span class="weui-form-preview__value">药农</span>
-                        </c:if>
-                    </div>
-                    <c:if test="${building.busiType==2||building.busiType==3}">
-                        <div class="weui-form-preview__item">
-                            <label class="weui-form-preview__label">经营特色</label>
-                            <span class="weui-form-preview__value">空气清新，环境放松</span>
-                        </div>
-                        <c:if test="${building.ifOpen==1}">
-                            <div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">客房数</label>
-                                <span class="weui-form-preview__value">${building.numberOfRoom}</span>
-                            </div>
-                            <div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">床位数</label>
-                                <span class="weui-form-preview__value">${building.numberOfBed}</span>
-                            </div>
-                            <div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">餐位数</label>
-                                <span class="weui-form-preview__value">${building.mealDigits}</span>
-                            </div>
-                        </c:if>
-
-                    </c:if>
-
-                    <c:choose>
-                        <c:when test="${bfid==1}">
-                            <div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">建筑面积</label>
-                                <span class="weui-form-preview__value">${building.buildArea}</span>
-                            </div>
-
-                            <div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">占地面积</label>
-                                <span class="weui-form-preview__value">${building.landArea}</span>
-                            </div>
-                            <div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">房屋间数</label>
-                                <span class="weui-form-preview__value">${building.roomNum}</span>
-                            </div>
-                            <div class="weui-form-preview__item">
-                                <label class="weui-form-preview__label">家庭人口</label>
-                                <span class="weui-form-preview__value">${building.population}</span>
-                            </div>
-                        </c:when>
-                        <c:otherwise>
-                            <c:if test="${building.ifOpen==1}">
-                                <div class="weui-form-preview__item">
-                                    <label class="weui-form-preview__label">建筑面积</label>
-                                    <span class="weui-form-preview__value">${building.buildArea}</span>
-                                </div>
-
-                                <div class="weui-form-preview__item">
-                                    <label class="weui-form-preview__label">占地面积</label>
-                                    <span class="weui-form-preview__value">${building.landArea}</span>
-                                </div>
-                                <div class="weui-form-preview__item">
-                                    <label class="weui-form-preview__label">房屋间数</label>
-                                    <span class="weui-form-preview__value">${building.roomNum}</span>
-                                </div>
-                                <div class="weui-form-preview__item">
-                                    <label class="weui-form-preview__label">家庭人口</label>
-                                    <span class="weui-form-preview__value">${building.population}</span>
-                                </div>
-                            </c:if>
-                            <c:if test="${building.ifOpen==0}">
-                                <div class="weui-form-preview__item">
-                                    <label class="weui-form-preview__label">户主未公开信息</label>
-
-                                </div>
-                            </c:if>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-            </div>
-
-        </div>--%>
-
+        </c:if>
         <br><br><br><br>
-
         <c:if test="${empty existUser1}">
             <a href="login" class="btn btn-success btn-block btn-lg">用户登录</a>
         </c:if>
@@ -305,6 +192,7 @@
     });*/
 
     $("#fangwu").click(function () {
+        $(".look").fadeToggle(500)
         if (${not empty existUser1}) {
             $.ajax({
                 type: "POST",
@@ -315,19 +203,12 @@
                     var json = eval(data);
                     var html = '';
                     for (var key in json) {
-                        html += "<div class='weui-form-preview__item'>\n" +
-                            "<label class='weui-form-preview__label'>" + key + "</label>\n" +
-                            "<span class='weui-form-preview__value'>" + json[key] + "</span>\n" +
-                            "</div>";
-                    };
-                    $('#fangwuinfo').html(html);
+                        html += '<div class="col-xs-12">' + key +
+                            '<span class="pull-right">' + json[key] + '</span></div>'
+                    }
+                    $('.look').html(html);
                 }
             });
-        }else{
-            var html="<div class='weui-form-preview__item' style='text-align: center;font-size: 15px'>\n" +
-                "请登录查后看信息\n"+
-                "</div>";
-            $('#fangwuinfo').html(html);
         }
     });
 

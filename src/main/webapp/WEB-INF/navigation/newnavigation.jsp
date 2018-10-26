@@ -1,11 +1,11 @@
-<%--
-    手机端后台
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%--
+            手机端后台
+    --%>
+        <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+        <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%
+            <%
     //request.setCharacterEncoding("UTF-8");
     String path = request.getContextPath();
     String basepath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
@@ -15,59 +15,42 @@
         <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-        <title>智慧门牌服务管理</title>
-        <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css"/>
-        <link rel="stylesheet" type="text/css" href="/static/style/weui.css"/>
-        <link rel="stylesheet" type="text/css" href="/static/style/example.css"/>
+        <title>智慧门牌</title>
+        <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="../static/style/weui.css"/>
+        <link rel="stylesheet" type="text/css" href="../static/style/example.css"/>
         <%--<script type="text/javascript" src="/static/js/zepto.min.js"></script>--%>
-        <script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
-        <script type="text/javascript" src="/static/js/common/common.js"></script>
-        <script type="text/javascript" src="/static/js/common/Sortable.min.js"></script>
-        <script type="text/javascript" src="/static/js/service/bigservice.js"></script>
-        <script type="text/javascript" src="/static/js/navigation/navigation.js"></script>
+        <script type="text/javascript" src="../static/js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="../static/js/common/common.js"></script>
+        <script type="text/javascript" src="../static/js/common/Sortable.min.js"></script>
+        <script type="text/javascript" src="../static/js/service/bigservice.js"></script>
+        <script type="text/javascript" src="../static/js/navigation/navigation.js"></script>
         </head>
         <body ontouchstart>
         <div class="page">
-
-        <div class="pageContent" id="tpl_qrcode" style="display:block;">
-        <%--<div class="weui-cells weui-cells_form">--%>
-
-        <%--<div class="weui-grids" onClick="javascript :history.back(-1);">--%>
-
-        <%--<a href="system" class="weui-grid">--%>
-        <%--<div class="weui-grid__icon" >--%>
-        <%--<img src="/static/images/panan/tuichu.png" style="" alt="">--%>
-
-        <%--</div>--%>
-        <%--<p class="weui-grid__label">退出</p>--%>
-        <%--</a>--%>
-
-        <%--<--%>
-
-        <%--</div>--%>
-        <%--</div>--%>
-        <%--头部--%>
         <div class="row top">
         <div class="col-xs-3 heig" onClick="history.back(-1);">
 
         <span class="glyphicon glyphicon-arrow-left"></span>
         </div>
-        <div class="col-xs-6 text-center heig">后台管理</div>
+        <div class="col-xs-6 text-center heig"><b>后台管理</b></div>
         <div class="col-xs-3 text-center heig" >
-        <c:if test="${not empty existUser}">
-        <a href="system">
-        <%--<span class="glyphicon glyphicon-cog"></span><br>--%>
-        退出
-        </a>
+        <c:if test="${not empty existUser1}">
+            <a href="system">
+            返回首页
+            </a>
         </c:if>
         </div>
         </div>
-        <div class="page__hd" style="height: 30px;padding-top: 0px;padding-bottom: 40px;">
+        <div class="pageContent" id="tpl_qrcode" style="display:block;">
+
+
+        <div class="" style="height: 30px;padding-top: 0px;padding-bottom: 40px;">
         <ul id="ashbin" style="display: none">
         <li>
         <div class="weui-flex">
         <p class="weui-flex__item"></p>
-        <img src="/static/images/icon_delete.png" alt="">
+        <img src="../static/images/icon_delete.png" alt="">
         </div>
         </li>
         </ul>
@@ -79,7 +62,7 @@
             <li id="bigService_li_1">
             <div class="weui-flex js_category">
             <p class="weui-flex__item pressToDelete" id="bigService_p_1">公安便民</p>
-            <img class="glyphicon-move" src="/static/images/icon_nav_form.png" alt="">
+            <img class="glyphicon-move" src="../static/images/icon_nav_form.png" alt="">
             </div>
             <div class="page__category js_categoryInner">
             <div class="weui-grids page__category-content">
@@ -91,7 +74,7 @@
                     <img src="${systemList.icon}" style="position:absolute; z-index:1; width: 28px; height: 28px"
                     alt="">
                     <c:if test="${systemList.ifvalid=='0'}">
-                        <img src="/static/images/jinzhi3.png" style="position:absolute; z-index:2;width: 28px; height:
+                        <img src="../static/images/jinzhi3.png" style="position:absolute; z-index:2;width: 28px; height:
                         28px">
                     </c:if>
                     </div>
@@ -103,19 +86,19 @@
 
             <a href="addPoliceVie" class="weui-grid">
             <div class="weui-grid__icon">
-            <img src="/static/images/plus_32px_581648_easyicon.net.png" alt="">
+            <img src="../static/images/plus_32px_581648_easyicon.net.png" alt="">
             </div>
             <p class="weui-grid__label">开启子服务</p>
             </a>
-            <a href="test" class="weui-grid">
+            <a href="newPoliceVie" class="weui-grid">
             <div class="weui-grid__icon">
-            <img src="/static/images/plus_32px_581648_easyicon.net.png" alt="">
+            <img src="../static/images/plus_32px_581648_easyicon.net.png" alt="">
             </div>
             <p class="weui-grid__label">新增子服务</p>
             </a>
             <a href="deletePoliceVie" class="weui-grid">
             <div class="weui-grid__icon">
-            <img src="/static/images/icon_delete.png" alt="">
+            <img src="../static/images/icon_delete.png" alt="">
             </div>
             <p class="weui-grid__label">禁用子服务</p>
             </a>
@@ -129,7 +112,7 @@
             <li id="bigService_li_2">
             <div class="weui-flex js_category">
             <p class="weui-flex__item pressToDelete" id="bigService_2">民政服务</p>
-            <img class="glyphicon-move" src="/static/images/icon_nav_form.png" alt="">
+            <img class="glyphicon-move" src="../static/images/icon_nav_form.png" alt="">
             </div>
             <div class="page__category js_categoryInner">
             <div class="weui-grids page__category-content">
@@ -140,7 +123,7 @@
                     <div class="weui-grid__icon" >
                     <img src="${systemList.icon}" style="position:absolute; z-index:1; width: 28px; height: 28px">
                     <c:if test="${systemList.ifvalid=='0'}">
-                        <img src="/static/images/jinzhi3.png" style="position:absolute; z-index:2;width: 28px; height:
+                        <img src="../static/images/jinzhi3.png" style="position:absolute; z-index:2;width: 28px; height:
                         28px">
                     </c:if>
                     </div>
@@ -152,19 +135,19 @@
 
             <a href="addOrgmicroserviceVie" class="weui-grid">
             <div class="weui-grid__icon">
-            <img src="/static/images/plus_32px_581648_easyicon.net.png" alt="">
+            <img src="../static/images/plus_32px_581648_easyicon.net.png" alt="">
             </div>
             <p class="weui-grid__label">开启子服务</p>
             </a>
-            <a href="test" class="weui-grid">
+            <a href="newPoliceVie" class="weui-grid">
             <div class="weui-grid__icon">
-            <img src="/static/images/plus_32px_581648_easyicon.net.png" alt="">
+            <img src="../static/images/plus_32px_581648_easyicon.net.png" alt="">
             </div>
             <p class="weui-grid__label">新增子服务</p>
             </a>
             <a href="deleteOrgmicroserviceVie" class="weui-grid">
             <div class="weui-grid__icon">
-            <img src="/static/images/icon_delete.png" alt="">
+            <img src="../static/images/icon_delete.png" alt="">
             </div>
             <p class="weui-grid__label">禁用子服务</p>
             </a>
@@ -176,25 +159,25 @@
         <li id="bigService_li_3">
         <div class="weui-flex js_category">
         <p class="weui-flex__item pressToDelete" id="bigService_3">旅游服务</p>
-        <img class="glyphicon-move" src="/static/images/icon_nav_form.png" alt="">
+        <img class="glyphicon-move" src="../static/images/icon_nav_form.png" alt="">
         </div>
         <div class="page__category js_categoryInner">
         <div class="weui-grids page__category-content">
         <a href="javascript:;" class="weui-grid">
         <div class="weui-grid__icon">
-        <img src="/static/images/icon_tabbar.png" alt="">
+        <img src="../static/images/icon_tabbar.png" alt="">
         </div>
         <p class="weui-grid__label">附近景点</p>
         </a>
         <a href="javascript:;" class="weui-grid">
         <div class="weui-grid__icon">
-        <img src="/static/images/icon_tabbar.png" alt="">
+        <img src="../static/images/icon_tabbar.png" alt="">
         </div>
         <p class="weui-grid__label">附近特色</p>
         </a>
         <a href="javascript:;" class="weui-grid">
         <div class="weui-grid__icon">
-        <img src="/static/images/plus_32px_581648_easyicon.net.png" alt="">
+        <img src="../static/images/plus_32px_581648_easyicon.net.png" alt="">
         </div>
         <p class="weui-grid__label">添加子服务</p>
         </a>
@@ -204,7 +187,7 @@
         </ul>
         <br><br><br><br><br>
         <a href="javascript:addBigService();" class="weui-btn weui-btn_primary">添加新大类服务</a>
-        <br><br><br><br><br>
+        <br>
         </div>
         </div>
 
@@ -346,49 +329,9 @@
 
 
         <!--导航页面-->
-        <div class="weui-tab">
+
         <!--导航-->
-        <div class="weui-tabbar">
-        <!--发现-->
-        <%--<a class="weui-tabbar__item weui-bar__item_on" href="javascript:showqrcode();">--%>
-        <%--<span style="display: inline-block;position: relative;">--%>
-        <%--<img src="/static/images/icon_nav_layout_1.png" alt="" class="weui-tabbar__icon">--%>
-        <%--<span class="weui-badge weui-badge_dot"--%>
-        <%--style="position: absolute;top: 0;right: -6px;display: none"></span>--%>
-        <%--</span>--%>
 
-        <%--<p class="weui-tabbar__label">二维码管理</p>--%>
-        <%--</a>--%>
-
-        <!--我-->
-        <a class="weui-tabbar__item weui-bar__item_on " href="javascript:showqrcode();">
-        <span style="display: inline-block;position: relative;">
-        <img src="/static/images/icon_nav_flow1.png" alt="" class="weui-tabbar__icon">
-        <span class="weui-badge weui-badge_dot"
-        style="position: absolute;top: 0;right: -6px;display: block"></span>
-        </span>
-
-        <p class="weui-tabbar__label">服务管理</p>
-        </a>
-
-        <!--通讯录-->
-        <a class="weui-tabbar__item weui-bar__item_on" href="javascript:showMonitoring();">
-        <img src="/static/images/icon_nav_find.png" alt="" class="weui-tabbar__icon">
-
-        <p class="weui-tabbar__label">服务监控</p>
-        </a>
-
-        <!--消息-->
-        <a class="weui-tabbar__item weui-bar__item_on" href="javascript:showFeedback();">
-        <span style="display: inline-block;position: relative;">
-        <img src="/static/images/icon_nav_message.png" alt="" class="weui-tabbar__icon">
-        <span class="weui-badge" style="position: absolute;top: -2px;right: -13px;display: block">3</span>
-        </span>
-
-        <p class="weui-tabbar__label">市民反馈</p>
-        </a>
-        </div>
-        </div>
         <script type="text/javascript">
         var basepath = "/static";
         /**

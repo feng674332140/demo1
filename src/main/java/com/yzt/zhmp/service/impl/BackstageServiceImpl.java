@@ -108,4 +108,9 @@ public class BackstageServiceImpl implements BackstageService {
     public List<DisUser> selectAllTownDisUser(String substring) {
         return null;
     }
+
+    @Override
+    public List<Department> selectAllDepartment() {
+        return backstageDao.selectAllDepartment();
+    }
 }

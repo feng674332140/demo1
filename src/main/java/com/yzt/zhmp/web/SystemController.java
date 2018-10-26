@@ -1,17 +1,18 @@
 package com.yzt.zhmp.web;
 
 import com.yzt.zhmp.beans.Cbuilding;
+import com.yzt.zhmp.beans.Feedback;
 import com.yzt.zhmp.beans.System;
 import com.yzt.zhmp.beans.User;
 import com.yzt.zhmp.service.CollectionSystemService;
 import com.yzt.zhmp.service.SystemService;
+import net.sf.ehcache.search.parser.ModelElement;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -51,12 +53,10 @@ public class SystemController {
     public String zhengfufuwu(HttpServletRequest request, Model model) {
         User existUser1 = (User) request.getSession().getAttribute("existUser1");
         model.addAttribute("existUser1", existUser1);
-        String discode = "330727 ";
+        String discode = "330727";
         //显示政府服务分类
         List<String> deptName = systemService.selectDeptNamebuDisCode(discode);
-
         request.getSession().setAttribute("deptName", deptName);
-        //
         List allList = systemService.selectAll(discode);
         request.getSession().setAttribute("allList", allList);
         //显示农户信息
@@ -72,13 +72,10 @@ public class SystemController {
      * @return
      */
     @RequestMapping("xiangguanlianjie")
-    public ModelAndView xiangguanlianjie() {
-        ModelAndView modelAndView = new ModelAndView();
+    public String xiangguanlianjie(Model model) {
         List allList = systemService.selectAll("330727");
-        modelAndView.addObject("allList", allList);
-        modelAndView.setViewName("WEB-INF/a/xiangguanlianjie");
-
-        return modelAndView;
+        model.addAttribute("allList", allList);
+        return "WEB-INF/a/xiangguanlianjie";
     }
 
     /**
@@ -87,25 +84,13 @@ public class SystemController {
      * @return
      */
     @RequestMapping("zhoubianfankui")
-    public ModelAndView zhoubianfankui() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("WEB-INF/a/zhoubianfankui");
-        return modelAndView;
+    public String zhoubianfankui(Model model) {
+        //查询所有的反馈信息
+        List<Feedback> feedbacks = systemService.selectAllFeedback();
+        model.addAttribute("feedbacks",feedbacks);
+        return "WEB-INF/a/zhoubianfankui";
     }
 
-    /**
-     * 未使用
-     *
-     * @return
-     */
-    @RequestMapping("zhengwu")
-    public ModelAndView zhengwu() {
-        ModelAndView modelAndView = new ModelAndView();
-        List allList = systemService.selectAll("330727");
-        modelAndView.addObject("allList", allList);
-        modelAndView.setViewName("WEB-INF/a/ZhengWusystem");
-        return modelAndView;
-    }
 
     /**
      * 后台显示
@@ -118,7 +103,7 @@ public class SystemController {
         //查询民政
         List systemList = systemService.selectSystem();
         //查询公安
-        List policeList = systemService.selectPliceSystem();
+        List policeList = systemService.selectPoliceSystem();
         modelAndView.addObject("policeSystem", policeList);
         java.lang.System.err.println(policeList);
         modelAndView.addObject("systemList", systemList);
@@ -213,7 +198,7 @@ public class SystemController {
         //查询民政
         List systemList = systemService.selectSystem();
         //查询公安
-        List policeList = systemService.selectPliceSystem();
+        List policeList = systemService.selectPoliceSystem();
         modelAndView.addObject("policeSystem", policeList);
         java.lang.System.err.println(policeList);
         modelAndView.addObject("systemList", systemList);
@@ -230,7 +215,7 @@ public class SystemController {
     @RequestMapping("addPoliceVie")
     public ModelAndView addPoliceVie() {
         ModelAndView modelAndView = new ModelAndView();
-        List systemList = systemService.selectPliceSystem();
+        List systemList = systemService.selectPoliceSystem();
         modelAndView.addObject("systemList", systemList);
         modelAndView.setViewName("WEB-INF/microservice/Orgaddmicroservice");
         return modelAndView;
@@ -244,7 +229,7 @@ public class SystemController {
     @RequestMapping("deletePoliceVie")
     public ModelAndView deletePoliceVie() {
         ModelAndView modelAndView = new ModelAndView();
-        List systemList = systemService.selectPliceSystem();
+        List systemList = systemService.selectPoliceSystem();
         modelAndView.addObject("systemList", systemList);
         modelAndView.setViewName("WEB-INF/microservice/Orgdeletemicroservice");
         return modelAndView;
@@ -260,12 +245,10 @@ public class SystemController {
      * @return
      */
     @RequestMapping("addPoliceeatures")
-    public ModelAndView addPolicefeatures(String urlname, String headico, String ifvial, String shouName) {
-        ModelAndView modelAndView = new ModelAndView();
+    public String addPolicefeatures(String urlname, String headico, String ifvial, String shouName,Model model) {
         System system = new System(222, "民政服务", urlname, headico, shouName, ifvial);
         int i = systemService.addnewFeatures(system);
-        modelAndView.setViewName("WEB-INF/system");
-        return modelAndView;
+        return "WEB-INF/system";
     }
 
     /**
@@ -306,5 +289,40 @@ public class SystemController {
         json.put("餐位数量", "10");
         response.getWriter().write(json.toString());
     }
+
+    /**
+     * 添加反馈信息
+     *
+     * @param feedback
+     * @param response
+     */
+    @RequestMapping("/addFeedback")
+    public void addFeedback(Feedback feedback, HttpServletResponse response) throws IOException {
+        //先判断用户或手机号有没有关联的反馈
+        JSONObject jsonObject = new JSONObject();
+        Feedback existFeedback = systemService.findFeedbackByUsernameOrPhone(feedback);
+        if (existFeedback == null) {
+            feedback.setSubmittime(new Date());
+            systemService.addFeedback(feedback);
+            jsonObject.put("msg", "提交成功！请等待反馈");
+
+        } else {
+            Date submittime = existFeedback.getSubmittime();
+            long time = submittime.getTime();
+            long nowTime = java.lang.System.currentTimeMillis();
+
+            long between = nowTime - time;
+            if (between > (86400000)) {
+                //上一条提交大于一天则可以提交
+                feedback.setSubmittime(new Date());
+                systemService.addFeedback(feedback);
+                jsonObject.put("msg", "提交成功！请等待反馈");
+            } else {
+                jsonObject.put("msg", "您今天已经提交过信息");
+            }
+        }
+        response.getWriter().write(jsonObject.toString());
+    }
+
 
 }

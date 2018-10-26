@@ -500,11 +500,10 @@ ul {
     animation: b .2s forwards
 }
 
-
-
 /*头部 返回样式*/
 .top{
     border: 1px solid #ddd;
+    margin: 0;
 }
 .top a{
     color: #333;

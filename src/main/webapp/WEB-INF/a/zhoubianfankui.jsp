@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>智慧门牌服务管理</title>
+    <title>智慧门牌</title>
     <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="../static/style/weui.css"/>
     <link rel="stylesheet" type="text/css" href="../static/style/example.css"/>
@@ -55,110 +55,57 @@
         <div class="col-xs-3 heig" onClick="history.back(-1);">
             <span class="glyphicon glyphicon-arrow-left"></span>
         </div>
-        <div class="col-xs-6 text-center heig"><b>周边反馈</b></div>
+        <div class="col-xs-6 text-center heig"><b>反馈信息</b></div>
         <div class="col-xs-3 text-center heig">
         </div>
     </div>
     <%--周边反馈--%>
-    <c:if test="${not empty existUser1}">
+    <c:if test="${empty existUser1}">
         <div class="weui-form-preview__ft">
-            <a class="weui-form-preview__btn weui-form-preview__btn_primary" style="font-size: 18px" href="javascript:">反馈信息</a>
+            <a class="weui-form-preview__btn weui-form-preview__btn_primary" style="font-size: 18px"
+               href="addFeedbackPage">添加反馈信息</a>
         </div>
     </c:if>
+    <c:if test="${not empty existUser1}">
+
     <div class="page__bd page__bd_spacing">
-        <br>
-        <div class="weui-form-preview">
-            <div class="weui-form-preview__hd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">门牌号</label>
-                    <em class="weui-form-preview__value">丹溪路37号</em>
+        <c:forEach items="${feedbacks}" var="feedback">
+            <br>
+            <div class="weui-form-preview">
+                <div class="weui-form-preview__hd">
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">门牌号</label>
+                        <em class="weui-form-preview__value">${feedback.hoursenumber}</em>
+                    </div>
+                </div>
+                <div class="weui-form-preview__bd">
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">用户名</label>
+                        <span class="weui-form-preview__value">${feedback.username}</span>
+                    </div>
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">电话</label>
+                        <span class="weui-form-preview__value">${feedback.phoneNumber}</span>
+                    </div>
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">问题描述</label>
+                        <span class="weui-form-preview__value">${feedback.description}</span>
+                    </div>
+                </div>
+                <div class="weui-form-preview__ft">
+                    <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">操作</a>
                 </div>
             </div>
-            <div class="weui-form-preview__bd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">用户名</label>
-                    <span class="weui-form-preview__value">刘三</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">电话</label>
-                    <span class="weui-form-preview__value">13723452345</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">问题描述</label>
-                    <span class="weui-form-preview__value">这里的门牌已经遭受无损，请求修复</span>
-                </div>
-            </div>
-            <div class="weui-form-preview__ft">
-                <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">操作</a>
-            </div>
-        </div>
-        <br>
-
-        <div class="weui-form-preview">
-            <div class="weui-form-preview__hd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">门牌号</label>
-                    <em class="weui-form-preview__value">八一南街102号</em>
-                </div>
-            </div>
-            <div class="weui-form-preview__bd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">用户名</label>
-                    <span class="weui-form-preview__value">沈四</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">电话</label>
-                    <span class="weui-form-preview__value">13732143211</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">问题描述</label>
-                    <span class="weui-form-preview__value">希望加上一键报警功能</span>
-                </div>
-            </div>
-            <div class="weui-form-preview__ft">
-                <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">操作</a>
-            </div>
-        </div>
-        <br>
-
-        <div class="weui-form-preview">
-            <div class="weui-form-preview__hd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">门牌号</label>
-                    <em class="weui-form-preview__value">螺狮南路44号</em>
-                </div>
-            </div>
-            <div class="weui-form-preview__bd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">用户名</label>
-                    <span class="weui-form-preview__value">张六</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">电话</label>
-                    <span class="weui-form-preview__value">13780982345</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">问题描述</label>
-                    <span class="weui-form-preview__value">希望加上附近旅游推荐的功能</span>
-                </div>
-            </div>
-            <div class="weui-form-preview__ft">
-                <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">操作</a>
-            </div>
-        </div>
-        <br><br><br><br><br><br>
+            <br>
+        </c:forEach>
     </div>
 
+    <br><br><br><br><br><br>
+</div>
 
-    <br><br><br><br>
+</c:if>
 
-    <c:if test="${empty existUser1}">
-        <a href="login" class="btn btn-success btn-block btn-lg">用户登录</a>
-    </c:if>
-    <c:if test="${not empty existUser1}">
-        <a href="loginOut" class="btn btn-danger btn-block btn-lg">退出登录</a>
-    </c:if>
-
+<br><br><br><br>
 
 </div>
 
@@ -184,6 +131,7 @@
         //搜索栏
         searchBarAction();
         showqrcode();
+
     })
 </script>
 </body>
