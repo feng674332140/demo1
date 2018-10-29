@@ -6,7 +6,6 @@ import com.yzt.zhmp.beans.System;
 import com.yzt.zhmp.beans.User;
 import com.yzt.zhmp.service.CollectionSystemService;
 import com.yzt.zhmp.service.SystemService;
-import net.sf.ehcache.search.parser.ModelElement;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;

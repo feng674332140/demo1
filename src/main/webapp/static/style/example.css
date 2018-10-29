@@ -42,9 +42,7 @@ ul {
     opacity: 1
 }
 
-.page__hd {
-    padding: 20px
-}
+
 
 .page__bd_spacing {
     padding: 0 15px
@@ -500,10 +498,15 @@ ul {
     animation: b .2s forwards
 }
 
+
+
 /*头部 返回样式*/
+.row{
+    margin: 0;
+}
 .top{
     border: 1px solid #ddd;
-    margin: 0;
+    background-color: #fff;
 }
 .top a{
     color: #333;
@@ -534,4 +537,17 @@ ul {
     top: 0;
     left: 0;
     z-index: 100;
+}
+.tit{
+    padding: 5px 15px ;
+    font-size: 13px;
+    position: relative;
+}
+
+/*登录查看*/
+.look{
+    background-color: #fff;
+    line-height: 40px;
+    font-size: 15px;
+    display: none;
 }

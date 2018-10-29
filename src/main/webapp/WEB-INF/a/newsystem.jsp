@@ -4,7 +4,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
     //request.setCharacterEncoding("UTF-8");
@@ -26,6 +25,7 @@
     <script type="text/javascript" src="../static/js/common/Sortable.min.js"></script>
     <script type="text/javascript" src="../static/js/service/bigservice.js"></script>
     <script type="text/javascript" src="../static/js/navigation/navigation.js"></script>
+
     <style type="text/css">
         body, html, #container {
             height: 100%;
@@ -45,12 +45,6 @@
             line-height: 20px;
         }
 
-        #input {
-            /*width: 250px;*/
-            height: 25px;
-            border: 0;
-            background-color: white;
-        }
     </style>
 </head>
 <body ontouchstart>
@@ -62,7 +56,6 @@
                 群山之祖，诸水之源，大美磐安</p>
         </div>
         <div class="weui-panel weui-panel_access">
-            <%--<div class="weui-panel__hd">门牌信息</div>--%>
             <div class="weui-panel__bd" style="float: left">
                 <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
                     <div class="weui-media-box__hd">
@@ -70,8 +63,8 @@
                              src="../static/images/menpai/2c1c1576b4fc5268fd89f17288d1b868.gif" alt="">
                     </div>
                     <div class="weui-media-box__bd">
-                        <h4 class="weui-media-box__title ">磐安县螺山路13号</h4>
-                        <p class="weui-media-box__desc" style="font-size: 10px">管理单位:磐安县螺山路</p>
+                        <h4 class="weui-media-box__title ">磐安县海螺街33号民政大楼</h4>
+                        <p class="weui-media-box__desc" style="font-size: 10px">管理单位:磐安县民政局</p>
                     </div>
                 </a>
 
@@ -80,8 +73,8 @@
         </div>
 
         <%--地图--%>
-        <div class="weui-cells weui-cells_form map" style="height:30%;margin-top: 10px">
-            <div class="maps"></div>
+        <div class="weui-cells weui-cells_form map" style="height:30%;margin-top: 10px" >
+            <div class="maps" onclick="toMap()"></div>
             <div id="container" tabindex="0"></div>
         </div>
 
@@ -99,7 +92,7 @@
                         </div>
                     </td>
                     <td style="font-size: 15px ">
-                        <p class=" tit">所属部门：公安</p>
+                        <p class=" tit">所属部门：磐安</p>
                         <p class=" tit">民警姓名：厉韬</p>
                         <p class=" tit">一键报警：<a href="tel:15179788823">15156257489</a></p>
                     </td>
@@ -141,7 +134,7 @@
                 </div>
             </div>
         </c:if>
-        <br><br><br><br>
+        <br>
         <c:if test="${empty existUser1}">
             <a href="login" class="btn btn-success btn-block btn-lg">用户登录</a>
         </c:if>
@@ -151,12 +144,11 @@
     </div>
 </div>
 
-<script src="https://webapi.amap.com/maps?v=1.3&amp;key=0527fc08a6b9ab7a0d2dacdf50ed20d6&callback=init"></script>
-<!-- UI组件库 1.0 -->
-<script src="//webapi.amap.com/ui/1.0/main.js"></script>
-<script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
+<%--百度地图--%>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=skrpasVpQNa6WnSyj8aY5h3fCgVFhBNg">
+    //v2.0版本的引用方式：src="http://api.map.baidu.com/api?v=2.0&ak=您的密钥"
+</script>
 <script>
-
     $("#zhengfu").click(function () {
         if ($("#tpl_monitoring").css("display") == "none") {
             $("#tpl_monitoring").show();
@@ -164,7 +156,6 @@
             $("#tpl_monitoring").hide();
         }
     });
-
 
     $("#xiangguan").click(function () {
         if ($("#tpl_rcode").css("display") == "none") {
@@ -174,7 +165,6 @@
         }
     });
 
-
     $("#zhoubian").click(function () {
         if ($("#tpl_feedback").css("display") == "none") {
             $("#tpl_feedback").show();
@@ -182,14 +172,6 @@
             $("#tpl_feedback").hide();
         }
     });
-
-    /*$("#fangwu").click(function () {
-        if ($("#fangwuinfo").css("display") == "none") {
-            $("#fangwuinfo").show();
-        } else {
-            $("#fangwuinfo").hide();
-        }
-    });*/
 
     $("#fangwu").click(function () {
         $(".look").fadeToggle(500)
@@ -215,62 +197,27 @@
     function showXiangGuan() {
         $(".pageContent").css("display", "none");
         $("#tpl_rcode").css("display", "block");
-
     }
 
-    var dataX;//经度
-    var dataY;//纬度
+    var dataX=120.4507351963;//经度
+    var dataY=29.0596338332;//纬度
 
-    var marker, map = new AMap.Map('container', {
-        center: [120.449058, 29.052711],
-        zoom: 17
-    });
-
-    map.setFeatures(['road', 'bg', 'point'])//多个种类要素显示
-
-
-    AMap.plugin('AMap.Geocoder', function () {
-        var geocoder = new AMap.Geocoder({
-            city: "010"//城市，默认：“全国”
-        });
-        var marker = new AMap.Marker({
-            map: map,
-            bubble: true
-        })
-        map.on('click', function (e) {
-            dataX = e.lnglat.lng;
-            dataY = e.lnglat.lat;
-
-            marker.setPosition(e.lnglat);
-            geocoder.getAddress(e.lnglat, function (status, result) {
-                if (status == 'complete') {
-                    document.getElementById('input').value = result.regeocode.formattedAddress
-                }
-            })
-        })
-    });
-
-    function locationConfirm() {
-        alert(dataX);
-        alert(dataY);
+    function toMap(){
+        window.location.href="http://api.map.baidu.com/marker?location="+dataY+","+dataX+"" +
+            "&title=我的位置&content=磐安县公安局&output=html&src=webapp.baidu.openAPIdemo "
     }
 
-    function addMarker() {
-        if (marker) {
-            return;
-        }
-        marker = new AMap.Marker({
-            icon: "<%=basepath%>/static/images/mark_b.png",
-            position: [114.356531, 30.5274]
-        });
-        marker.setMap(map);
-    }
+    var map = new BMap.Map("container");
+    // 创建地图实例
+    var point = new BMap.Point(dataX, dataY);
+    // 创建点坐标
+    map.centerAndZoom(point, 16);
 
-    $(document).ready(function () {
-        addMarker();
+    var marker = new BMap.Marker(point);        // 创建标注
+    map.addOverlay(marker);
 
 
-    });
+
 
 </script>
 

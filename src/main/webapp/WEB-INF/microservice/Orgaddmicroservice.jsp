@@ -18,14 +18,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <title>智慧门牌</title>
-    <link rel="stylesheet" type="text/css" href="/static/style/weui.css"/>
-    <link rel="stylesheet" type="text/css" href="/static/style/example.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/style/weui.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/style/example.css"/>
     <link rel="stylesheet" href="<%=basepath%>/control/plugins/layui/css/check.css" media="all">
     <%--<script type="text/javascript" src="/static/js/zepto.min.js"></script>--%>
     <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="/static/js/common/common.js"></script>
-    <script type="text/javascript" src="/static/js/service/microservice.js"></script>
-    <script type="text/javascript" src="/static/js/common/Sortable.min.js"></script>
+    <script type="text/javascript" src="../static/js/common/common.js"></script>
+    <script type="text/javascript" src="../static/js/service/microservice.js"></script>
+    <script type="text/javascript" src="../static/js/common/Sortable.min.js"></script>
 </head>
 <body ontouchstart>
 <div class="page">

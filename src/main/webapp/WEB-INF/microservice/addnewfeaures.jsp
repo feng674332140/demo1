@@ -19,10 +19,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <title>添加功能</title>
-    <!-- jQuery -->
-    <script type="text/javascript" src="/static/js/jquery-1.7.1.min.js"></script>
     <link rel="stylesheet" href="<%=basepath%>/control/plugins/layui/css/check.css" media="all">
-    <script type="text/javascript" src="/static/js/pop-ico.js"></script>
+    <script type="text/javascript" src="../static/js/pop-ico.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/style/example.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/style/weui.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="<%=basepath%>/static/style/weui.css"/>
+    <link rel="stylesheet" type="text/css" href="<%=basepath%>/static/style/example.css"/>
+    <script type="text/javascript" src="../static/js/jquery-1.10.2.min.js"></script>
+
     <style type="text/css">
         body {
             font-size: 12px;
@@ -86,8 +91,13 @@
 </head>
 <body ontouchstart>
 <div class="main" style="width: 100%;margin: 0 auto;border: 1px solid #BEBEBE;min-height:400px">
-    <div style="background-color: #E4E4E4;padding: 10px;">
-        <font size="5">新添加页面</font>
+    <div class="row top">
+        <div class="col-xs-3 heig" onClick="history.back(-1);">
+            <span class="glyphicon glyphicon-arrow-left"></span>
+        </div>
+        <div class="col-xs-6 text-center heig"><b>添加服务</b></div>
+        <div class="col-xs-3 text-center heig">
+        </div>
     </div>
 
     <div style="padding: 10px">
@@ -98,7 +108,6 @@
             <span>在页面显示的名称：</span><input type="text" name="shouName" value="">
             <br/>
             <br/>
-
             <!-- 图标选择 start -->
             <span>请选择图标：</span>
             <br><br>
@@ -117,7 +126,6 @@
                         <a title="关闭窗口" class="hide-ico-btn">x</a>
                     </div>
                     <div class="ico-list">
-
                         <a data-src="/static/images/minzheng/binzangguanli.png" class="cur"><img
                                 src="../static/images/minzheng/binzangguanli.png" width="72" height="72"></a>
                         <a data-src="/static/images/minzheng/chengxiangdibao.png"><img
@@ -156,7 +164,6 @@
                                 src="../static/images/minzheng/yiliaojiuzhu.png" width="72" height="72"></a>
                         <a data-src="/static/images/minzheng/youdaifuxu.png"><img
                                 src="../static/images/minzheng/youdaifuxu.png" width="72" height="72"></a>
-
                     </div>
                 </div>
                 <!-- 弹出窗口  end-->
@@ -171,10 +178,7 @@
     </div>
 </div>
 <div class="corp" style="width: 100%;margin: 0 auto;text-align: center;margin-top: 10px">
-
 </div>
-
-
 <script type="text/javascript">
     var basepath = "<%=basepath%>";
     /**
