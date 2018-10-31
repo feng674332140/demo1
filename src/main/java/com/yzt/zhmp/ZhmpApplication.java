@@ -15,10 +15,8 @@ public class ZhmpApplication extends SpringBootServletInitializer {
         return application.sources(ZhmpApplication.class);
     }
 
-
     public static void main(String[] args) {
         SpringApplication.run(ZhmpApplication.class, args);
     }
-
 
 }

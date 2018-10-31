@@ -67,6 +67,8 @@ public class BackstageController {
     @RequestMapping("/control/login")
     public String login(String name, String password,
                         Model model, HttpServletRequest request) {
+        //登录失败后回显用户名
+        model.addAttribute("name",name);
         request.getSession().invalidate();
         String discode = "";
         User existUser = null;
@@ -188,6 +190,17 @@ public class BackstageController {
         //获取对应的区域
         String disCode = backstageService.findDisCode(usrid);
         List<DisUserAddDisName> disUsers = collectionSystemService.selectUserByuserid(usrid);
+        String temp;
+        for (int i = 0; i <disUsers.size() ; i++) {
+            String ifValid = disUsers.get(i).getIfValid();
+            if ("1".equals(ifValid)){
+                temp="有效";
+            }else{
+                temp="无效";
+            }
+            disUsers.get(i).setIfValidValue(temp);
+        }
+
         int count = disUsers.size();
         JSONArray jsonArray = JSONArray.fromObject(disUsers);
         response.getWriter().write("{\"code\":0,\"msg\":\"\",\"count\":" + count

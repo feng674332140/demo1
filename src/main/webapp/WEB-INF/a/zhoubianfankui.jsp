@@ -66,8 +66,8 @@
                href="addFeedbackPage">添加反馈信息</a>
         </div>
     </c:if>
-    <c:if test="${not empty existUser1}">
 
+    <c:if test="${not empty existUser1}">
     <div class="page__bd page__bd_spacing">
         <c:forEach items="${feedbacks}" var="feedback">
             <br>
@@ -93,32 +93,17 @@
                     </div>
                 </div>
                 <div class="weui-form-preview__ft">
-                    <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">操作</a>
+                    <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="Reply">回复</a>
                 </div>
             </div>
             <br>
         </c:forEach>
     </div>
-
     <br><br><br><br><br><br>
 </div>
-
 </c:if>
-
 <br><br><br><br>
-
 </div>
-
-
-<script src="https://webapi.amap.com/maps?v=1.3&amp;key=0527fc08a6b9ab7a0d2dacdf50ed20d6&callback=init"></script>
-<!-- UI组件库 1.0 -->
-<script src="//webapi.amap.com/ui/1.0/main.js"></script>
-<script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
-<script>
-
-
-</script>
-
 
 <script type="text/javascript">
     var basepath = "/static";
@@ -131,7 +116,6 @@
         //搜索栏
         searchBarAction();
         showqrcode();
-
     })
 </script>
 </body>

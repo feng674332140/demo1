@@ -1,5 +1,6 @@
 package com.yzt.zhmp.web;
 
+import com.sun.org.apache.bcel.internal.generic.I2F;
 import com.yzt.zhmp.beans.Cbuilding;
 import com.yzt.zhmp.beans.Cdistrict;
 import com.yzt.zhmp.service.CollectionSystemService;
@@ -148,15 +149,27 @@ public class CollectionController {
      * @return
      */
     @RequestMapping("/control/uptadeCdisture")
-    public String updateCdistrict(HttpServletRequest request, Cdistrict cdistrict,Model model) {
+    public String updateCdistrict(HttpServletRequest request, Cdistrict cdistrict, Model model) {
         String discode = (String) request.getSession().getAttribute("discode");
         cdistrict.setDisCode(discode);
-        int i = collectionSystemService.updateCdistrict(cdistrict);
-        if (i == 1) {
-            String msg = "更新成功";
+        //查询是否有地区介绍,没有进行添加,有进行修改
+        Cdistrict existCdistrict = collectionSystemService.selectCdistrict(discode);
+        String msg;
+        if (existCdistrict != null) {
+            int i = collectionSystemService.updateCdistrict(cdistrict);
+            if (i == 1) {
+                msg = "更新成功";
+            } else {
+                msg = "更新失败";
+            }
             model.addAttribute("msg", msg);
         } else {
-            String msg = "更新失败";
+            int i = collectionSystemService.addCountyInfo(cdistrict);
+            if (i == 1) {
+                msg = "添加成功";
+            } else {
+                msg = "添加失败";
+            }
             model.addAttribute("msg", msg);
         }
         return "control/XianquInfo";
@@ -164,14 +177,15 @@ public class CollectionController {
 
     /**
      * 页面初始化加载数据
+     *
      * @param response
      */
     @RequestMapping("/xianquData")
-    public void xianquData(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    public void xianquData(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String discode = (String) request.getSession().getAttribute("discode");
         Cdistrict cdistrict = collectionSystemService.selectCdistrict(discode);
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("cdistrict",cdistrict);
+        jsonObject.put("cdistrict", cdistrict);
         response.getWriter().write(jsonObject.toString());
     }
 

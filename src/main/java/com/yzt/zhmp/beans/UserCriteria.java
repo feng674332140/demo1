@@ -3,6 +3,7 @@ package com.yzt.zhmp.beans;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class UserCriteria {
     protected String orderByClause;
 

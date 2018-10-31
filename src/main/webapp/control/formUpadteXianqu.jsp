@@ -12,8 +12,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="./plugins/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="../control/plugins/layui/css/check.css" media="all">
-    <script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="../static/js/jquery-1.10.2.min.js"></script>
 </head>
+<style>
+    .txt3 {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .textarea1{
+        resize: none;
+    }
+</style>
 
 <body>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
@@ -21,37 +30,41 @@
 </fieldset>
 
 <form class="layui-form" id="mytable" method="post" action="${pageContext.request.contextPath}/control/uptadeCdisture">
-
-    <div class="layui-form-item layui-form-text" style="width: 700px;">
-        <label class="layui-form-label">总体介绍</label>
+    <div class="layui-form-item layui-form-text" style="width: 1200px;">
+        <label class="layui-form-label" style="line-height: 6"><span class="txt3">总体介绍</span></label>
         <div class="layui-input-block">
-                <textarea placeholder="请输入内容" name="introduction" class="layui-textarea"
-                          required>${cdistrict.introduction}</textarea>
+                <textarea placeholder="请输入内容" name="introduction" class="layui-textarea textarea1" required>${cdistrict.introduction}</textarea>
         </div>
     </div>
-
-    <div class="layui-form-item layui-form-text" style="width: 700px;">
-        <label class="layui-form-label">交通状况</label>
+    <div class="layui-form-item layui-form-text" style="width: 1200px;">
+        <label class="layui-form-label" style="line-height: 6"><span class="txt3">交通状况</span></label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入内容" name="traffic" class="layui-textarea" required>${cdistrict.traffic}</textarea>
+            <textarea placeholder="请输入内容" name="traffic" class="layui-textarea textarea1" required>${cdistrict.traffic}</textarea>
         </div>
     </div>
-    <div class="layui-form-item layui-form-text" style="width: 700px;">
-        <label class="layui-form-label">旅游介绍</label>
+    <div class="layui-form-item layui-form-text" style="width: 1200px;">
+        <label class="layui-form-label" style="line-height: 6"><span class="txt3">旅游介绍</span></label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入内容" name="travel" class="layui-textarea" required>${cdistrict.travel}</textarea>
+            <textarea placeholder="请输入内容" name="travel" class="layui-textarea textarea1" required>${cdistrict.travel}</textarea>
         </div>
     </div>
-    <div class="layui-form-item layui-form-text" style="width: 700px;">
-        <label class="layui-form-label">名胜古迹</label>
+    <div class="layui-form-item layui-form-text" style="width: 1200px;">
+        <label class="layui-form-label" style="line-height: 6"><span class="txt3">名胜古迹</span></label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入内容" name="memo" class="layui-textarea" required>${cdistrict.memo}</textarea>
+            <textarea placeholder="请输入内容" name="memo" class="layui-textarea textarea1" required>${cdistrict.memo}</textarea>
         </div>
     </div>
 
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn" lay-filter="demo1">确定更新</button>
+            <button class="layui-btn" lay-filter="demo1">
+                <c:if test="${cdistrict.introduction!=null||cdistrict.traffic!=null||cdistrict.travel!=null||cdistrict.memo!=null}">
+                    更新
+                </c:if>
+                <c:if test="${cdistrict.introduction==null&&cdistrict.traffic==null&&cdistrict.travel==null&&cdistrict.memo==null}">
+                    添加
+                </c:if>
+            </button>
             <span class="layui-btn" onclick="javascript:history.back(-1)">取消</span>
         </div>
     </div>

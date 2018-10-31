@@ -58,7 +58,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">账号</label>
             <div class="layui-input-inline">
-                <input type="text" name="name" lay-verify="required" autocomplete="off" class="layui-input">
+                <input type="text" name="name" lay-verify="required" autocomplete="off" class="layui-input" value="${name}">
             </div>
         </div>
 

@@ -25,13 +25,10 @@ public class MyWebMvcConfigurerAdapter implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration interceptorRegistration = registry.addInterceptor(new LoginInterceptor());
-        interceptorRegistration.addPathPatterns("/control");
+        interceptorRegistration.addPathPatterns("/control/*");
         interceptorRegistration.excludePathPatterns("/control/index");
-        interceptorRegistration.excludePathPatterns("/backstageResource/**");
         interceptorRegistration.excludePathPatterns("/system");
 
         interceptorRegistration.excludePathPatterns("/control/login");
-
-
     }
 }

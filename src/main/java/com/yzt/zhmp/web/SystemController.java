@@ -11,6 +11,7 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -63,18 +64,6 @@ public class SystemController {
 
         model.addAttribute("building", cbuilding);
         return "WEB-INF/a/zhengfufuwu";
-    }
-
-    /**
-     * 相关连接
-     *
-     * @return
-     */
-    @RequestMapping("xiangguanlianjie")
-    public String xiangguanlianjie(Model model) {
-        List allList = systemService.selectAll("330727");
-        model.addAttribute("allList", allList);
-        return "WEB-INF/a/xiangguanlianjie";
     }
 
     /**
@@ -245,7 +234,7 @@ public class SystemController {
      */
     @RequestMapping("addPoliceeatures")
     public String addPolicefeatures(String urlname, String headico, String ifvial, String shouName,Model model) {
-        System system = new System(222, "民政服务", urlname, headico, shouName, ifvial);
+        System system = new System(222, "公安服务", urlname, headico, shouName, ifvial);
         int i = systemService.addnewFeatures(system);
         return "WEB-INF/system";
     }
@@ -272,6 +261,7 @@ public class SystemController {
      * @param response
      * @throws IOException
      */
+    @CrossOrigin
     @ResponseBody
     @RequestMapping("fangwuInfo")
     public void fangwuInfo(String discode, HttpServletResponse response) throws IOException {
@@ -296,6 +286,7 @@ public class SystemController {
      * @param response
      */
     @RequestMapping("/addFeedback")
+    @ResponseBody
     public void addFeedback(Feedback feedback, HttpServletResponse response) throws IOException {
         //先判断用户或手机号有没有关联的反馈
         JSONObject jsonObject = new JSONObject();
@@ -323,5 +314,20 @@ public class SystemController {
         response.getWriter().write(jsonObject.toString());
     }
 
+    /**
+     * 跳转返回回复页面
+     * @return
+     */
+    @RequestMapping("/Reply")
+    @CrossOrigin
+    public String toReply(){
+        return "WEB-INF/a/reply";
+    }
 
+
+    @RequestMapping("/toReply")
+    @ResponseBody
+    public void reply(String reply){
+
+    }
 }

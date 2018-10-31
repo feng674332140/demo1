@@ -1,9 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <%
-    //request.setCharacterEncoding("UTF-8");
+    request.setCharacterEncoding("UTF-8");
     String path = request.getContextPath();
     String basepath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
     String userID = (String) session.getAttribute("userID");
@@ -105,29 +104,5 @@
         </c:if>
     </div>
 </div>
-<script src="https://webapi.amap.com/maps?v=1.3&amp;key=0527fc08a6b9ab7a0d2dacdf50ed20d6&callback=init"></script>
-<!-- UI组件库 1.0 -->
-<script src="//webapi.amap.com/ui/1.0/main.js"></script>
-<script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
-<script>
-
-    $(document).ready(function () {
-        addMarker();
-    });
-</script>
-
-<script type="text/javascript">
-    var basepath = "/static";
-    /**
-     * 开始自动加载find
-     */
-    $(document).ready(function () {
-        //显示/隐藏子节点
-        showInnerContent();
-        //搜索栏
-        searchBarAction();
-        showqrcode();
-    })
-</script>
 </body>
 </html>

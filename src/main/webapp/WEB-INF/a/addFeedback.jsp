@@ -68,7 +68,7 @@
         <div class="weui-form-preview">
             <div class="weui-form-preview__hd">
                 <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">门牌号</label>
+                    <label class="weui-form-preview__label">地址</label>
                     <em class="weui-form-preview__value" id="houseNumber">丹溪路37号</em>
                 </div>
             </div>
@@ -117,10 +117,6 @@
         <button onclick="ifhide()" class="but">知道了</button>
     </div>
 </div>
-<script src="https://webapi.amap.com/maps?v=1.3&amp;key=0527fc08a6b9ab7a0d2dacdf50ed20d6&callback=init"></script>
-<!-- UI组件库 1.0 -->
-<script src="//webapi.amap.com/ui/1.0/main.js"></script>
-<script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
 <script>
 </script>
 <script type="text/javascript">

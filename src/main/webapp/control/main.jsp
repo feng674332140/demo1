@@ -36,9 +36,10 @@
 <script>
     var map = new AMap.Map('container', {
         resizeEnable: true, //是否监控地图容器尺寸变化
-        // zoom:11, //初始化地图层级
+        zoom:12 //初始化地图层级
         // center: [120.450004,29.054551] //初始化地图中心点
     });
+
     map.on("complete", function () {
 
         log.success("地图加载完成！");

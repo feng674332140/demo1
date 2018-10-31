@@ -31,7 +31,6 @@
             height: 100%;
             margin: 0px;
         }
-
         .panel {
             background-color: #ddf;
             color: #333;
@@ -45,6 +44,11 @@
             line-height: 20px;
         }
 
+        @font-face {
+            font-family: 'MyNewFont';   /*字体名称*/
+            src: url('control/plugins/layui/font/STXINGKA.TTF');       /*字体源文件*/
+        }
+
     </style>
 </head>
 <body ontouchstart>
@@ -52,7 +56,7 @@
 
     <div class="pageContent" id="tpl_qrcode" style="display:block;">
         <div class="weui-panel weui-panel_access">
-            <p style="text-align: center;height: 38px;line-height: 45px;font-family: 华文隶书;font-size: 17px">
+            <p style="text-align: center;height: 38px;line-height: 45px;font-family:'MyNewFont';font-size: 17px">
                 群山之祖，诸水之源，大美磐安</p>
         </div>
         <div class="weui-panel weui-panel_access">
@@ -103,20 +107,20 @@
             <div class="row">
                 <a href="javascript:void(0);" id="fangwu" class="col-xs-4">
                     <div class="weui-grid__icon">
-                        <img src="../static/images/panan/diming.png" style="" alt="">
+                        <img src="../static/images/panan/address.png" style="" alt="">
                     </div>
                     <p class="weui-grid__label">地名信息</p>
                 </a>
 
                 <a href="zhengfufuwu" class="col-xs-4" id="engfu">
                     <div class="weui-grid__icon">
-                        <img src="../static/images/zhengfu2.png" style="" alt="">
+                        <img src="../static/images/zhengfu.png" style="" alt="">
                     </div>
                     <p class="weui-grid__label">政府服务</p>
                 </a>
                 <a href="zhoubianfankui" class="col-xs-4" id="kl">
                     <div class="weui-grid__icon">
-                        <img src="../static/images/menpai/zhoubian.png" style="" alt="">
+                        <img src="../static/images/panan/feedback.png" style="" alt="">
                     </div>
                     <p class="weui-grid__label">周边反馈</p>
                 </a>

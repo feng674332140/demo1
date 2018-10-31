@@ -6,9 +6,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>skpi</title>
-    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/static/style/example.css"/>
+    <title>${name}</title>
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/style/example.css"/>
 </head>
 <body>
 <div class="row top">
@@ -26,7 +26,7 @@
         width="100%" height="100%" frameborder="0"  ></iframe>
 <script>
     var name="${name}"
-    if(name=="民政刊物"||name=="派出所信息"||name=="辖区民警"||name=="一键报警"||name=="商店详情"){
+    if(name=="民政刊物"||name=="磐安发布"||name=="辖区民警"||name=="商店详情"||name=="金华旅游锦囊"){
     location.href="${url}"
     }
 </script>
