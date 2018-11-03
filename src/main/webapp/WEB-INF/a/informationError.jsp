@@ -48,7 +48,8 @@
             border: 0;
             background-color: white;
         }
-        #description{
+
+        #description {
             width: 100%;
         }
     </style>
@@ -59,56 +60,31 @@
         <div class="col-xs-3 heig" onClick="history.back(-1);">
             <span class="glyphicon glyphicon-arrow-left"></span>
         </div>
-        <div class="col-xs-6 text-center heig"><b>添加反馈信息</b></div>
+        <div class="col-xs-6 text-center heig"><b>地名信息报错</b></div>
         <div class="col-xs-3 text-center heig">
         </div>
     </div>
     <div class="page__bd page__bd_spacing">
         <br>
         <div class="weui-form-preview">
-            <div class="weui-form-preview__hd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">地址</label>
-                    <em class="weui-form-preview__value" id="houseNumber">丹溪路37号</em>
-                </div>
-            </div>
-            <div class="weui-form-preview__bd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">用户名</label>
-                    <span class="weui-form-preview__value" id="username">刘三</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">电话</label>
-                    <span class="weui-form-preview__value" id="phoneNumber">13723452345</span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">问题类别</label>
-                    <span class="weui-form-preview__value">
-                        <select id="deptid" style="line-height: 20px">
-                            <option value="">请选择问题类型</option>
-                            <c:forEach items="${departmentList}" var="department">
-                                <option value="${department.deptid}">${department.name}</option>
-                            </c:forEach>
-                        </select>
-                    </span>
-                </div>
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label" style="text-align: center">问题描述</label>
-                </div>
-                <textarea class="wishContent" id="description" rows="10" cols="39" style="resize:none;color: #333" maxlength="400"
-                          placeholder="请输入反馈信息(400字以内)" oninput="checkDescription()"></textarea>
-                <span id="wordsNum">还可以输入400字</span>
-            </div>
-
-                <a class="btn btn-success btn-block btn-lg" href="javascript:"
-                   onclick="submitForm()">提交</a>
-
+            <%--<div class="weui-form-preview__item">
+                <label class="weui-form-preview__label" style="text-align: center">问题描述</label>
+            </div>--%>
+            <textarea class="wishContent" id="description" rows="10" cols="39" style="resize:none;color: #333"
+                      maxlength="400"
+                      placeholder="请输入反馈信息(400字以内)" oninput="checkDescription()"></textarea>
+            <span id="wordsNum" style="float: right">400/400</span>
         </div>
         <br>
-        <br><br><br><br><br><br>
-    </div>
+        <a class="btn btn-success btn-block btn-lg" href="javascript:"
+           onclick="submitForm()">提交</a>
 
-    <br><br><br><br>
+    </div>
+    <br>
+    <br><br><br><br><br><br>
+</div>
+
+<br><br><br><br>
 </div>
 <%--提示层--%>
 <div id="box">
@@ -120,58 +96,60 @@
 <script>
 </script>
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         $(".weui-form-preview__item").css({"color": "#333"});
         $(".weui-form-preview__label").css({"color": "#333"});
 
     })
 
-    function checkDescription(){
+    function checkDescription() {
         var description = $("#description").val();
-        var dLength=description.length;
-        if (dLength<400) {
-            var i=400-dLength;
-            $("#wordsNum").html("还可以输入"+i+"字")
-        }else{
+        var dLength = description.length;
+        if (dLength < 400) {
+            var i = 400 - dLength;
+            $("#wordsNum").html(i + "/400")
+        } else {
             $("#txt").text("问题描述不能超过400字");
             $("#box").show(500);
         }
 
 
     }
+
     function submitForm() {
         var houseNumber = $("#houseNumber").html();
         var username = $("#username").html();
         var phoneNumber = $("#phoneNumber").html();
         var deptid = $("#deptid").val();
         var description = $("#description").val();
-        if (deptid.length==""){
+        if (deptid.length == "") {
             $("#txt").text("请选择问题类别");
             $("#box").show(500);
             return;
         }
-        if ($.trim(description).length==0){
+        if ($.trim(description).length == 0) {
             $("#txt").text("问题描述不能为空");
             $("#box").show(500);
             return;
         }
 
-        var data={
-            "houseNumber":houseNumber,
-            "username":username,
-            "phoneNumber":phoneNumber,
-            "deptId":deptid,
-            "description":description
+        var data = {
+            "houseNumber": houseNumber,
+            "username": username,
+            "phoneNumber": phoneNumber,
+            "deptId": deptid,
+            "description": description
         };
 
-        var url="${pageContext.request.contextPath}/addFeedback";
-        $.post(url,data,function (data) {
-            var data1=eval("("+data+")");
+        var url = "${pageContext.request.contextPath}/addFeedback";
+        $.post(url, data, function (data) {
+            var data1 = eval("(" + data + ")");
             //alert(data1.msg);
             $("#box").show(500);
             $("#txt").text(data1.msg);
         })
     }
+
     function ifhide() {
         $("#box").hide(500);
     }

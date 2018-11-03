@@ -40,11 +40,23 @@ public class Transfer {
     @RequestMapping("addFeedbackPage")
     public String addFeedback(Model model) {
         List<Department> departmentList = backstageService.selectAllDepartment();
-        model.addAttribute("departmentList",departmentList);
+        model.addAttribute("departmentList", departmentList);
         return "WEB-INF/a/addFeedback";
     }
 
     @RequestMapping("newPoliceVie")
-    public String tst(){return "WEB-INF/microservice/addnewfeaures";}
+    public String tst() {
+        return "WEB-INF/microservice/addnewfeaures";
+    }
+
+    /**
+     * 跳转地址信息报错页面
+     *
+     * @return
+     */
+    @RequestMapping("informationError")
+    public String informationError() {
+        return "WEB-INF/a/informationError";
+    }
 
 }

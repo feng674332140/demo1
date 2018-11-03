@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -75,7 +77,7 @@ public class SystemController {
     public String zhoubianfankui(Model model) {
         //查询所有的反馈信息
         List<Feedback> feedbacks = systemService.selectAllFeedback();
-        model.addAttribute("feedbacks",feedbacks);
+        model.addAttribute("feedbacks", feedbacks);
         return "WEB-INF/a/zhoubianfankui";
     }
 
@@ -233,7 +235,7 @@ public class SystemController {
      * @return
      */
     @RequestMapping("addPoliceeatures")
-    public String addPolicefeatures(String urlname, String headico, String ifvial, String shouName,Model model) {
+    public String addPolicefeatures(String urlname, String headico, String ifvial, String shouName, Model model) {
         System system = new System(222, "公安服务", urlname, headico, shouName, ifvial);
         int i = systemService.addnewFeatures(system);
         return "WEB-INF/system";
@@ -267,7 +269,30 @@ public class SystemController {
     public void fangwuInfo(String discode, HttpServletResponse response) throws IOException {
         response.setContentType("text/json;charset=UTF-8");
         JSONObject json = new JSONObject();
-        json.put("户主姓名", "张三");
+        /*Cbuilding cbuilding = systemService.selectCBuilding("33072710000212121");
+        String name = cbuilding.getName();
+        json.put("户主姓名", name);
+        int buID = cbuilding.getBuID();
+        String disCode = cbuilding.getDisCode();
+        String phoneNum = cbuilding.getPhoneNum();
+        String familyType = cbuilding.getFamilyType();
+        int population = cbuilding.getPopulation();
+        int roomNum = cbuilding.getRoomNum();
+        int floorNum = cbuilding.getFloorNum();
+        float landArea = cbuilding.getLandArea();
+        float buildArea = cbuilding.getBuildArea();
+        float yardArea = cbuilding.getYardArea();
+        int numberOfRoom = cbuilding.getNumberOfRoom();
+        int numberOfBed = cbuilding.getNumberOfBed();
+        int mealDigits = cbuilding.getMealDigits();
+        String feature = cbuilding.getFeature();
+        String busiType = cbuilding.getBusiType();
+        String memo = cbuilding.getMemo();
+        String ifOpen = cbuilding.getIfOpen();
+        String buildingYear = cbuilding.getBuildingYear();
+        String address = cbuilding.getAddress();*/
+
+
         json.put("联系电话", "13900000000");
         json.put("房主竣工日期", "1999");
         json.put("门牌编号", "00000000000");
@@ -290,25 +315,22 @@ public class SystemController {
     public void addFeedback(Feedback feedback, HttpServletResponse response) throws IOException {
         //先判断用户或手机号有没有关联的反馈
         JSONObject jsonObject = new JSONObject();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Feedback existFeedback = systemService.findFeedbackByUsernameOrPhone(feedback);
         if (existFeedback == null) {
-            feedback.setSubmittime(new Date());
+            feedback.setSubmitTime(new Date());
             systemService.addFeedback(feedback);
             jsonObject.put("msg", "提交成功！请等待反馈");
-
         } else {
-            Date submittime = existFeedback.getSubmittime();
-            long time = submittime.getTime();
-            long nowTime = java.lang.System.currentTimeMillis();
-
-            long between = nowTime - time;
-            if (between > (86400000)) {
-                //上一条提交大于一天则可以提交
-                feedback.setSubmittime(new Date());
+            Date submitTime = existFeedback.getSubmitTime();
+            String nowTime = simpleDateFormat.format(new Date());
+            String lastTime = simpleDateFormat.format(submitTime);
+            if (lastTime.equals(nowTime)) {
+                jsonObject.put("msg", "您今天已经提交过信息");
+            } else {
+                feedback.setSubmitTime(new Date());
                 systemService.addFeedback(feedback);
                 jsonObject.put("msg", "提交成功！请等待反馈");
-            } else {
-                jsonObject.put("msg", "您今天已经提交过信息");
             }
         }
         response.getWriter().write(jsonObject.toString());
@@ -316,18 +338,30 @@ public class SystemController {
 
     /**
      * 跳转返回回复页面
+     *
      * @return
      */
-    @RequestMapping("/Reply")
-    @CrossOrigin
-    public String toReply(){
+    @RequestMapping("/toReply")
+    public String toReply(Feedback feedback, Model model, HttpServletRequest request) {
+        Feedback existFeedback = systemService.findOnlyFeedback(feedback);
+        Date submitTime = existFeedback.getSubmitTime();
+        feedback.setSubmitTime(submitTime);
+        model.addAttribute("existFeedback", existFeedback);
         return "WEB-INF/a/reply";
     }
 
 
-    @RequestMapping("/toReply")
+    @RequestMapping("/reply")
     @ResponseBody
-    public void reply(String reply){
-
+    public void reply(Feedback feedback, String submitTime1, HttpServletResponse response) throws IOException, ParseException {
+        //添加回复时间
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        feedback.setSubmitTime(sdf.parse(submitTime1));
+        feedback.setReplyTime(new Date());
+        systemService.updateFeedbackByUsernameOrPhone(feedback);
+        String msg = "回复成功";
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("msg", msg);
+        response.getWriter().write(jsonObject.toString());
     }
 }

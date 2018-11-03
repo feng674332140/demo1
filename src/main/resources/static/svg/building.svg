@@ -1,0 +1,21 @@
+<svg width="480" height="300" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+            <g>
+                <title>Layer 1</title>
+                <polygon fill="rgba(94,193,240,1)" stroke="rgb(155,155,155)" stroke-width="5" fill-opacity="0.1" stroke-opacity="0.9" points="106,16 106,96 226,96 226,16 " class="svg_item" id="element0"/>
+                <polygon fill="rgba(94,193,240,1)" stroke="rgb(155,155,155)" stroke-width="5" fill-opacity="0.1" stroke-opacity="0.9" points="226,16 226,96 346,96 346,16 " class="svg_item" id="element1"/>
+                <polygon fill="rgba(94,193,240,1)" stroke="rgb(155,155,155)" stroke-width="5" fill-opacity="0.1" stroke-opacity="0.9" points="106,96 106,176 226,176 226,96 " class="svg_item" id="element2"/>
+                <polygon fill="rgba(94,193,240,1)" stroke="rgb(155,155,155)" stroke-width="5" fill-opacity="0.1" stroke-opacity="0.9" points="346,16 346,96 466,96 466,16 " class="svg_item" id="element3"/>
+                <polygon fill="rgba(94,193,240,1)" stroke="rgb(155,155,155)" stroke-width="5" fill-opacity="0.1" stroke-opacity="0.9" points="346,96 346,176 466,176 466,96 " class="svg_item" id="element4"/>
+                <text id="svg_1" fill="black" y="148" x="131" font-family="LiSu " font-size="30" class="element2">1-101</text>
+                <text id="svg_2" fill="black" y="68" x="131" font-family="LiSu " font-size="30" class="element0">1-201</text>
+                <text id="svg_3" fill="black" y="68" x="251" font-family="LiSu " font-size="30" class="element1">1-202</text>
+                <text id="svg_4" fill="black" y="148" x="371" font-family="LiSu " font-size="30" class="element4">2-102</text>
+                <text id="svg_5" fill="black" y="68" x="371" font-family="LiSu " font-size="30" class="element3">2-202</text>
+                <text id="svg_6" fill="black" y="67" x="13" font-family="LiSu " font-size="30" class="floor_num">2 楼</text>
+                <text id="svg_7" fill="black" y="147" x="13" font-family="LiSu " font-size="30" class="floor_num">1 楼</text>
+                <path id="svg_8" fill="black" stroke-width="2" d="m123,195l220,0l-220,0z"/>
+                <text id="svg_9" fill="black" y="253" x="117" font-family="LiSu " font-size="45" class="floor_num">1 单元</text>
+                <path id="svg_10" fill="white" stroke="red" stroke-width="2" d="m363,195l100,0l-100,0z"/>
+                <text id="svg_11" fill="black" y="255" x="311" font-family="LiSu " font-size="45" class="floor_num">2 单元</text>
+            </g>
+        </svg>

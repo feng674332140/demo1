@@ -1,5 +1,6 @@
 package com.yzt.zhmp.service.impl;
 
+import com.yzt.zhmp.beans.Cbuilding;
 import com.yzt.zhmp.beans.Feedback;
 import com.yzt.zhmp.beans.System;
 import com.yzt.zhmp.dao.SystemDao;
@@ -63,5 +64,20 @@ public class SystemServiceImpl implements SystemService {
     @Override
     public List<Feedback> selectAllFeedback() {
         return systemDao.selectAllFeedback();
+    }
+
+    @Override
+    public void updateFeedbackByUsernameOrPhone(Feedback feedback) {
+        systemDao.updateFeedbackByUsernameOrPhone(feedback);
+    }
+
+    @Override
+    public Feedback findOnlyFeedback(Feedback feedback) {
+        return systemDao.findOnlyFeedback(feedback);
+    }
+
+    @Override
+    public Cbuilding selectCBuilding(String s) {
+        return systemDao.selectCBuilding(s);
     }
 }

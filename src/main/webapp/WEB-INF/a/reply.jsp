@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%
     request.setCharacterEncoding("UTF-8");
@@ -43,14 +44,11 @@
         }
 
         #input {
-            /*width: 250px;*/
             height: 25px;
             border: 0;
             background-color: white;
         }
-        #description{
-            width: 100%;
-        }
+
     </style>
 </head>
 <body ontouchstart>
@@ -63,85 +61,100 @@
         <div class="col-xs-3 text-center heig">
         </div>
     </div>
+    <input type="hidden" id="submitTime" value="<fmt:formatDate value="${existFeedback.submitTime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
     <div class="page__bd page__bd_spacing">
         <br>
         <div class="weui-form-preview">
             <div class="weui-form-preview__hd">
                 <div class="weui-form-preview__item">
                     <label class="weui-form-preview__label">门牌号</label>
-                    <em class="weui-form-preview__value" id="houseNumber">丹溪路37号</em>
+                    <em class="weui-form-preview__value" id="houseNumber">${existFeedback.houseNumber}</em>
+                </div>
+            </div>
+            <div class="weui-form-preview__bd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">用户名</label>
+                    <span class="weui-form-preview__value" id="username">${existFeedback.username}</span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">电话</label>
+                    <span class="weui-form-preview__value" id="phoneNumber">${existFeedback.phoneNumber}</span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">问题描述</label>
+                    <span class="weui-form-preview__value" style="text-align: left" id="description">${existFeedback.description}</span>
                 </div>
             </div>
             <div class="weui-form-preview__bd">
                 <div class="weui-form-preview__item">
                     <label class="weui-form-preview__label" style="text-align: center">回复内容</label>
                 </div>
-                <textarea class="wishContent" id="reply" rows="10" cols="39" style="resize:none;color: #333" maxlength="400"
-                          placeholder="请输入反馈信息(400字以内)" oninput="checkDescription()"></textarea>
+                <textarea class="wishContent" id="reply" rows="10" cols="39" style="resize:none;width: 100%"
+                          maxlength="400" placeholder="请输入反馈信息(400字以内)" oninput="checkDescription()">${existFeedback.reply}</textarea>
                 <span id="wordsNum">还可以输入400字</span>
+                <a class="btn btn-success btn-block btn-lg" href="javascript:" onclick="submitForm()">提交</a>
             </div>
-
-                <a class="btn btn-success btn-block btn-lg" href="javascript:"
-                   onclick="submitForm()">提交</a>
-
         </div>
-        <br>
-        <br><br><br><br><br><br>
-    </div>
-
-    <br><br><br><br>
-</div>
-<%--提示层--%>
-<div id="box">
-    <div class="con">
-        <p id="txt">${error}</p>
-        <button onclick="ifhide()" class="but">知道了</button>
     </div>
 </div>
-<script>
-</script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $(".weui-form-preview__item").css({"color": "#333"});
-        $(".weui-form-preview__label").css({"color": "#333"});
+    <%--提示层--%>
+    <div id="box">
+        <div class="con">
+            <p id="txt">${error}</p>
+            <button onclick="ifhide()" class="but">知道了</button>
+        </div>
+    </div>
+    <script>
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".weui-form-preview__item").css({"color": "#333"});
+            $(".weui-form-preview__label").css({"color": "#333"});
 
-    })
-
-    function checkDescription(){
-        var description = $("#description").val();
-        var dLength=description.length;
-        if (dLength<400) {
-            var i=400-dLength;
-            $("#wordsNum").html("还可以输入"+i+"字")
-        }else{
-            $("#txt").text("问题描述不能超过400字");
-            $("#box").show(500);
-        }
-
-
-    }
-    function submitForm() {
-        var reply = $("#reply").val();
-        if ($.trim(reply).length==0){
-            $("#txt").text("问题描述不能为空");
-            $("#box").show(500);
-            return;
-        }
-
-        var data={
-            "reply":reply,
-        }
-        var url="${pageContext.request.contextPath}/toReply"
-        $.post(url,data,function (data) {
-            var data1=eval("("+data+")");
-            //alert(data1.msg);
-            $("#box").show(500)
-            $("#txt").text(data1.msg)
         })
-    }
-    function ifhide() {
-        $("#box").hide(500)
-    }
-</script>
+
+        function checkDescription() {
+            var description = $("#description").val();
+            var dLength = description.length;
+            if (dLength < 400) {
+                var i = 400 - dLength;
+                $("#wordsNum").html("还可以输入" + i + "字")
+            } else {
+                $("#txt").text("问题描述不能超过400字");
+                $("#box").show(500);
+            }
+
+
+        }
+
+        function submitForm() {
+            var submitTime = $("#submitTime").val();
+            var reply = $("#reply").val();
+            var username = $("#username").html();
+            var phoneNumber = $("#phoneNumber").html();
+            if ($.trim(reply).length == 0) {
+                $("#txt").text("问题描述不能为空");
+                $("#box").show(500);
+                return;
+            }
+
+          var data = {
+                "username":username,
+                "submitTime1":submitTime,
+                "phoneNumber":phoneNumber,
+                "reply": reply,
+            }
+            var url = "${pageContext.request.contextPath}/reply"
+            $.post(url, data, function (data) {
+                var data1 = eval("(" + data + ")");
+                $("#box").show(500)
+                $("#txt").text(data1.msg)
+            })
+        }
+
+        function ifhide() {
+            $("#box").hide(500)
+        }
+    </script>
 </body>
 </html>

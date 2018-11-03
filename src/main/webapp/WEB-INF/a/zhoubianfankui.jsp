@@ -40,12 +40,11 @@
             overflow: hidden;
             line-height: 20px;
         }
-
-        #input {
-            /*width: 250px;*/
-            height: 25px;
-            border: 0;
-            background-color: white;
+        .fold{
+            max-width: 20em;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis; /*超出部分用...代替*/
         }
     </style>
 </head>
@@ -61,62 +60,72 @@
     </div>
     <%--周边反馈--%>
     <c:if test="${empty existUser1}">
-        <div class="weui-form-preview__ft">
-            <a class="weui-form-preview__btn weui-form-preview__btn_primary" style="font-size: 18px"
-               href="addFeedbackPage">添加反馈信息</a>
-        </div>
+    <div class="weui-form-preview__ft">
+        <a class="weui-form-preview__btn weui-form-preview__btn_primary" style="font-size: 18px"
+           href="addFeedbackPage">添加反馈信息</a>
+    </div>
     </c:if>
 
     <c:if test="${not empty existUser1}">
     <div class="page__bd page__bd_spacing">
-        <c:forEach items="${feedbacks}" var="feedback">
-            <br>
+        <c:forEach items="${feedbacks}" var="feedback" varStatus="s">
             <div class="weui-form-preview">
                 <div class="weui-form-preview__hd">
                     <div class="weui-form-preview__item">
                         <label class="weui-form-preview__label">门牌号</label>
-                        <em class="weui-form-preview__value">${feedback.hoursenumber}</em>
+                        <em class="weui-form-preview__value" id="houseNumber${s.index}">${feedback.houseNumber}</em>
                     </div>
                 </div>
                 <div class="weui-form-preview__bd">
                     <div class="weui-form-preview__item">
                         <label class="weui-form-preview__label">用户名</label>
-                        <span class="weui-form-preview__value">${feedback.username}</span>
+                        <span class="weui-form-preview__value" id="username${s.index}">${feedback.username}</span>
                     </div>
                     <div class="weui-form-preview__item">
                         <label class="weui-form-preview__label">电话</label>
-                        <span class="weui-form-preview__value">${feedback.phoneNumber}</span>
+                        <span class="weui-form-preview__value" id="phoneNumber${s.index}">${feedback.phoneNumber}</span>
                     </div>
                     <div class="weui-form-preview__item">
                         <label class="weui-form-preview__label">问题描述</label>
-                        <span class="weui-form-preview__value">${feedback.description}</span>
+                        <span class="weui-form-preview__value fold" id="description${s.index}">${feedback.description}</span>
                     </div>
                 </div>
                 <div class="weui-form-preview__ft">
-                    <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="Reply">回复</a>
+                    <a class="weui-form-preview__btn weui-form-preview__btn_primary"
+                       onclick="toReply(${s.index})">查看</a>
                 </div>
             </div>
+
             <br>
         </c:forEach>
     </div>
-    <br><br><br><br><br><br>
-</div>
-</c:if>
-<br><br><br><br>
-</div>
+    </c:if>
+    <br><br>
+    <form id="myForm" action="${pageContext.request.contextPath}/toReply" method="post">
+        <%--增加隐藏域实现post跳转到回复反馈页面--%>
+        <input type="hidden" name="houseNumber"/>
+        <input type="hidden" name="username"/>
+        <input type="hidden" name="phoneNumber"/>
+        <input type="hidden" name="description"/>
+    </form>
+</body>
 
 <script type="text/javascript">
-    var basepath = "/static";
-    /**
-     * 开始自动加载find
-     */
-    $(document).ready(function () {
-        //显示/隐藏子节点
-        showInnerContent();
-        //搜索栏
-        searchBarAction();
-        showqrcode();
-    })
+    function toReply(index) {
+        var houseNumber = $("#houseNumber" + index).text();
+        $("input[name='houseNumber']").val(houseNumber);
+
+        var username = $("#username" + index).html();
+        $("input[name='username']").val(username);
+
+        var phoneNumber = $("#phoneNumber" + index).html();
+        $("input[name='phoneNumber']").val(phoneNumber);
+
+        var description = $("#description" + index).html();
+        $("input[name='description']").val(description);
+
+        $("#myForm").submit();
+    }
 </script>
-</body>
+
 </html>

@@ -194,8 +194,8 @@
     }
 
     function msgbox(n) {
+        //点击按钮打开/关闭 对话框,点击添加n=0 提交后n=1
         document.getElementById('inputbox').style.display = n ? 'block' : 'none';
-        /* 点击按钮打开/关闭 对话框 */
         if (n == 0) {
             document.getElementById('username').val("");
         }

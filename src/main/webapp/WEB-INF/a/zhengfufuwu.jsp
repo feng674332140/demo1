@@ -62,7 +62,7 @@
                 <div class="col-xs-6 text-center heig"><b>政府服务</b></div>
                 <div class="col-xs-3 text-center heig">
                     <c:if test="${not empty existUser1 }">
-                        <a href="pananHouTai">
+                        <a href="pananHouTai" style="text-decoration: none">
                             后台管理
                         </a>
                     </c:if>
@@ -82,7 +82,7 @@
                             <c:if test="${policeSystem.ifdept=='1'}">
                                 <c:if test="${policeSystem.ifvalid=='1'&& policeSystem.name==deptName}">
                                     <a href="${pageContext.request.contextPath}/skip?url=${policeSystem.url}&name=${policeSystem.showname}"
-                                       class="weui-grid">
+                                       class="weui-grid" style="text-decoration: none">
                                         <div class="weui-grid__icon">
                                             <img src="${policeSystem.icon}" alt="">
                                         </div>

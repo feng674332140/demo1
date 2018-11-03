@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -65,65 +66,63 @@ public class UserLoginController {
      * @param session
      * @return
      */
-    @RequestMapping("/usersLogin")
-    public String usersLogin(String name, String password, HttpSession session, Model model, HttpServletRequest request) {
-        User user = new User();
-        user.setPassword(MD5Utils.md5(password));
-        user.setName(name);
-        User existUser1 = userLoginService.login(user);
-        if (existUser1 == null) {
-            model.addAttribute("error", "账号或密码错误");
-            return "WEB-INF/login/login";
-        }
-        session.setAttribute("existUser1", existUser1);
-        //查看角色权限字段
-        Integer usrId = existUser1.getUsrid();
-        List<String> fileName = userLoginService.rolelogin(usrId);
-        //查看此用户是否有从此建筑权限
-        List<String> buid = userLoginService.selectBuidbyUserId(usrId);
-        //声明字段  为1时用户和建筑有关联
-        int bfid = 0;
-        for (String s : buid) {
-            if ("17".equals(s)) {
-                bfid = 1;
+    @RequestMapping(value = "/usersLogin",method = RequestMethod.POST)
+    public String usersLogin(String name, String password, HttpSession session, Model model) {
+        if (session.getAttribute("existUser1") == null) {
+            User user = new User();
+            user.setPassword(MD5Utils.md5(password));
+            user.setName(name);
+            User existUser1 = userLoginService.login(user);
+            if (existUser1 == null) {
+                model.addAttribute("error", "账号或密码错误");
+                return "WEB-INF/login/login";
             }
+            session.setAttribute("existUser1", existUser1);
+            //查看角色权限字段
+            Integer usrId = existUser1.getUsrid();
+            List<String> fileName = userLoginService.rolelogin(usrId);
+            //查看此用户是否有从此建筑权限
+            List<String> buid = userLoginService.selectBuidbyUserId(usrId);
+            //声明字段  为1时用户和建筑有关联
+            int bfid = 0;
+            for (String s : buid) {
+                if ("17".equals(s)) {
+                    bfid = 1;
+                }
+            }
+            session.setAttribute("bfid", bfid);
+
+            //暂未用到  查看用户角色id
+            List<String> fildId = userLoginService.selectFileIdByUserid(usrId);
+            session.setAttribute("fildId", fildId);
+
+            //查找用户对应的部门id
+            Integer deptid = userLoginService.selectByUserid(usrId);
+            if (deptid == null) {
+                model.addAttribute("error", "请使用部门账号登录");
+                return "WEB-INF/login/login";
+            }
+            String deptName;
+            switch (deptid) {
+                case 111:
+                    deptName = "民政";
+                    break;
+                case 222:
+                    deptName = "公安";
+                    break;
+                case 333:
+                    deptName = "教育";
+                    break;
+                default:
+                    deptName = "";
+                    break;
+            }
+            model.addAttribute("deptName", deptName);
+            model.addAttribute("deptid", deptid);
+            return "WEB-INF/a/newsystem";
+        } else {
+            return "WEB-INF/a/newsystem";
         }
-        session.setAttribute("bfid", bfid);
-
-        //暂未用到  查看用户角色id
-        List<String> fildId = userLoginService.selectFileIdByUserid(usrId);
-        session.setAttribute("fildId", fildId);
-
-        //查找用户对应的部门id
-        Integer deptid = userLoginService.selectByUserid(usrId);
-        if (deptid == null) {
-            model.addAttribute("error", "请使用部门账号登录");
-            return "WEB-INF/login/login";
-        }
-        String deptName;
-        switch (deptid) {
-            case 111:
-                deptName = "民政";
-                break;
-            case 222:
-                deptName = "公安";
-                break;
-            case 333:
-                deptName = "教育";
-                break;
-            default:
-                deptName = "";
-                break;
-        }
-        model.addAttribute("deptName", deptName);
-        model.addAttribute("deptid", deptid);
-
-        //显示农户信息
-        //Cbuilding cbuilding = collectionSystemService.selectBuildingByid(17);
-        //model.addAttribute("building", cbuilding);
-        session.setAttribute("existUser1", existUser1);
-
-        return "WEB-INF/a/newsystem";
     }
 
     @RequestMapping("/loginOut")

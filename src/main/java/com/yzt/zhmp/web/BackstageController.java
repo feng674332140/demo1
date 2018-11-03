@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -64,11 +65,11 @@ public class BackstageController {
      * @param request
      * @return
      */
-    @RequestMapping("/control/login")
+    @RequestMapping(value = "/control/login",method = RequestMethod.POST)
     public String login(String name, String password,
                         Model model, HttpServletRequest request) {
         //登录失败后回显用户名
-        model.addAttribute("name",name);
+        model.addAttribute("name", name);
         request.getSession().invalidate();
         String discode = "";
         User existUser = null;
@@ -191,12 +192,12 @@ public class BackstageController {
         String disCode = backstageService.findDisCode(usrid);
         List<DisUserAddDisName> disUsers = collectionSystemService.selectUserByuserid(usrid);
         String temp;
-        for (int i = 0; i <disUsers.size() ; i++) {
+        for (int i = 0; i < disUsers.size(); i++) {
             String ifValid = disUsers.get(i).getIfValid();
-            if ("1".equals(ifValid)){
-                temp="有效";
-            }else{
-                temp="无效";
+            if ("1".equals(ifValid)) {
+                temp = "有效";
+            } else {
+                temp = "无效";
             }
             disUsers.get(i).setIfValidValue(temp);
         }
@@ -246,7 +247,7 @@ public class BackstageController {
                     Integer priviusrid = existUser.getUsrid();
 
                     //保存用户
-                    if (username != null && username != "" && password != null && password != "") {
+                    if (null != username && "" != username && null != password && "" != password) {
                         User user = new User();
                         user.setName(username);
                         user.setPassword(MD5Utils.md5(password));
@@ -288,22 +289,22 @@ public class BackstageController {
                             backstageService.saveDisUser(disUser);
                         }
 
-                        model.addAttribute("status","用户添加成功");
+                        model.addAttribute("status", "用户添加成功");
                         return "control/form";
                     } else {
-                        model.addAttribute("status","用户名或密码不能为空");
+                        model.addAttribute("status", "用户名或密码不能为空");
                         return "control/form";
                     }
                 } else {
-                    model.addAttribute("status","账户已失效，请重新登陆");
+                    model.addAttribute("status", "账户已失效，请重新登陆");
                     return "control/form";
                 }
             } else {
-                model.addAttribute("status","用户名已存在");
+                model.addAttribute("status", "用户名已存在");
                 return "control/form";
             }
         } else {
-            model.addAttribute("status","用户名密码不能为空");
+            model.addAttribute("status", "用户名密码不能为空");
             return "control/form";
         }
     }

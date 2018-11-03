@@ -1,6 +1,7 @@
 package com.yzt.zhmp.dao;
 
 
+import com.yzt.zhmp.beans.Cbuilding;
 import com.yzt.zhmp.beans.Feedback;
 import com.yzt.zhmp.beans.System;
 import org.apache.ibatis.annotations.*;
@@ -80,24 +81,51 @@ public interface SystemDao {
      *
      * @param feedback
      */
-    @Insert("INSERT INTO d_feedback (username,phonenumber,deptid,description,submittime) " +
-            "VALUES (#{username},#{phoneNumber},#{deptid},#{description},#{submittime})")
+    @Insert("INSERT INTO d_feedback (username,houseNumber,phoneNumber,deptId,description,submitTime) " +
+            "VALUES (#{username},#{houseNumber},#{phoneNumber},#{deptId},#{description},#{submitTime})")
     void addFeedback(Feedback feedback);
 
     /**
      * 查询该用户或手机号有没有重复提交过
+     *
      * @param feedback
      * @return
      */
-    @Select("SELECT username,phonenumber,max(submittime) submittime FROM d_feedback WHERE username=#{username} OR phonenumber=#{phoneNumber}")
+    @Select("SELECT username,phoneNumber,max(submitTime) submitTime FROM d_feedback WHERE username=#{username} OR phoneNumber=#{phoneNumber}")
     Feedback findFeedbackByUsernameOrPhone(Feedback feedback);
 
     /**
      * 查询反馈细信息
+     *
      * @return
      */
     @Select("SELECT * FROM d_feedback")
     List<Feedback> selectAllFeedback();
+
+    /**
+     *
+     * @param feedback
+     */
+    @Update("update d_feedback set reply=#{reply},replyTime=#{replyTime} where username=#{username} and phoneNumber=#{phoneNumber} and " +
+            "submitTime=#{submitTime}")
+    void updateFeedbackByUsernameOrPhone(Feedback feedback);
+
+
+    /**
+     * 查询满足条件的唯一一条反馈数据
+     * @param feedback
+     * @return
+     */
+    @Select("select * from d_feedback where houseNumber=#{houseNumber} and username=#{username} and phoneNumber=#{phoneNumber} and description=#{description}")
+    Feedback findOnlyFeedback(Feedback feedback);
+
+    /**
+     * 查询首页显示的房屋信息
+     * @param s
+     * @return
+     */
+    @Select("SELECT * FROM c_building where disCode=#{s}")
+    Cbuilding selectCBuilding(String s);
 
     class OrgProvider {
         //开启功能

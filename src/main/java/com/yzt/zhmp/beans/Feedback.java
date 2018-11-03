@@ -17,12 +17,12 @@ import java.util.Date;
 @ToString
 public class Feedback {
     private Integer id;
-    private String hoursenumber;
+    private String houseNumber;
     private String username;
     private String phoneNumber;
-    private Integer deptid;
+    private Integer deptId;
     private String description;
-    private Date submittime;
+    private Date submitTime;
     private String reply;
-    private Date replytime;
+    private Date replyTime;
 }
