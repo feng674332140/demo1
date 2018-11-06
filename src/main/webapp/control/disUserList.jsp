@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>table模块快速使用</title>
+    <title>智慧门牌</title>
     <link rel="stylesheet" href="../control/plugins/layui/css/layui.css" media="all">
 </head>
 
@@ -15,11 +15,11 @@
        lay-filter="test" id="test">
     <thead>
     <tr>
-        <th lay-data="{field:'usrID', width:80, sort: true}">用户ID</th>
+        <th lay-data="{field:'rowNo', width:80, sort: true}">序号</th>
+        <th lay-data="{field:'username', width:110}">用户名</th>
         <th lay-data="{field:'name', width:100}">区域</th>
         <th lay-data="{field:'priviligeTime', width:180}">账号创建时间</th>
-        <th lay-data="{field:'priviUsrID', width:110}">上级用户ID</th>
-        <th lay-data="{field:'ifValidValue', width:120}">账号是否有效</th>
+        <th lay-data="{field:'ifValid', width:120}">账号是否有效</th>
         <th lay-data="{field:'memo', width:120}">所属等级</th>
     </tr>
 

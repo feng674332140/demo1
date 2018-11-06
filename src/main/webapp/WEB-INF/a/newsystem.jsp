@@ -25,6 +25,7 @@
     <script type="text/javascript" src="../static/js/common/Sortable.min.js"></script>
     <script type="text/javascript" src="../static/js/service/bigservice.js"></script>
     <script type="text/javascript" src="../static/js/navigation/navigation.js"></script>
+    <script type="text/javascript" src="http://d3js.org/d3.v3.js"></script>
 
     <style type="text/css">
         body, html, #container {
@@ -52,6 +53,10 @@
         @font-face {
             font-family: 'MyNewFont';   /*字体名称*/
             src: url('control/plugins/layui/font/STXINGKA.TTF');   /*字体源文件*/
+        }
+
+        .svg-container {
+
         }
 
     </style>
@@ -140,39 +145,56 @@
             </div>
         </div>
         <a href="informationError" style="float:right;color: red;font-size: 13px;text-decoration: none">信息报错&nbsp;&nbsp;&nbsp;</a>
-        <%--嵌入地址信息页面--%>
-        <%--<iframe name="myframe" id="myframe" src="http://119.23.206.104/zhmp/control/login?name=panan&password=111111"--%>
-        <%--?srcid=[YOUR_FILE'S_ID_HERE]&pid=explorer&efh=false&a=v&chrome=false&embedded=true--%><%--拼接参数解决部分页面无法嵌入的问题--%>
-        <%--        width="100%" height="100%" frameborder="0"></iframe>--%>
-        <%--<embed src="../static/硚口区.svg" width="300" height="100" type="image/svg+xml" pluginspage="http://www.adobe.com/svg/viewer/install/" />--%>
-        <p style="width: 100%"><?xml version="1.0" standalone="no"?>
-            <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
-            "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
         <div class="svg-container">
-        <svg width="480" height="300" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-            <g>
-                <title>Layer 1</title>
-                <polygon fill="rgba(94,193,240,1)" stroke="rgb(155,155,155)" stroke-width="5" fill-opacity="0.1" stroke-opacity="0.9" points="106,16 106,96 226,96 226,16 " class="svg_item" id="element0"/>
-                <polygon fill="rgba(94,193,240,1)" stroke="rgb(155,155,155)" stroke-width="5" fill-opacity="0.1" stroke-opacity="0.9" points="226,16 226,96 346,96 346,16 " class="svg_item" id="element1"/>
-                <polygon fill="rgba(94,193,240,1)" stroke="rgb(155,155,155)" stroke-width="5" fill-opacity="0.1" stroke-opacity="0.9" points="106,96 106,176 226,176 226,96 " class="svg_item" id="element2"/>
-                <polygon fill="rgba(94,193,240,1)" stroke="rgb(155,155,155)" stroke-width="5" fill-opacity="0.1" stroke-opacity="0.9" points="346,16 346,96 466,96 466,16 " class="svg_item" id="element3"/>
-                <polygon fill="rgba(94,193,240,1)" stroke="rgb(155,155,155)" stroke-width="5" fill-opacity="0.1" stroke-opacity="0.9" points="346,96 346,176 466,176 466,96 " class="svg_item" id="element4"/>
-                <text id="svg_1" fill="black" y="148" x="131" font-family="LiSu " font-size="30" class="element2">1-101</text>
-                <text id="svg_2" fill="black" y="68" x="131" font-family="LiSu " font-size="30" class="element0">1-201</text>
-                <text id="svg_3" fill="black" y="68" x="251" font-family="LiSu " font-size="30" class="element1">1-202</text>
-                <text id="svg_4" fill="black" y="148" x="371" font-family="LiSu " font-size="30" class="element4">2-102</text>
-                <text id="svg_5" fill="black" y="68" x="371" font-family="LiSu " font-size="30" class="element3">2-202</text>
-                <text id="svg_6" fill="black" y="67" x="13" font-family="LiSu " font-size="30" class="floor_num">2 楼</text>
-                <text id="svg_7" fill="black" y="147" x="13" font-family="LiSu " font-size="30" class="floor_num">1 楼</text>
-                <path id="svg_8" fill="black" stroke-width="2" d="m123,195l220,0l-220,0z"/>
-                <text id="svg_9" fill="black" y="253" x="117" font-family="LiSu " font-size="45" class="floor_num">1 单元</text>
-                <path id="svg_10" fill="white" stroke="red" stroke-width="2" d="m363,195l100,0l-100,0z"/>
-                <text id="svg_11" fill="black" y="255" x="311" font-family="LiSu " font-size="45" class="floor_num">2 单元</text>
-            </g>
-        </svg>
+            <svg id="svg" <%--width="100%" height="100%"--%> viewBox="0 0 560 300"   xmlns="http://www.w3.org/2000/svg">
+                <g id="svgPanel" onclick="add()">
+                    <title>Layer 1</title>
+                    <polygon fill="rgba(94,193,240,1)" stroke="rgb(155,155,155)" stroke-width="5" fill-opacity="0.1"
+                             stroke-opacity="0.9" points="106,16 106,96 226,96 226,16 " class="svg_item" id="element0"/>
+                    <polygon fill="rgba(94,193,240,1)" stroke="rgb(155,155,155)" stroke-width="5" fill-opacity="0.1"
+                             stroke-opacity="0.9" points="226,16 226,96 346,96 346,16 " class="svg_item" id="element1"/>
+                    <polygon fill="rgba(94,193,240,1)" stroke="rgb(155,155,155)" stroke-width="5" fill-opacity="0.1"
+                             stroke-opacity="0.9" points="106,96 106,176 226,176 226,96 " class="svg_item"
+                             id="element2"/>
+                    <polygon fill="rgba(94,193,240,1)" stroke="rgb(155,155,155)" stroke-width="5" fill-opacity="0.1"
+                             stroke-opacity="0.9" points="346,16 346,96 466,96 466,16 " class="svg_item" id="element3"/>
+                    <polygon fill="rgba(94,193,240,1)" stroke="rgb(155,155,155)" stroke-width="5" fill-opacity="0.1"
+                             stroke-opacity="0.9" points="346,96 346,176 466,176 466,96 " class="svg_item"
+                             id="element4"/>
+                    <text id="svg_1" fill="black" y="148" x="131" font-family="LiSu " font-size="30" class="element2">
+                        1-101
+                    </text>
+                    <text id="svg_2" fill="black" y="68" x="131" font-family="LiSu " font-size="30" class="element0">
+                        1-201
+                    </text>
+                    <text id="svg_3" fill="black" y="68" x="251" font-family="LiSu " font-size="30" class="element1">
+                        1-202
+                    </text>
+                    <text id="svg_4" fill="black" y="148" x="371" font-family="LiSu " font-size="30" class="element4">
+                        2-102
+                    </text>
+                    <text id="svg_5" fill="black" y="68" x="371" font-family="LiSu " font-size="30" class="element3">
+                        2-202
+                    </text>
+                    <text id="svg_6" fill="black" y="67" x="13" font-family="LiSu " font-size="30" class="floor_num">2
+                        楼
+                    </text>
+                    <text id="svg_7" fill="black" y="147" x="13" font-family="LiSu " font-size="30" class="floor_num">1
+                        楼
+                    </text>
+                    <path id="svg_8" fill="black" stroke-width="2" d="m123,195l220,0l-220,0z"/>
+                    <text id="svg_9" fill="black" y="253" x="117" font-family="LiSu " font-size="45" class="floor_num">1
+                        单元
+                    </text>
+                    <path id="svg_10" fill="white" stroke="red" stroke-width="2" d="m363,195l100,0l-100,0z"/>
+                    <text id="svg_11" fill="black" y="255" x="311" font-family="LiSu " font-size="45" class="floor_num">
+                        2 单元
+                    </text>
+                </g>
+            </svg>
         </div>
-        "
-        </p>
+
         <br>
         <c:if test="${empty existUser1}">
             <a href="login" class="btn btn-success btn-block btn-lg">用户登录</a>
@@ -254,11 +276,9 @@
     var point = new BMap.Point(dataX, dataY);
     // 创建点坐标
     map.centerAndZoom(point, 16);
-
     var marker = new BMap.Marker(point);        // 创建标注
     map.addOverlay(marker);
-
-
+    
 </script>
 
 </body>

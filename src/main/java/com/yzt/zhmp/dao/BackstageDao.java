@@ -52,10 +52,18 @@ public interface BackstageDao {
 
     /**
      * 查询所有的部门
+     *
      * @return
      */
     @Select("select * from d_department")
     List<Department> selectAllDepartment();
+
+    /**
+     * 修改用户密码
+     * @param user
+     */
+    @Update("UPDATE d_user SET password = #{password} WHERE usrID = #{usrid};")
+    void updatePassword(User user);
 
 
     class SelectAllCounty {
@@ -154,11 +162,10 @@ public interface BackstageDao {
      *
      * @return
      */
-    @Select("select (\n" +
-            "select t2.name from d_department t2 where t1.deptID=t2.deptID\n" +
-            ") deptname,t1.usrID,t1.priviligeTime,t1.priviUsrID,\n" +
-            "case when t1.ifValid=1 then '有效'\n" +
-            "else  '无效' end ifValid from d_deptUser t1 where priviUsrID=#{usrid}")
+    @Select("SELECT @rowNum := @rowNum + 1 AS rowNo,t3.NAME username, " +
+            "( SELECT t2.NAME FROM d_department t2 WHERE t1.deptID = t2.deptID ) deptname,t1.priviligeTime," +
+            "CASE t1.ifValid WHEN 1 THEN '有效' ELSE '无效' END ifValid FROM d_deptUser t1 ,d_user t3," +
+            "( SELECT @rowNum := 0 ) b WHERE t1.usrID = t3.usrID AND priviUsrID = #{usrid};")
     List<DeptUser> selectAllDeptUser(Integer usrid);
 
     /**

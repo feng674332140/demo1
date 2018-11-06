@@ -11,11 +11,11 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DisUserAddDisName {
+    private Integer rowNo;
     private String name;
     private int usrID;
-    private int priviUsrID;
+    private String username;
     private String ifValid;
-    private String ifValidValue;
     private String memo;
     private String priviligeTime;
 

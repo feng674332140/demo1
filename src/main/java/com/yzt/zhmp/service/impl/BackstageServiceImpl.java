@@ -46,7 +46,7 @@ public class BackstageServiceImpl implements BackstageService {
 
     @Override
     public List<DisUser> selectAllProvince(String str) {
-        return backstageDao.selectAllProvince(str) ;
+        return backstageDao.selectAllProvince(str);
     }
 
     @Override
@@ -112,5 +112,10 @@ public class BackstageServiceImpl implements BackstageService {
     @Override
     public List<Department> selectAllDepartment() {
         return backstageDao.selectAllDepartment();
+    }
+
+    @Override
+    public void updatePassword(User user) {
+        backstageDao.updatePassword(user);
     }
 }

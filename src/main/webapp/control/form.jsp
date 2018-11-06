@@ -5,9 +5,7 @@
 
 <html>
 <head>
-    <title>
-        添加
-    </title>
+    <title>智慧门牌</title>
     <link rel="stylesheet" href="./plugins/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="./plugins/layui/css/check.css" media="all">
     <style>

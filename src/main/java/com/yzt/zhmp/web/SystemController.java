@@ -269,30 +269,6 @@ public class SystemController {
     public void fangwuInfo(String discode, HttpServletResponse response) throws IOException {
         response.setContentType("text/json;charset=UTF-8");
         JSONObject json = new JSONObject();
-        /*Cbuilding cbuilding = systemService.selectCBuilding("33072710000212121");
-        String name = cbuilding.getName();
-        json.put("户主姓名", name);
-        int buID = cbuilding.getBuID();
-        String disCode = cbuilding.getDisCode();
-        String phoneNum = cbuilding.getPhoneNum();
-        String familyType = cbuilding.getFamilyType();
-        int population = cbuilding.getPopulation();
-        int roomNum = cbuilding.getRoomNum();
-        int floorNum = cbuilding.getFloorNum();
-        float landArea = cbuilding.getLandArea();
-        float buildArea = cbuilding.getBuildArea();
-        float yardArea = cbuilding.getYardArea();
-        int numberOfRoom = cbuilding.getNumberOfRoom();
-        int numberOfBed = cbuilding.getNumberOfBed();
-        int mealDigits = cbuilding.getMealDigits();
-        String feature = cbuilding.getFeature();
-        String busiType = cbuilding.getBusiType();
-        String memo = cbuilding.getMemo();
-        String ifOpen = cbuilding.getIfOpen();
-        String buildingYear = cbuilding.getBuildingYear();
-        String address = cbuilding.getAddress();*/
-
-
         json.put("联系电话", "13900000000");
         json.put("房主竣工日期", "1999");
         json.put("门牌编号", "00000000000");

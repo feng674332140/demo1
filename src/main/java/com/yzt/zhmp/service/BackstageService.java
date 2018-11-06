@@ -147,7 +147,15 @@ public interface BackstageService {
 
     /**
      * 查询所有的部门
+     *
      * @return
      */
     List<Department> selectAllDepartment();
+
+    /**
+     * 修改用户密码
+     *
+     * @param user
+     */
+    void updatePassword(User user);
 }

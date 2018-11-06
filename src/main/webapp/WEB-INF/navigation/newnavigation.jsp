@@ -156,7 +156,7 @@
             </li>
         </c:if>
 
-        <li id="bigService_li_3">
+       <%-- <li id="bigService_li_3">
         <div class="weui-flex js_category">
         <p class="weui-flex__item pressToDelete" id="bigService_3">旅游服务</p>
         <img class="glyphicon-move" src="../static/images/icon_nav_form.png" alt="">
@@ -183,10 +183,10 @@
         </a>
         </div>
         </div>
-        </li>
+        </li>--%>
         </ul>
         <br><br><br><br><br>
-        <a href="javascript:addBigService();" class="weui-btn weui-btn_primary">添加新大类服务</a>
+        <%--<a href="javascript:addBigService();" class="weui-btn weui-btn_primary">添加新大类服务</a>--%>
         <br>
         </div>
         </div>

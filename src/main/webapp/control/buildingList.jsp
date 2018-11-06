@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>table模块快速使用</title>
+    <title>智慧门牌</title>
     <link rel="stylesheet" href="../control/plugins/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="../control/plugins/layui/css/check.css" media="all">
     <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/jquery-1.10.2.min.js"></script>

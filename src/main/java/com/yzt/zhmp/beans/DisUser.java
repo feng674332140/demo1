@@ -16,8 +16,6 @@ public class DisUser extends DisUserKey{
 
     private String ifvalid;
 
-    private String ifvalidValue;
-
     private String memo;
 
 

@@ -20,10 +20,10 @@ public interface CollectionSystemDao {
      * @param usrID
      * @return
      */
-    @Select("SELECT t1.`name`,t2.usrID,t2.priviUsrID,t2.priviligeTime,t2.memo,t2.ifValid \n" +
-            "FROM d_district t1,d_disUser t2 \n" +
-            "WHERE t1.disCode=t2.disCode AND t2.priviUsrID=#{usrID};")
-    public List<DisUserAddDisName> selectUserByuserid(int usrID);
+    @Select("SELECT @rowNum:=@rowNum+1 as rowNo , t1.`name`,t2.usrID,t3.`name` username,t2.priviligeTime,t2.memo," +
+            "case when t2.ifValid=1 then '有效' else  '无效' end ifValid FROM d_district t1,d_disUser t2 ,d_user t3, " +
+            "(SELECT @rowNum:=0) b WHERE t1.disCode = t2.disCode AND t2.usrID=t3.usrID AND t2.priviUsrID  = #{usrID};")
+    List<DisUserAddDisName> selectUserByuserid(int usrID);
 
     /**
      * 根据登入的用户id查询所属地名
@@ -34,7 +34,7 @@ public interface CollectionSystemDao {
     @Select("SELECT t1.`name`\n" +
             "FROM d_district t1,d_disUser t2 \n" +
             "WHERE t1.disCode=t2.disCode AND t2.usrID=#{usrID};")
-    public String selectDisName(int usrID);
+    String selectDisName(int usrID);
 
     /**
      * 添加民众信息
@@ -43,7 +43,7 @@ public interface CollectionSystemDao {
      * @return
      */
     @InsertProvider(type = FarmerProvider.class, method = "addFarmerInfo")
-    public int addFarmerInfo(Cbuilding cbuilding);
+    int addFarmerInfo(Cbuilding cbuilding);
 
     /**
      * 查询民众信息
@@ -52,7 +52,7 @@ public interface CollectionSystemDao {
      * @return
      */
     @Select("SELECT * FROM c_building WHERE buID=#{buID}")
-    public Cbuilding selectCbuildingByid(int buID);
+    Cbuilding selectCbuildingByid(int buID);
 
     /**
      * 删除选中的农户信息
@@ -61,7 +61,7 @@ public interface CollectionSystemDao {
      * @return
      */
     @Delete("DELETE FROM c_building WHERE buID=#{buID}")
-    public int deleteCbuilidingByid(int buID);
+    int deleteCbuilidingByid(int buID);
 
     /**
      * 更新农户信息
@@ -70,7 +70,7 @@ public interface CollectionSystemDao {
      * @return
      */
     @UpdateProvider(type = FarmerProvider.class, method = "updateCbuidingByfamilyType")
-    public int updateCbuidingByfamilyType(Cbuilding cbuilding);
+    int updateCbuidingByfamilyType(Cbuilding cbuilding);
 
 
     /**
@@ -80,7 +80,7 @@ public interface CollectionSystemDao {
      * @return
      */
     @Select("SELECT * FROM c_building WHERE disCode=#{disCode}")
-    public List<Cbuilding> selectBuildingBycode(String disCode);
+    List<Cbuilding> selectBuildingBycode(String disCode);
 
     /**
      * 添加县区信息介绍
@@ -89,7 +89,7 @@ public interface CollectionSystemDao {
      * @return
      */
     @InsertProvider(type = FarmerProvider.class, method = "addCountyInfo")
-    public int addCountyInfo(Cdistrict cdistrict);
+    int addCountyInfo(Cdistrict cdistrict);
 
     /**
      * 查询行政区介绍
@@ -98,7 +98,7 @@ public interface CollectionSystemDao {
      * @return
      */
     @Select("SELECT * FROM c_district WHERE disCode=#{disCode}")
-    public Cdistrict selectCdistrict(String disCode);
+    Cdistrict selectCdistrict(String disCode);
 
     /**
      * 更新行政区介绍
@@ -107,7 +107,7 @@ public interface CollectionSystemDao {
      * @return
      */
     @UpdateProvider(type = FarmerProvider.class, method = "updateCountyInfo")
-    public int updateCdistrict(Cdistrict cdistrict);
+    int updateCdistrict(Cdistrict cdistrict);
 
 
     class FarmerProvider {

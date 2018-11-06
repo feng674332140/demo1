@@ -8,6 +8,11 @@ import lombok.ToString;
 @Getter
 @ToString
 public class DeptUser{
+
+    private Integer rowNo;
+
+    private String username;
+
     private Integer dptusrid;
 
     private Integer usrid;
