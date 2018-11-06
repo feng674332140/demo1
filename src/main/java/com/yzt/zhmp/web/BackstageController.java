@@ -73,104 +73,85 @@ public class BackstageController {
      */
     @RequestMapping("/control/login")
     public String login(String name, String password, String checkCode,
-                        Model model, HttpServletRequest request) {
-        model.addAttribute("name", name);
-        String sessionCheckCode = (String) request.getSession().getAttribute("checkCode");
-        if (!sessionCheckCode.equalsIgnoreCase(checkCode)) {
-            model.addAttribute("password", password);
-            model.addAttribute("error", "验证码错误!");
-            return "control/login01";
-        }
-        //登录失败后回显用户名
-
-        request.getSession().invalidate();
-        String discode = "";
-        User existUser = null;
-        existUser = (User) request.getSession().getAttribute("existUser");
+                        Model model, HttpServletRequest request, HttpSession session) {
+        String discode;
+        User existUser = (User) request.getSession().getAttribute("existUser");
         if (existUser == null) {
+            //回显用户名
+            model.addAttribute("name", name);
+            String sessionCheckCode = (String) session.getAttribute("checkCode");
+
+            if (!sessionCheckCode.equalsIgnoreCase(checkCode)) {
+                model.addAttribute("error", "验证码错误!");
+                return "control/login01";
+            }
+
             //判断用户存不存在
             User user = new User();
             user.setName(name);
-            if (password != null) {
-                user.setPassword(MD5Utils.md5(password));
-            }
+            user.setPassword(MD5Utils.md5(password));
             existUser = backstageService.login(user);
             //将用户信息存入session
             try {
                 model.addAttribute("existUser", existUser);
-                request.getSession().setAttribute("existUser", existUser);
-                request.getSession().setAttribute("usrid", existUser.getUsrid());
+                session.setAttribute("existUser", existUser);
+                session.setAttribute("usrid", existUser.getUsrid());
             } catch (Exception e) {
-                request.setAttribute("error", "账号或密码错误");
+                model.addAttribute("error", "账号或密码错误");
                 return "control/login01";
             }
-        }
-        if (existUser == null) {
-            request.setAttribute("error", "账号或密码错误");
-            return "control/login01";
         } else {
             Integer usrid = existUser.getUsrid();
             DisUser disUser = backstageService.selectDisUser(usrid);
             //查询对应的部门的名称,行政用户无对应部门
             Department department = backstageService.findDept(usrid);
             model.addAttribute("department", department);
-            request.getSession().setAttribute("department", department);
+            session.setAttribute("department", department);
             try {
                 discode = disUser.getDiscode();
                 //把discode存入session
-                request.getSession().setAttribute("discode", discode);
+                session.setAttribute("discode", discode);
             } catch (Exception e) {
-                request.setAttribute("error", "此账号没有权限登录");
+                model.addAttribute("error", "此账号没有权限登录");
                 return "control/login01";
             }
 
             //查询对应的区域名称
             String district = collectionSystemService.selectDisName(usrid);
             model.addAttribute("district", district);
-            request.getSession().setAttribute("district", district);
+            session.setAttribute("district", district);
 
             //显示可选择的部门
             List<Department> departments = backstageService.selectAllDept();
-            model.addAttribute("departments", departments);
-            request.getSession().setAttribute("departments", departments);
-            //如果是村级用户显示录入农户信息页面
+            session.setAttribute("departments", departments);
 
             //管理员
-            if (discode.equals("00000000000000000")) {
-                //代表管理员账号,查询所有省显示
-                String str = discode.substring(2, 6);
+            if (("00000000000000000").equals(discode)) {
                 List<District> districts = backstageService.selectAllArea(discode);
                 //代表是管理员账号,可以添加省级账号
                 model.addAttribute("mark", "省级");
-                model.addAttribute("districts", districts);
-                request.getSession().setAttribute("districts", districts);
+                session.setAttribute("districts", districts);
                 //省级账号
-            } else if (discode.substring(2, 6).equals("0000")) {
+            } else if (("0000").equals(discode.substring(2, 6))) {
                 model.addAttribute("mark", "市级");
                 List<District> districts = backstageService.selectAllArea(discode);
-                model.addAttribute("districts", districts);
-                request.getSession().setAttribute("districts", districts);
+                session.setAttribute("districts", districts);
                 //市级账号
-            } else if (discode.substring(4, 6).equals("00")) {
+            } else if (("00").equals(discode.substring(4, 6))) {
                 model.addAttribute("mark", "县区级");
-                String str = discode.substring(0, 4);
                 List<District> districts = backstageService.selectAllArea(discode);
-                model.addAttribute("districts", districts);
-                request.getSession().setAttribute("districts", districts);
-            } else if (discode.substring(6, 9).equals("000")) {
+                session.setAttribute("districts", districts);
+            } else if (("000").equals(discode.substring(6, 9))) {
                 model.addAttribute("mark", "乡镇级");
                 List<District> districts = backstageService.selectAllArea(discode);
-                model.addAttribute("districts", districts);
-                request.getSession().setAttribute("districts", districts);
-            } else if (discode.substring(9, 12).equals("000")) {
+                session.setAttribute("districts", districts);
+            } else if (("000").equals(discode.substring(9, 12))) {
                 model.addAttribute("mark", "村级");
                 List<District> districts = backstageService.selectAllArea(discode);
-                model.addAttribute("districts", districts);
-                request.getSession().setAttribute("districts", districts);
+                session.setAttribute("districts", districts);
             } else if ("0000".equals(discode.substring(13, 17))) {
                 List<District> districts = backstageService.selectAllArea(discode);
-                model.addAttribute("districts", districts);
-                request.getSession().setAttribute("districts", districts);
+                session.setAttribute("districts", districts);
             } else {
                 String msg = "村";
                 model.addAttribute("msg", msg);
@@ -184,10 +165,10 @@ public class BackstageController {
                 dis = 1;
                 request.getSession().setAttribute("dis", dis);
                 request.getSession().setAttribute("cdistrict", cdistrict);
-
             }
-            return "control/index";
         }
+        return "control/index";
+
     }
 
     /**
@@ -236,7 +217,8 @@ public class BackstageController {
      * @param request
      */
     @RequestMapping("/control/regist")
-    public String registered(String username, String password, Integer deptID, String disCode, Model model, HttpServletRequest request) {
+    public String registered(String username, String password, Integer deptID, String disCode, Model
+            model, HttpServletRequest request) {
         User existUser = (User) request.getSession().getAttribute("existUser");
         if (existUser != null) {
             if (username != null && !("").equals(username.trim()) && password != null && !("").equals(password.trim())) {
@@ -381,10 +363,7 @@ public class BackstageController {
         if (sessionCheckCode.equalsIgnoreCase(checkCode)) {
             User existUser = (User) session.getAttribute("existUser");
             Integer userId = existUser.getUsrid();
-            User user = new User();
-            user.setUsrid(userId);
-            user.setPassword(MD5Utils.md5(password));
-            backstageService.updatePassword(user);
+            backstageService.updatePassword(userId, MD5Utils.md5(password));
             model.addAttribute("msg", "修改成功");
         } else {
             model.addAttribute("msg", "验证码错误");

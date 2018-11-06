@@ -115,7 +115,7 @@ public class BackstageServiceImpl implements BackstageService {
     }
 
     @Override
-    public void updatePassword(User user) {
-        backstageDao.updatePassword(user);
+    public void updatePassword(Integer userId,String password) {
+        backstageDao.updatePassword(userId,password);
     }
 }

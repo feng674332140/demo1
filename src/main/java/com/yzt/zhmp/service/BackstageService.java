@@ -155,7 +155,8 @@ public interface BackstageService {
     /**
      * 修改用户密码
      *
-     * @param user
+     * @param userId
+     * @param password
      */
-    void updatePassword(User user);
+    void updatePassword(Integer userId,String password);
 }

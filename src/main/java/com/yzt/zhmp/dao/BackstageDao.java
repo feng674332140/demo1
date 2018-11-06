@@ -60,10 +60,12 @@ public interface BackstageDao {
 
     /**
      * 修改用户密码
-     * @param user
+     *
+     * @param userId
+     * @param password
      */
-    @Update("UPDATE d_user SET password = #{password} WHERE usrID = #{usrid};")
-    void updatePassword(User user);
+    @Update("UPDATE d_user SET password = #{password} WHERE usrID = #{userId};")
+    void updatePassword(@Param("userId") Integer userId, @Param("password") String password);
 
 
     class SelectAllCounty {

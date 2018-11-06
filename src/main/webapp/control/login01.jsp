@@ -103,6 +103,8 @@
         if (checkCode.length !== 0) {
             $("#myForm").removeAttr("onSubmit");
             $("#myForm").attr("onSubmit", "return true");
+        }else{
+            $("#myForm").attr("onSubmit", "return false");
         }
     }
 
