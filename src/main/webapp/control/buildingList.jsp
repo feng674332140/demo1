@@ -62,6 +62,7 @@
 <script>
     function ifhide() {
         $("#box").hide(500)
+        window.location.href = "buildingList.jsp";
     }
     window.onload = function () {
         var msg = '${msg}';
@@ -89,9 +90,10 @@
                     },
                     success: function (data) {
                         if (data) {
-                            alert("删除成功")
-                            window.location.href = "buildingList.jsp";
-                            // location.reload();
+                            $("#box").show(500);
+                            $("#txt").text("删除成功");
+
+
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {

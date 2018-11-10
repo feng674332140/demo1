@@ -17,7 +17,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <title>用户登录</title>
-    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="<%=basepath%>/control/plugins/layui/css/check.css" media="all">
     <link rel="stylesheet" type="text/css" href="<%=basepath%>/static/style/weui.css"/>
     <link rel="stylesheet" type="text/css" href="<%=basepath%>/static/style/example.css"/>

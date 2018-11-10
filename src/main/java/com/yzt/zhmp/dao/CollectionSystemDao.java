@@ -22,7 +22,8 @@ public interface CollectionSystemDao {
      */
     @Select("SELECT @rowNum:=@rowNum+1 as rowNo , t1.`name`,t2.usrID,t3.`name` username,t2.priviligeTime,t2.memo," +
             "case when t2.ifValid=1 then '有效' else  '无效' end ifValid FROM d_district t1,d_disUser t2 ,d_user t3, " +
-            "(SELECT @rowNum:=0) b WHERE t1.disCode = t2.disCode AND t2.usrID=t3.usrID AND t2.priviUsrID  = #{usrID};")
+            "(SELECT @rowNum:=0) b WHERE t1.disCode = t2.disCode AND t2.usrID=t3.usrID AND t2.priviUsrID  = #{usrID} " +
+            "ORDER BY t3.usrID ASC;")
     List<DisUserAddDisName> selectUserByuserid(int usrID);
 
     /**
@@ -79,7 +80,10 @@ public interface CollectionSystemDao {
      * @param disCode
      * @return
      */
-    @Select("SELECT * FROM c_building WHERE disCode=#{disCode}")
+    @Select("SELECT buID, disCode, name, phoneNum, familyType, population, roomNum, floorNum,landArea, buildArea, yardArea, \n" +
+            "       numberOfRoom, numberOfBed, mealDigits, feature,case busiType when '1' then '普通农户' when '2' then '农家乐' \n" +
+            "       when '3' then '民宿' when '4' then '药农' end busiType,memo, ifOpen, buildingYear, address FROM c_building \n" +
+            "WHERE disCode=#{disCode}")
     List<Cbuilding> selectBuildingBycode(String disCode);
 
     /**

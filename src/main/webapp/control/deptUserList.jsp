@@ -15,7 +15,7 @@
     <thead>
     <tr>
         <th lay-data="{field:'rowNo', width:80, sort: true}">序号</th>
-        <th lay-data="{field:'username', width:110}">用户名</th>
+        <th lay-data="{field:'username', width:140}">用户名</th>
         <th lay-data="{field:'deptname', width:100}">部门</th>
         <th lay-data="{field:'priviligetime', width:180}">账号创建时间</th>
         <th lay-data="{field:'ifvalid', width:120}">账号是否有效</th>

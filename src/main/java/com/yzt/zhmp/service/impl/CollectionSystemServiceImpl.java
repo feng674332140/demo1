@@ -55,19 +55,16 @@ public class CollectionSystemServiceImpl implements CollectionSystemService {
 
 
     @Override
-    @Cacheable(value = DEMO_CACHE_NAME,key = "'cbuilding_'+#disCode")
     public List<Cbuilding> selectBuildingBycode(String disCode) {
         return collectionSystemDao.selectBuildingBycode(disCode);
     }
 
     @Override
-    @CacheEvict(value = DEMO_CACHE_NAME,key = "'cbuilding_'+#buID")
     public int deleteCbuilidingByid(int buID) {
         return collectionSystemDao.deleteCbuilidingByid(buID);
     }
 
     @Override
-    @CachePut(value = DEMO_CACHE_NAME,key = "'cbuilding_'+#cbuilding")
     public int updateCbuidingByfamilyType(Cbuilding cbuilding) {
         return collectionSystemDao.updateCbuidingByfamilyType(cbuilding);
     }

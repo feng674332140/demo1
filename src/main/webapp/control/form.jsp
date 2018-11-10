@@ -1,13 +1,14 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.yzt.zhmp.beans.User" %>
-<%@ page import="com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>智慧门牌</title>
     <link rel="stylesheet" href="./plugins/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="./plugins/layui/css/check.css" media="all">
+
+    <script src="./plugins/layui/layui.js"></script>
+    <script src="../static/js/jquery-1.10.2.min.js"></script>
+    <script src="../control/plugins/layui/layui.js" charset="utf-8"></script>
     <style>
         .box {
             width: 20%;
@@ -38,10 +39,26 @@
         .box button {
             text-align: center
         }
+
+        #span, #spanP {
+            color: red;
+            position: absolute;
+            left: 205px;
+            top: 9px;
+
+        }
+
+        .layui-form-item {
+            width: 100% !important;
+        }
+
+        .layui-input {
+            width: 190px;
+        }
     </style>
 </head>
 <body>
-<div id="container" style="width: 100%;" >
+<div id="container" style="width: 100%;">
     <div class="layui-tab lable" style="margin-top: 40px;margin-left: 40px;width: 50%;float: left">
         <ul class="layui-tab-title" style="width: 550px">
             <li onClick="msgbox(0)" class="layui-this">添加部门用户</li>
@@ -99,42 +116,41 @@
                                 <button class="layui-btn layui-btn-normal"
                                         onClick="msgbox(1);changeDisValue('${d.name}','${d.discode}')">添加
                                 </button>
-
-
                             </td>
                         </tr>
                     </c:forEach>
-
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <div class="lable" id="divid" style="width:500px;float: left; margin-left: 800px; margin-top: 70px;position: absolute">
-        <form id='inputbox' class="layui-form" action="/control/regist">
+    <div class="lable" id="divid"
+         style="width:500px;float: left; margin-left: 800px; margin-top: 70px;position: absolute">
+        <form id='inputbox' class="layui-form" action="${pageContext.request.contextPath}/control/register"
+              onsubmit="return false">
             <div class="layui-form-item" style="width: 300px;">
                 <label class="layui-input-block" id="title"> </label>
             </div>
             <div class="layui-form-item" style="width: 300px;">
                 <label class="layui-form-label">账号:</label>
                 <div class="layui-input-block">
-                    <input type="text" name="username" id="username" lay-verify="title" autocomplete="off"
-                           placeholder="请输入账号" class="layui-input">
+                    <input type="text" name="username" id="username" lay-verify="required" autocomplete="off"
+                           placeholder="请输入6-16位字母和数字" class="layui-input"><span id="span"></span>
                 </div>
             </div>
             <div class="layui-form-item" style="width: 300px;">
                 <label class="layui-form-label">密码:</label>
                 <div class="layui-input-block">
-                    <input type="password" name="password" id="password" lay-verify="title" autocomplete="off"
-                           placeholder="请输入密码" class="layui-input">
+                    <input type="password" name="password" id="password" lay-verify="required" autocomplete="off"
+                           placeholder="请输入6-16位密码" class="layui-input"><span id="spanP"></span>
                 </div>
             </div>
             <input type="hidden" name="deptID" id="deptID" class="layui-input">
             <input type="hidden" name="disCode" id="disCode" class="layui-input">
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit="" lay-filter="demo1" >提交</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="demo1" onclick="submitForm()">提交</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
@@ -159,13 +175,68 @@
         var menuYloc = $("#divid").offset().top;
         $(window).scroll(function () {
             var offsetTop = menuYloc + $(window).scrollTop() + "px";
-            $("#divid").animate({ top: offsetTop }, { duration: 600, queue: false });
+            $("#divid").animate({top: offsetTop}, {duration: 600, queue: false});
         });
         console.log(adc);
-        if(adc.length!=0){
+        if (adc.length != 0) {
             $("#box").show(500)
         }
+
+        $("#username").blur(function () {
+            var username = $("#username").val();
+
+            //账号长度
+            if ($.trim(username).length > 0 && $.trim(username).length < 6 || $.trim(username).length > 16) {
+                $("#span").html("请输入6到16位账号");
+                $("#inputbox").attr("onsubmit", "return false");
+                return;
+            } else {
+                $("#span").html("");
+                $("#inputbox").attr("onsubmit", "return true");
+            }
+            if ($.trim(username).length === 0) {
+                $("#span").html("账号不能为空");
+                $("#inputbox").attr("onsubmit", "return false");
+                return;
+            } else {
+                $("#span").html("");
+                $("#inputbox").attr("onsubmit", "return true");
+            }
+            //不能为纯数字
+            if (!(/(?![0-9]+$)[0-9A-Za-z]/).test(username)) {
+                $("#span").html("账号不能为纯数字");
+                $("#inputbox").attr("onsubmit", "return false");
+                return;
+            } else {
+                $("#span").html("");
+                $("#inputbox").attr("onsubmit", "return true");
+            }
+
+        });
     });
+
+    function submitForm() {
+        var username = $("#username").val();
+        var password = $("#password").val();
+
+        if ($.trim(username).length === 0) {
+            $("#span").html("账号不能为空");
+            $("#inputbox").attr("onsubmit", "return false");
+            return;
+        } else {
+            $("#span").html("");
+            $("#inputbox").attr("onsubmit", "return true");
+        }
+
+        if ($.trim(password).length < 6 || $.trim(password).length > 16 || $.trim(password).length === 0) {
+            $("#spanP").html("请输入6到16位密码");
+            $("#inputbox").attr("onsubmit", "return false");
+        } else {
+            $("#spanP").html("");
+            $("#inputbox").attr("onsubmit", "return true");
+        }
+    }
+
     function changeValue(data) {
         $("#deptID").val(data);
         if (data == 111) {
@@ -182,13 +253,11 @@
         if (temp.length > 0) {
             alert(temp)
         }
-    })
+    });
 
     function changeDisValue(data1, data2) {
         $("#disCode").val(data2);
         $("#title").html("添加" + data1 + "账号");
-
-
     }
 
     function msgbox(n) {
@@ -217,8 +286,6 @@
             , tabDelete: function (othis) {
                 //删除指定Tab项
                 element.tabDelete('demo', '44'); //删除：“商品管理”
-
-
                 othis.addClass('layui-btn-disabled');
             }
             , tabChange: function () {
@@ -241,28 +308,8 @@
         });
 
     });
-    // function check() {
 
-
-    <%--if(${status}==1){--%>
-    //     $("#box").show(500)
-        <%--$("#txt").text("用户添加成功")--%>
-    <%--}else if (${status}==2){--%>
-        <%--$("#box").show(500)--%>
-        <%--$("#txt").text("用户名或密码不能为空")--%>
-    <%--} else if (${status}==3){--%>
-        <%--$("#box").show(500)--%>
-        <%--$("#txt").text("账户已失效，请重新登陆")--%>
-    <%--}else if (${status}==4){--%>
-        <%--$("#box").show(500)--%>
-        <%--$("#txt").text("用户名已存在")--%>
-    <%--}--%>
-    <%--else {--%>
-        <%--$("#box").show(500)--%>
-        <%--$("#txt").text("用户名密码不能为空")--%>
-    <%--}--%>
-    // }
-    function ifhide(){
+    function ifhide() {
         $("#box").hide(500)
     }
 </script>

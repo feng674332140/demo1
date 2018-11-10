@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../static/js/common/Sortable.min.js"></script>
     <script type="text/javascript" src="../static/js/service/bigservice.js"></script>
     <script type="text/javascript" src="../static/js/navigation/navigation.js"></script>
-    <script type="text/javascript" src="http://d3js.org/d3.v3.js"></script>
+    <script type="text/javascript" src="../static/js/svg-pan-zoom.js"></script>
 
     <style type="text/css">
         body, html, #container {
@@ -56,7 +56,8 @@
         }
 
         .svg-container {
-
+            width: 100%;
+            overflow: auto;
         }
 
     </style>
@@ -65,8 +66,7 @@
 <div class="page">
     <div class="pageContent" id="tpl_qrcode">
         <div class="weui-panel weui-panel_access">
-            <p style="text-align: center;height: 38px;line-height: 45px;font-family:'MyNewFont';font-size: 17px">
-                群山之祖，诸水之源，大美磐安</p>
+            <p style="text-align: center;height: 38px;line-height: 45px;font-family:'MyNewFont';font-size: 17px">群山之祖，诸水之源，大美磐安</p>
         </div>
         <div class="weui-panel weui-panel_access">
             <div class="weui-panel__bd" style="float: left">
@@ -146,9 +146,9 @@
         </div>
         <a href="informationError" style="float:right;color: red;font-size: 13px;text-decoration: none">信息报错&nbsp;&nbsp;&nbsp;</a>
 
-        <div class="svg-container">
-            <svg id="svg" <%--width="100%" height="100%"--%> viewBox="0 0 560 300"   xmlns="http://www.w3.org/2000/svg">
-                <g id="svgPanel" onclick="add()">
+        <div class="svg-container" style="overflow-x: hidden">
+            <svg width="350" height="300" viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg" id="svggroup">
+                <g >
                     <title>Layer 1</title>
                     <polygon fill="rgba(94,193,240,1)" stroke="rgb(155,155,155)" stroke-width="5" fill-opacity="0.1"
                              stroke-opacity="0.9" points="106,16 106,96 226,96 226,16 " class="svg_item" id="element0"/>
@@ -210,10 +210,9 @@
     //v2.0版本的引用方式：src="http://api.map.baidu.com/api?v=2.0&ak=您的密钥"
 </script>
 <script>
+
     $(function () {
-        // $("#fangwu").click(function () {
-        // $(".look").fadeToggle(500)
-        <%--if (${not empty existUser1}) {--%>
+        //后台请求房屋信息
         $.ajax({
             type: "POST",
             url: "${pageContext.request.contextPath}/fangwuInfo",
@@ -229,9 +228,55 @@
                 $('.look').html(html);
             }
         });
-        // }
-        // });
-    })
+
+        var svgActive = false, svgHovered = false
+
+        const element = document.querySelector('#svggroup');
+        window.svgPanZoom = svgPanZoom(element, {
+            zoomEnabled: true,
+            controlIconsEnabled: true,
+            dblClickZoomEnabled: false,
+            fit: 1,
+            center: 1,
+            customEventsHandler: {
+                init: function(options){
+                    function updateSvgClassName(){
+                        options.svgElement.setAttribute('class', '' + (svgActive ? 'active':'') + (svgHovered ? ' hovered':''))
+                    }
+                    this.listeners = {
+                        click: function(){
+                            if (svgActive) {
+                                options.instance.disableZoom();
+                                svgActive = false;
+                            } else {
+                                options.instance.enableZoom();
+                                svgActive = true;
+                            }
+                            updateSvgClassName()
+                        },
+                        mouseenter: function(){
+                            svgHovered = true;
+                            updateSvgClassName()
+                        },
+                        mouseleave: function(){
+                            svgActive = false;
+                            svgHovered = false;
+                            options.instance.disableZoom();
+                            updateSvgClassName();
+                        }
+                    }
+                    this.listeners.mousemove = this.listeners.mouseenter;
+                    for (var eventName in this.listeners){
+                        options.svgElement.addEventListener(eventName, this.listeners[eventName])
+                    }
+                }
+                , destroy: function(options){
+                    for (var eventName in this.listeners){
+                        options.svgElement.removeEventListener(eventName, this.listeners[eventName])
+                    }
+                }
+            }});
+    });
 
     $("#zhengfu").click(function () {
         if ($("#tpl_monitoring").css("display") == "none") {
@@ -270,7 +315,6 @@
         window.location.href = "http://api.map.baidu.com/marker?location=" + dataY + "," + dataX + "" +
             "&title=我的位置&content=磐安县公安局&output=html&src=webapp.baidu.openAPIdemo "
     }
-
     var map = new BMap.Map("container");
     // 创建地图实例
     var point = new BMap.Point(dataX, dataY);
@@ -278,7 +322,9 @@
     map.centerAndZoom(point, 16);
     var marker = new BMap.Marker(point);        // 创建标注
     map.addOverlay(marker);
-    
+
+
+
 </script>
 
 </body>

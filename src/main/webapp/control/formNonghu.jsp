@@ -191,7 +191,8 @@
     window.onload = function () {
         var msg = '${msg}';
         if (msg.length > 0) {
-            alert(msg);
+            $("#box").show(500);
+            $("#txt").text(msg);
         }
     };
 
@@ -233,11 +234,9 @@
             if (category === '3' || category === '4') {
                 $("#inputBox1").removeClass("layui-hide");
                 $("#inputBox2").removeClass("layui-hide");
-                $("#radioBox").removeClass("layui-hide");
             } else {
                 $("#inputBox1").addClass("layui-hide");
                 $("#inputBox2").addClass("layui-hide");
-                $("#radioBox").addClass("layui-hide");
             }
         });
     });
@@ -249,8 +248,8 @@
             if($("#buildingYear").val().length==4){
                 return true;
             }else {
-                $("#box").show(500)
-                $("#txt").text("年份输入错误！")
+                $("#box").show(500);
+                $("#txt").text("年份输入错误！");
                 return false;
             }
         }else {

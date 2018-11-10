@@ -25,21 +25,6 @@ public interface BackstageService {
      */
     DisUser selectDisUser(Integer usrid);
 
-    /**
-     * 根据区域编号查询区域名称
-     *
-     * @param discode
-     * @return
-     */
-    District getDistrict(String discode);
-
-    /**
-     * 查询市下面的所有县区
-     *
-     * @param discode
-     * @return
-     */
-    List<District> selectAllCounty(String discode);
 
     /**
      * 查询所有的部门
@@ -49,13 +34,6 @@ public interface BackstageService {
      */
     Department findDept(Integer usrid);
 
-    /**
-     * 查询所有省
-     *
-     * @param str
-     * @return
-     */
-    List<DisUser> selectAllProvince(String str);
 
     /**
      * 保存用户
@@ -101,49 +79,14 @@ public interface BackstageService {
      */
     List<District> selectAllArea(String discode);
 
-    /**
-     * 查询所有行政用户
-     *
-     * @return
-     */
-    List<DisUser> selectAllDisUser();
 
     /**
      * 查询所有部门用户
-     *
+     * @param usrid
      * @return
      */
     List<DeptUser> selectAllDeptUser(Integer usrid);
 
-    /**
-     * 行政用户对应的区域
-     *
-     * @param usrid
-     * @return
-     */
-    String findDisCode(Integer usrid);
-
-    /**
-     * 查询省下面的行政区域
-     *
-     * @return
-     */
-    List<DisUser> selectAllProvinceDisUser(String substring);
-
-    /**
-     * 查询市下面的行政区域
-     *
-     * @return
-     */
-    List<DisUser> selectAllCityDisUser(String substring);
-
-    /**
-     * 查询县区下面的行政区用户
-     *
-     * @param substring
-     * @return
-     */
-    List<DisUser> selectAllTownDisUser(String substring);
 
     /**
      * 查询所有的部门

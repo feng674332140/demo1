@@ -47,27 +47,27 @@
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
         <legend>修改密码</legend>
     </fieldset>
-    <form class="layui-form" action="${pageContext.request.contextPath}/updatePassword" method="post">
+    <form class="layui-form" action="${pageContext.request.contextPath}/updatePassword" method="post" onsubmit="return false">
         <div class="layui-form-item">
             <label class="layui-form-label">输入新密码</label>
             <div class="layui-input-inline">
-                <input type="password" id="password1" lay-verify="pass" autocomplete="off" class="layui-input"
-                       value="${password}">
+                <input type="password" id="newPassword" name="newPassword" lay-verify="pass" autocomplete="off" class="layui-input"
+                       value="${newPassword}">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">请再次输入</label>
             <div class="layui-input-inline">
-                <input type="password" name="password" id="password2" onblur="checkPassword()"
+                <input type="password" name="reNewPassword" id="reNewPassword" onblur="checkPassword()"
                        lay-verify="required" placeholder="请确认密码" autocomplete="off"
-                       class="layui-input" value="${password}">
+                       class="layui-input" value="${reNewPassword}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">验证码</label>
             <div class="layui-input-inline">
-                <input type="text" name="checkCode" id="checkcode" placeholder="请输入验证码"
+                <input type="text" name="checkCode" id="checkCode" placeholder="请输入验证码"
                        autocomplete="off" lay-verify="required" class="layui-input">
                 <br>
                 <img src="${pageContext.request.contextPath}/checkCode" height="30" width="80"
@@ -81,7 +81,7 @@
 
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit="" lay-filter="demo1">修改</button>
+                <button class="layui-btn" onclick="checkPassword()" lay-submit="" lay-filter="demo1">修改</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
@@ -109,13 +109,18 @@
     }
 
     function checkPassword() {
-        var password1 = $("#password1").val();
-        var password2 = $("#password2").val();
-
-        if (password1 !== password2) {
-            $("#password2").val("");
+        var newPassword = $("#newPassword").val();
+        var reNewPassword = $("#reNewPassword").val();
+        var checkCode = $("#checkCode").val();
+        if (checkCode.length===0){
+            return;
+        }
+        if (newPassword !== reNewPassword) {
             $("#txt").html("两次密码不一致,请重新新输入");
             $("#box").show(500);
+            $(".layui-form").attr("onsubmit","return false");
+        }else{
+            $(".layui-form").removeAttr("onsubmit")
         }
     }
 

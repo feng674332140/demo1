@@ -17,9 +17,8 @@
 <div class="layui-layout layui-layout-admin kit-layout-admin">
     <div class="layui-header">
         <div class="layui-logo">${district}</div>
-        <div class="layui-logo kit-logo-mobile">K</div>
+        <div class="layui-logo kit-logo-mobile">${district}</div>
         <ul class="layui-nav layui-layout-left kit-nav">
-
         </ul>
         <ul class="layui-nav layui-layout-right kit-nav">
             <li class="layui-nav-item">
@@ -108,7 +107,7 @@
     <div class="layui-footer">
         <!-- 底部固定区域 -->
         2018 &copy;
-        <a href="#">武汉一张图科技有限有限公司</a>
+        <a href="#">武汉一张图科技有限公司</a>
 
     </div>
 </div>

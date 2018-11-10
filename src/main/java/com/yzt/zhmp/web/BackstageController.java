@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.imageio.ImageIO;
@@ -40,12 +39,11 @@ public class BackstageController {
     /**
      * 跳转登陆页面
      *
-     * @return
+     * @return 如果session中有登录用户跳转到index页面, 否则跳转登录页面
      */
     @RequestMapping("/control/index")
     public String toLogin(HttpServletRequest request) {
-        User existUser = null;
-        existUser = (User) request.getSession().getAttribute("existUser");
+        User existUser = (User) request.getSession().getAttribute("existUser");
         if (existUser != null) {
             return "control/index";
         }
@@ -54,6 +52,8 @@ public class BackstageController {
 
     /**
      * 注销用户 清空session
+     *
+     * @param request
      */
     @RequestMapping("/control/Logout")
     public String toLogout(HttpServletRequest request) {
@@ -66,109 +66,85 @@ public class BackstageController {
      *
      * @param name      账号
      * @param password  密码
-     * @param model
      * @param checkCode 验证码
+     * @param model
      * @param request
      * @return
      */
     @RequestMapping("/control/login")
-    public String login(String name, String password, String checkCode,
-                        Model model, HttpServletRequest request, HttpSession session) {
+    public String login(String name, String password, String checkCode, Model model, HttpServletRequest request, HttpSession session) {
         String discode;
         User existUser = (User) request.getSession().getAttribute("existUser");
         if (existUser == null) {
             //回显用户名
             model.addAttribute("name", name);
             String sessionCheckCode = (String) session.getAttribute("checkCode");
-
-            if (!sessionCheckCode.equalsIgnoreCase(checkCode)) {
-                model.addAttribute("error", "验证码错误!");
-                return "control/login01";
-            }
-
-            //判断用户存不存在
-            User user = new User();
-            user.setName(name);
-            user.setPassword(MD5Utils.md5(password));
-            existUser = backstageService.login(user);
-            //将用户信息存入session
             try {
-                model.addAttribute("existUser", existUser);
+                if (!sessionCheckCode.equalsIgnoreCase(checkCode)) {
+                    model.addAttribute("error", "验证码错误!");
+                    return "control/login01";
+                }
+                User user = new User();
+                user.setName(name);
+                user.setPassword(MD5Utils.md5(password));
+                existUser = backstageService.login(user);
                 session.setAttribute("existUser", existUser);
                 session.setAttribute("usrid", existUser.getUsrid());
             } catch (Exception e) {
                 model.addAttribute("error", "账号或密码错误");
                 return "control/login01";
             }
+        }
+        Integer usrid = existUser.getUsrid();
+        DisUser disUser = backstageService.selectDisUser(usrid);
+        //查询对应的部门的名称,行政用户无对应部门
+        Department department = backstageService.findDept(usrid);
+        model.addAttribute("department", department);
+        session.setAttribute("department", department);
+        try {
+            discode = disUser.getDiscode();
+            session.setAttribute("discode", discode);
+        } catch (Exception e) {
+            model.addAttribute("error", "此账号没有权限登录");
+            return "control/login01";
+        }
+        //查询对应的区域名称
+        String district = collectionSystemService.selectDisName(usrid);
+        session.setAttribute("district", district);
+        //显示可选择的部门
+        List<Department> departments = backstageService.selectAllDept();
+        session.setAttribute("departments", departments);
+        //管理员
+        List<District> districts = null;
+        //分别对应管理员,省,市,县/区,街道/镇,村
+        if (("00000000000000000").equals(discode)) {
+            districts = backstageService.selectAllArea(discode);
+        } else if (("0000").equals(discode.substring(2, 6))) {
+            districts = backstageService.selectAllArea(discode);
+        } else if (("00").equals(discode.substring(4, 6))) {
+            districts = backstageService.selectAllArea(discode);
+        } else if (("000").equals(discode.substring(6, 9))) {
+            districts = backstageService.selectAllArea(discode);
+        } else if (("000").equals(discode.substring(9, 12))) {
+            districts = backstageService.selectAllArea(discode);
+        } else if ("0000".equals(discode.substring(13, 17))) {
+            districts = backstageService.selectAllArea(discode);
         } else {
-            Integer usrid = existUser.getUsrid();
-            DisUser disUser = backstageService.selectDisUser(usrid);
-            //查询对应的部门的名称,行政用户无对应部门
-            Department department = backstageService.findDept(usrid);
-            model.addAttribute("department", department);
-            session.setAttribute("department", department);
-            try {
-                discode = disUser.getDiscode();
-                //把discode存入session
-                session.setAttribute("discode", discode);
-            } catch (Exception e) {
-                model.addAttribute("error", "此账号没有权限登录");
-                return "control/login01";
-            }
-
-            //查询对应的区域名称
-            String district = collectionSystemService.selectDisName(usrid);
-            model.addAttribute("district", district);
-            session.setAttribute("district", district);
-
-            //显示可选择的部门
-            List<Department> departments = backstageService.selectAllDept();
-            session.setAttribute("departments", departments);
-
-            //管理员
-            if (("00000000000000000").equals(discode)) {
-                List<District> districts = backstageService.selectAllArea(discode);
-                //代表是管理员账号,可以添加省级账号
-                model.addAttribute("mark", "省级");
-                session.setAttribute("districts", districts);
-                //省级账号
-            } else if (("0000").equals(discode.substring(2, 6))) {
-                model.addAttribute("mark", "市级");
-                List<District> districts = backstageService.selectAllArea(discode);
-                session.setAttribute("districts", districts);
-                //市级账号
-            } else if (("00").equals(discode.substring(4, 6))) {
-                model.addAttribute("mark", "县区级");
-                List<District> districts = backstageService.selectAllArea(discode);
-                session.setAttribute("districts", districts);
-            } else if (("000").equals(discode.substring(6, 9))) {
-                model.addAttribute("mark", "乡镇级");
-                List<District> districts = backstageService.selectAllArea(discode);
-                session.setAttribute("districts", districts);
-            } else if (("000").equals(discode.substring(9, 12))) {
-                model.addAttribute("mark", "村级");
-                List<District> districts = backstageService.selectAllArea(discode);
-                session.setAttribute("districts", districts);
-            } else if ("0000".equals(discode.substring(13, 17))) {
-                List<District> districts = backstageService.selectAllArea(discode);
-                session.setAttribute("districts", districts);
-            } else {
-                String msg = "村";
-                model.addAttribute("msg", msg);
-            }
-            //查询是此行政区是否有介绍
-            Cdistrict cdistrict = collectionSystemService.selectCdistrict(discode);
-            int dis = 0;
-            if (cdistrict == null) {
-                request.getSession().setAttribute("dis", dis);
-            } else {
-                dis = 1;
-                request.getSession().setAttribute("dis", dis);
-                request.getSession().setAttribute("cdistrict", cdistrict);
-            }
+            String msg = "村";
+            model.addAttribute("msg", msg);
+        }
+        session.setAttribute("districts", districts);
+        //查询是此行政区是否有介绍
+        Cdistrict cdistrict = collectionSystemService.selectCdistrict(discode);
+        int dis = 0;
+        if (cdistrict == null) {
+            request.getSession().setAttribute("dis", dis);
+        } else {
+            dis = 1;
+            request.getSession().setAttribute("dis", dis);
+            request.getSession().setAttribute("cdistrict", cdistrict);
         }
         return "control/index";
-
     }
 
     /**
@@ -179,16 +155,14 @@ public class BackstageController {
      */
     @ResponseBody
     @RequestMapping("/allDisUser")
-    public void allDidUser(HttpServletResponse response, HttpServletRequest request) throws IOException {
+    public void allDisUser(HttpServletResponse response, HttpServletRequest request) throws IOException {
         User existUser = (User) request.getSession().getAttribute("existUser");
         Integer userID = existUser.getUsrid();
         List<DisUserAddDisName> disUsers = collectionSystemService.selectUserByuserid(userID);
-
         int count = disUsers.size();
         JSONArray jsonArray = JSONArray.fromObject(disUsers);
         response.getWriter().write("{\"code\":0,\"msg\":\"\",\"count\":" + count
                 + ",\"data\":" + jsonArray.toString() + "}");
-
     }
 
     /**
@@ -216,114 +190,80 @@ public class BackstageController {
      * @param disCode  创建行政用户对应的区域ID
      * @param request
      */
-    @RequestMapping("/control/regist")
-    public String registered(String username, String password, Integer deptID, String disCode, Model
-            model, HttpServletRequest request) {
+    @RequestMapping("/control/register")
+    public String registered(String username, String password, Integer deptID, String disCode, Model model, HttpServletRequest request) {
         User existUser = (User) request.getSession().getAttribute("existUser");
-        if (existUser != null) {
-            if (username != null && !("").equals(username.trim()) && password != null && !("").equals(password.trim())) {
-                Integer checkExist = backstageService.selectUserId(username);
-                if (checkExist == null) {
-                    //上级用户ID
-                    Integer priviusrid = existUser.getUsrid();
-                    //保存用户
-                    User user = new User();
-                    user.setName(username);
-                    user.setPassword(MD5Utils.md5(password));
-                    backstageService.registered(user);
-                    //保存后再查询对应保存生成的id
-                    Integer usrID = backstageService.selectUserId(username);
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-                    //创建的是部门用户
-                    if (deptID != null) {
-                        DeptUser deptUser = new DeptUser();
-                        deptUser.setDptusrid(usrID);
-                        deptUser.setUsrid(usrID);
-                        deptUser.setDeptid(deptID);
-                        deptUser.setPriviligetime(sdf.format(new Date()));
-                        deptUser.setPriviusrid(priviusrid);
-                        deptUser.setIfvalid("1");
-                        deptUser.setMemo("");
-                        backstageService.saveDeptUser(deptUser);
-                    }
-
-                    //创建行政用户
-                    if (disCode.length() > 0) {
-                        DisUser disUser = new DisUser();
-                        disUser.setPriviligetime(sdf.format(new Date()));
-                        disUser.setPriviusrid(priviusrid);
-                        disUser.setDiscode(disCode);
-                        disUser.setUsrid(usrID);
-                        disUser.setIfvalid("1");
-                        if ("0000".equals(disCode.substring(2, 6))) {
-                            disUser.setMemo("省级用户");
-                        } else if ("00".equals(disCode.substring(4, 6))) {
-                            disUser.setMemo("市级用户");
-                        } else if ("000".equals(disCode.substring(6, 9))) {
-                            disUser.setMemo("县级用户");
-                        } else if ("000".equals(disCode.substring(9, 12))) {
-                            disUser.setMemo("乡镇用户");
-                        } else {
-                            disUser.setMemo("村用户");
-                            user.setAccount("村");
-                        }
-                        backstageService.saveDisUser(disUser);
-                    }
-                    model.addAttribute("status", "用户添加成功");
-                    return "control/form";
-                } else {
-                    model.addAttribute("status", "用户名已存在");
-                    return "control/form";
-                }
-            } else {
-                model.addAttribute("status", "用户名密码不能为空");
-                return "control/form";
-            }
-        } else {
+        if (existUser == null) {
             model.addAttribute("status", "账户已失效，请重新登陆");
             return "control/form";
         }
+        if (!(username != null && !("").equals(username.trim()) && password != null && !("").equals(password.trim()))) {
+            model.addAttribute("status", "用户名密码不能为空");
+            return "control/form";
+        }
+        Integer checkExist = backstageService.selectUserId(username);
+        if (checkExist != null) {
+            model.addAttribute("status", "用户名已存在");
+            return "control/form";
+        }
+        //上级用户ID
+        Integer priviusrid = existUser.getUsrid();
+        //保存用户
+        User user = new User();
+        user.setName(username);
+        user.setPassword(MD5Utils.md5(password));
+        backstageService.registered(user);
+        //保存后再查询对应保存生成的id
+        Integer usrID = backstageService.selectUserId(username);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        //创建的是部门用户
+        if (deptID != null) {
+            DeptUser deptUser = new DeptUser();
+            deptUser.setDptusrid(usrID);
+            deptUser.setUsrid(usrID);
+            deptUser.setDeptid(deptID);
+            deptUser.setPriviligetime(sdf.format(new Date()));
+            deptUser.setPriviusrid(priviusrid);
+            deptUser.setIfvalid("1");
+            deptUser.setMemo("");
+            backstageService.saveDeptUser(deptUser);
+        }
+
+        //创建行政用户
+        if (disCode.length() > 0) {
+            DisUser disUser = new DisUser();
+            disUser.setPriviligetime(sdf.format(new Date()));
+            disUser.setPriviusrid(priviusrid);
+            disUser.setDiscode(disCode);
+            disUser.setUsrid(usrID);
+            disUser.setIfvalid("1");
+            if ("0000".equals(disCode.substring(2, 6))) {
+                disUser.setMemo("省级用户");
+            } else if ("00".equals(disCode.substring(4, 6))) {
+                disUser.setMemo("市级用户");
+            } else if ("000".equals(disCode.substring(6, 9))) {
+                disUser.setMemo("县级用户");
+            } else if ("000".equals(disCode.substring(9, 12))) {
+                disUser.setMemo("乡镇用户");
+            } else {
+                disUser.setMemo("村用户");
+                user.setAccount("村");
+            }
+            backstageService.saveDisUser(disUser);
+        }
+        model.addAttribute("status", "用户添加成功");
+        return "control/form";
     }
 
     /**
-     * 查询所有下一级的所有用户
+     * 生成验证码
      *
-     * @param discode
-     * @param model
-     * @return
+     * @param session
+     * @param response
      */
-    @RequestMapping("/findAllUser")
-    public String findAllUser(String discode, Model model) {
-        if (("000000").equals(discode)) {
-            //代表管理员账号,查询所有省显示
-            String str = discode.substring(2, 6);
-            List<DisUser> disUsers = backstageService.selectAllProvince(str);
-            List<District> districts = backstageService.selectAllArea(discode);
-            //代表是管理员账号,可以添加省级账号
-            model.addAttribute("mark", "省级");
-            model.addAttribute("disUsers", disUsers);
-            model.addAttribute("districts", districts);
-            //省级账号
-        } else if (("0000").equals(discode.substring(2, 6))) {
-            model.addAttribute("mark", "市级");
-            List<District> districts = backstageService.selectAllArea(discode);
-            model.addAttribute("districts", districts);
-            //市级账号
-        } else if (("00").equals(discode.substring(4, 6))) {
-            String str = discode.substring(0, 4);
-            List<District> districts = backstageService.selectAllArea(discode);
-            model.addAttribute("districts", districts);
-            //县区级需要设置部门,查询显示到页面
-            List<Department> departments = backstageService.selectAllDept();
-            model.addAttribute("departments", departments);
-        }
-        return "backstagePage/disUserList.jsp";
-    }
-
-
     @RequestMapping("/checkCode")
-    public void getCodeImage(HttpServletRequest request, HttpServletResponse response) {
+    public void getCodeImage(HttpServletResponse response, HttpSession session) {
         BufferedImage img = new BufferedImage(68, 22, BufferedImage.TYPE_INT_RGB);
         Graphics g = img.getGraphics();
         Random r = new Random();
@@ -345,7 +285,7 @@ public class BackstageController {
             sb.append(ch[index]);
         }
         // 把上面生成的验证码放到Session域中
-        request.getSession().setAttribute("checkCode", sb.toString());
+        session.setAttribute("checkCode", sb.toString());
         try {
             ImageIO.write(img, "JPG", response.getOutputStream());
         } catch (IOException e) {
@@ -353,20 +293,29 @@ public class BackstageController {
         }
     }
 
-
+    /**
+     * 修改密码
+     *
+     * @param checkCode     验证码
+     * @param newPassword   新密码
+     * @param reNewPassword 确认新密码
+     * @param model
+     * @param session
+     * @return 返回修改密码页面
+     */
     @RequestMapping("/updatePassword")
-    public String updatePassword(String checkCode, String password, Model model, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        model.addAttribute("password", password);
+    public String updatePassword(String checkCode, String newPassword, String reNewPassword, Model model, HttpSession session) {
         //对比验证码
         String sessionCheckCode = (String) session.getAttribute("checkCode");
-        if (sessionCheckCode.equalsIgnoreCase(checkCode)) {
+        if (!sessionCheckCode.equalsIgnoreCase(checkCode)) {
+            model.addAttribute("newPassword", newPassword);
+            model.addAttribute("reNewPassword", reNewPassword);
+            model.addAttribute("msg", "验证码错误");
+        } else {
             User existUser = (User) session.getAttribute("existUser");
             Integer userId = existUser.getUsrid();
-            backstageService.updatePassword(userId, MD5Utils.md5(password));
+            backstageService.updatePassword(userId, MD5Utils.md5(newPassword));
             model.addAttribute("msg", "修改成功");
-        } else {
-            model.addAttribute("msg", "验证码错误");
         }
         return "control/updatePassword";
     }

@@ -161,13 +161,13 @@ public interface BackstageDao {
 
     /**
      * 查询所有部门用户
-     *
+     * @param usrid
      * @return
      */
     @Select("SELECT @rowNum := @rowNum + 1 AS rowNo,t3.NAME username, " +
             "( SELECT t2.NAME FROM d_department t2 WHERE t1.deptID = t2.deptID ) deptname,t1.priviligeTime," +
             "CASE t1.ifValid WHEN 1 THEN '有效' ELSE '无效' END ifValid FROM d_deptUser t1 ,d_user t3," +
-            "( SELECT @rowNum := 0 ) b WHERE t1.usrID = t3.usrID AND priviUsrID = #{usrid};")
+            "( SELECT @rowNum := 0 ) b WHERE t1.usrID = t3.usrID AND priviUsrID = #{usrid} ORDER BY t3.usrID ASC;")
     List<DeptUser> selectAllDeptUser(Integer usrid);
 
     /**
