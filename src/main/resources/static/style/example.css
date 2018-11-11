@@ -42,9 +42,7 @@ ul {
     opacity: 1
 }
 
-.page__hd {
-    padding: 20px
-}
+
 
 .page__bd_spacing {
     padding: 0 15px
@@ -498,4 +496,57 @@ ul {
 .page.slideOut {
     -webkit-animation: b .2s forwards;
     animation: b .2s forwards
+}
+
+
+
+/*头部 返回样式*/
+.row{
+    margin: 0;
+}
+.top{
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+.top a{
+    color: #333;
+}
+.top>div{
+    cursor: pointer;
+}
+
+.heig{
+    line-height: 48px;
+
+    padding: 0;
+}
+.heig span{
+    display: inline-block;
+    line-height: 48px;
+    padding-left: 30px;
+}
+
+/*地图*/
+.map{
+    position: relative;
+}
+.maps{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+.tit{
+    padding: 5px 15px ;
+    font-size: 13px;
+    position: relative;
+}
+
+/*登录查看*/
+.look{
+    background-color: #fff;
+    line-height: 40px;
+    font-size: 15px;
 }

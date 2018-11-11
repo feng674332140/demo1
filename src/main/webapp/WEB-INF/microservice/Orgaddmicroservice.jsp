@@ -17,14 +17,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>智慧门牌服务管理</title>
-    <link rel="stylesheet" type="text/css" href="/static/style/weui.css"/>
-    <link rel="stylesheet" type="text/css" href="/static/style/example.css"/>
+    <title>智慧门牌</title>
+    <link rel="stylesheet" type="text/css" href="../static/style/weui.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/style/example.css"/>
+    <link rel="stylesheet" href="<%=basepath%>/control/plugins/layui/css/check.css" media="all">
     <%--<script type="text/javascript" src="/static/js/zepto.min.js"></script>--%>
     <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="/static/js/common/common.js"></script>
-    <script type="text/javascript" src="/static/js/service/microservice.js"></script>
-    <script type="text/javascript" src="/static/js/common/Sortable.min.js"></script>
+    <script type="text/javascript" src="../static/js/common/common.js"></script>
+    <script type="text/javascript" src="../static/js/service/microservice.js"></script>
+    <script type="text/javascript" src="../static/js/common/Sortable.min.js"></script>
 </head>
 <body ontouchstart>
 <div class="page">
@@ -73,7 +74,13 @@
             </ul>
     </div>
 </div>
-
+<%--提示层--%>
+<div id="box">
+    <div class="con">
+        <p id="txt"></p>
+        <button onclick="ifhide()" class="but">知道了</button>
+    </div>
+</div>
 <script type="text/javascript">
     var basepath = "/static";
     /**
@@ -106,8 +113,10 @@
                success:function(data){
                   // console.log(data);
                    if (data){
-                       alert("添加成功")
-                       window.location.href="systemnavigation";
+                       //alert("添加成功")
+                       $("#box").fadeIn(500)
+                       $("#txt").text("添加成功")
+
                    }
                }
            })
@@ -116,6 +125,10 @@
 
        })
    })
+   function ifhide() {
+       $("#box").fadeOut(500)
+       window.location.href="systemnavigation";
+   }
 </script>
 </body>
 </html>

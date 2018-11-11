@@ -5,9 +5,16 @@ import com.yzt.zhmp.beans.PoliceFeatures;
 
 import java.util.ArrayList;
 
-//把list值存到对应的功能bean的属性中
+/**
+ * 把list值存到对应的功能bean的属性中
+ * @author .
+ */
 public class ListFeatures {
-    //民政功能
+    /**
+     * 民政功能
+     * @param arrayList
+     * @return
+     */
     public OrgAdministrationFeatures listFeatures(ArrayList arrayList){
         OrgAdministrationFeatures orgAdministrationFeatures=new OrgAdministrationFeatures();
         for (int i=0;i<arrayList.size();i++){
@@ -40,19 +47,41 @@ public class ListFeatures {
     }
 
 
-    //公安模块功能
+    /**
+     * 公安模块功能
+     * @param arrayList
+     * @return
+     */
     public PoliceFeatures policeFeatures(ArrayList arrayList){
         PoliceFeatures policeFeatures=new PoliceFeatures();
         for (int i=0;i<arrayList.size();i++){
-            if (arrayList.get(i).equals("ZhuHuChaXun"))policeFeatures.setZhuHuChaXun((String) arrayList.get(i));
-            if (arrayList.get(i).equals("PaiChuSuoInfo"))policeFeatures.setPaiChuSuoInfo((String) arrayList.get(i));
-            if (arrayList.get(i).equals("AnQuanJanYi"))policeFeatures.setAnQuanJanYi((String) arrayList.get(i));
-            if (arrayList.get(i).equals("XunRenQiShi"))policeFeatures.setXunRenQiShi((String) arrayList.get(i));
-            if (arrayList.get(i).equals("WangShangHuiJian"))policeFeatures.setWangShangHuiJian((String) arrayList.get(i));
-            if (arrayList.get(i).equals("XiaQuMinJing"))policeFeatures.setXiaQuMinJing((String) arrayList.get(i));
-            if (arrayList.get(i).equals("YiJianBaoJing"))policeFeatures.setYiJianBaoJing((String) arrayList.get(i));
-            if (arrayList.get(i).equals("FangWuZuLin"))policeFeatures.setFangWuZuLin((String) arrayList.get(i));
-            if (arrayList.get(i).equals("ZhaoPingXinXi"))policeFeatures.setZhaoPingXinXi((String) arrayList.get(i));
+            if (arrayList.get(i).equals("ZhuHuChaXun")){
+                policeFeatures.setZhuHuChaXun((String) arrayList.get(i));
+            }
+            if (arrayList.get(i).equals("PaiChuSuoInfo")){
+                policeFeatures.setPaiChuSuoInfo((String) arrayList.get(i));
+            }
+            if (arrayList.get(i).equals("AnQuanJanYi")){
+                policeFeatures.setAnQuanJanYi((String) arrayList.get(i));
+            }
+            if (arrayList.get(i).equals("XunRenQiShi")){
+                policeFeatures.setXunRenQiShi((String) arrayList.get(i));
+            }
+            if (arrayList.get(i).equals("WangShangHuiJian")){
+                policeFeatures.setWangShangHuiJian((String) arrayList.get(i));
+            }
+            if (arrayList.get(i).equals("XiaQuMinJing")){
+                policeFeatures.setXiaQuMinJing((String) arrayList.get(i));
+            }
+            if (arrayList.get(i).equals("YiJianBaoJing")){
+                policeFeatures.setYiJianBaoJing((String) arrayList.get(i));
+            }
+            if (arrayList.get(i).equals("FangWuZuLin")){
+                policeFeatures.setFangWuZuLin((String) arrayList.get(i));
+            }
+            if (arrayList.get(i).equals("ZhaoPingXinXi")){
+                policeFeatures.setZhaoPingXinXi((String) arrayList.get(i));
+            }
         }
         return policeFeatures;
     }

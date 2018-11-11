@@ -1,0 +1,52 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+        "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<div class="svg-container">
+    <svg width="560.0" id="svgImg" height="300.0" version="1.1"
+         xmlns="http://www.w3.org/2000/svg">
+        <polygon id="element0" class="svg_item" points="150,0 150,80 270,80 270,0 " width="120" height="80"
+                 data-field="1-201,;" data-house="684" style="fill:rgba(94,193,240,1);stroke:rgb(155,155,155);stroke-width:5;
+ fill-opacity:0.1;stroke-opacity:0.9" onmouseover="svgOn(this)" onmouseout="svgOut(this)" onclick="select(this)"/>
+        <polygon id="element1" class="svg_item" points="270,0 270,80 390,80 390,0 " width="120" height="80"
+                 data-field="1-202,;" data-house="685" style="fill:rgba(94,193,240,1);stroke:rgb(155,155,155);stroke-width:5;
+ fill-opacity:0.1;stroke-opacity:0.9" onmouseover="svgOn(this)" onmouseout="svgOut(this)" onclick="select(this)"/>
+        <polygon id="element2" class="svg_item" points="150,80 150,160 270,160 270,80 " width="120" height="80"
+                 data-field="1-101,;" data-house="683" style="fill:rgba(94,193,240,1);stroke:rgb(155,155,155);stroke-width:5;
+ fill-opacity:0.1;stroke-opacity:0.9" onmouseover="svgOn(this)" onmouseout="svgOut(this)" onclick="select(this)"/>
+        <polygon id="element3" class="svg_item" points="390,0 390,80 510,80 510,0 " width="120" height="80"
+                 data-field="2-201,;" data-house="687" style="fill:rgba(94,193,240,1);stroke:rgb(155,155,155);stroke-width:5;
+ fill-opacity:0.1;stroke-opacity:0.9" onmouseover="svgOn(this)" onmouseout="svgOut(this)" onclick="select(this)"/>
+        <polygon id="element4" class="svg_item" points="390,80 390,160 510,160 510,80 " width="120" height="80"
+                 data-field="2-101,;" data-house="686" style="fill:rgba(94,193,240,1);stroke:rgb(155,155,155);stroke-width:5;
+ fill-opacity:0.1;stroke-opacity:0.9" onmouseover="svgOn(this)" onmouseout="svgOut(this)" onclick="select(this)"/>
+        <text class="element2" style="fill:black;" font-size="30" font-family="LiSu "
+              x="175" y="132" width="200" height="30" onmouseover="svgOn(this)" onclick="select(this)">1-101
+        </text>
+        <text class="element0" style="fill:black;" font-size="30" font-family="LiSu "
+              x="175" y="52" width="200" height="30" onmouseover="svgOn(this)" onclick="select(this)">1-201
+        </text>
+        <text class="element1" style="fill:black;" font-size="30" font-family="LiSu "
+              x="295" y="52" width="200" height="30" onmouseover="svgOn(this)" onclick="select(this)">1-202
+        </text>
+        <text class="element4" style="fill:black;" font-size="30" font-family="LiSu "
+              x="415" y="132" width="200" height="30" onmouseover="svgOn(this)" onclick="select(this)">2-102
+        </text>
+        <text class="element3" style="fill:black;" font-size="30" font-family="LiSu "
+              x="415" y="52" width="200" height="30" onmouseover="svgOn(this)" onclick="select(this)">2-202
+        </text>
+        <text class="floor_num" style="fill:black;" font-size="30" font-family="LiSu "
+              x="50" y="52" width="100" height="30">2 楼
+        </text>
+        <text class="floor_num" style="fill:black;" font-size="30" font-family="LiSu "
+              x="50" y="132" width="100" height="30">1 楼
+        </text>
+        <path d="M160 180 L380 180 Z" style="fill:white;stroke:red;stroke-width:2"/>
+        <text class="floor_num" style="fill:black;" font-size="45" font-family="LiSu "
+              x="220" y="252" width="100" height="30">1 单元
+        </text>
+        <path d="M400 180 L500 180 Z" style="fill:white;stroke:red;stroke-width:2"/>
+        <text class="floor_num" style="fill:black;" font-size="45" font-family="LiSu "
+              x="400" y="252" width="100" height="30">2 单元
+        </text>
+    </svg>
+</div>

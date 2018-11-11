@@ -17,6 +17,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <title>用户登录</title>
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="<%=basepath%>/control/plugins/layui/css/check.css" media="all">
     <link rel="stylesheet" type="text/css" href="<%=basepath%>/static/style/weui.css"/>
     <link rel="stylesheet" type="text/css" href="<%=basepath%>/static/style/example.css"/>
     <script type="text/javascript" src="<%=basepath%>/static/js/jquery-1.10.2.min.js"></script>
@@ -28,6 +30,14 @@
     </script>
 </head>
 <body ontouchstart>
+<div class="row top">
+    <div class="col-xs-3 heig" onClick="history.back(-1);">
+        <span class="glyphicon glyphicon-arrow-left"></span>
+    </div>
+    <div class="col-xs-6 text-center heig"><b>登录</b></div>
+    <div class="col-xs-3 text-center heig">
+    </div>
+</div>
 <!--错误提示-->
 <div class="weui-toptips weui-toptips_warn " id="js_tooltips">错误提示</div>
 
@@ -38,6 +48,7 @@
 
 <!--用户登录-->
 <div class="page__bd">
+
     <div class="weui-cells weui-cells_form">
         <form id="loginTable" action="${pageContext.request.contextPath}/usersLogin" method="post">
             <div class="weui-cell">
@@ -58,7 +69,7 @@
         </form>
     </div>
     <div class="weui-btn-area">
-        <a class="weui-btn weui-btn_primary" onclick="userLoginConfirm();login()">确定</a>
+        <a class="btn btn-success btn-block btn-lg" onclick="userLoginConfirm();login()">确定</a>
     </div>
     <div class="page__bd page__bd_spacing">
         <div class="weui-flex">
@@ -67,7 +78,7 @@
             </div>
             <c:if test="${error!=null}">
                 <div class="weui-flex__item">
-                    <div class="weui-agree"><a href="javascript:;"><var style="color: red">${error}</var></a></div>
+                    <div class="weui-agree"><a href="javascript:;"><var style="color: red"></var></a></div>
                 </div>
             </c:if>
             <div class="weui-flex__item" style="text-align: right">
@@ -86,9 +97,24 @@
             </span>
     </label>
 </div>
+<%--提示层--%>
+<div id="box">
+    <div class="con">
+        <p id="txt">${error}</p>
+        <button onclick="ifhide()" class="but">知道了</button>
+    </div>
+</div>
 
 <script>
-    var basepath = "/static";
+    var msg = '${error}';
+    if (msg.length > 0) {
+        console.log(msg)
+        $("#box").show(500)
+    }
+
+    function ifhide() {
+        $("#box").hide(500)
+    }
 </script>
 
 </body>

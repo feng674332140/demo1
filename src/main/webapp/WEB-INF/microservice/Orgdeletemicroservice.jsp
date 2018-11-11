@@ -17,14 +17,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>智慧门牌服务管理</title>
-    <link rel="stylesheet" type="text/css" href="/static/style/weui.css"/>
-    <link rel="stylesheet" type="text/css" href="/static/style/example.css"/>
-    <%--<script type="text/javascript" src="/static/js/zepto.min.js"></script>--%>
+    <title>智慧门牌</title>
+    <link rel="stylesheet" type="text/css" href="../static/style/weui.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/style/example.css"/>
+    <link rel="stylesheet" href="<%=basepath%>/control/plugins/layui/css/check.css" media="all">
+<%--<script type="text/javascript" src="/static/js/zepto.min.js"></script>--%>
     <script type="text/javascript" src="<%=request.getContextPath()%>/static/js/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="/static/js/common/common.js"></script>
-    <script type="text/javascript" src="/static/js/service/microservice.js"></script>
-    <script type="text/javascript" src="/static/js/common/Sortable.min.js"></script>
+    <script type="text/javascript" src="../static/js/common/common.js"></script>
+    <script type="text/javascript" src="../static/js/service/microservice.js"></script>
+    <script type="text/javascript" src="../static/js/common/Sortable.min.js"></script>
 </head>
 <body ontouchstart>
 <div class="page">
@@ -44,7 +45,7 @@
         <div class="weui-grids" id="originMicroservice">
             <c:forEach items="${systemList}" var="systemList">
                 <c:if test="${systemList.ifvalid=='1'}">
-                    <a href="javascript:;" class="weui-grid" id="${systemList.showname}">
+                    <a href="javascript:void(0);" class="weui-grid" id="${systemList.showname}">
                         <div class="weui-grid__icon" >
                             <img src="${systemList.icon}" alt="">
                         </div>
@@ -53,15 +54,13 @@
                 </c:if>
         </c:forEach>
 
-
-
         </div>
         <br><br><br><br><br><br>
         <ul class="weui-footer_fixed-bottom">
             <li>
                 <div class="weui-flex js_category">
                     <p class="weui-flex__item pressToDelete" id="bigService_p_1">已选择的微服务</p>
-                    <img class="glyphicon-move" src="/static/images/icon_nav_form.png" alt="">
+                    <img class="glyphicon-move" src="../static/images/icon_nav_form.png" alt="">
                 </div>
                 <div class="page__category js_categoryInner">
                     <div class="weui-grids" id="allMicroservice">
@@ -73,7 +72,13 @@
             </ul>
     </div>
 </div>
-
+<%--提示层--%>
+<div id="box">
+    <div class="con">
+        <p id="txt"></p>
+        <button onclick="ifhide()" class="but">知道了</button>
+    </div>
+</div>
 <script type="text/javascript">
     var basepath = "/static";
     /**
@@ -103,17 +108,22 @@
                data:{
                    link_id:JSON.stringify(link_Id)
                },
-               success:function(data){
-                  // console.log(data);
+               success:function(data){;
                    if (data){
-                       alert("禁用成功")
-                       window.location.href="systemnavigation";
+                       //alert("添加成功")
+                       $("#box").fadeIn(500)
+                       $("#txt").text("禁用成功")
+
                    }
                }
            })
 
        })
    })
+   function ifhide() {
+       $("#box").fadeOut(500)
+       window.location.href="systemnavigation";
+   }
 </script>
 </body>
 </html>

@@ -18,27 +18,27 @@ $(function(){
      * 移动事件
      */
     // List with handle
-    Sortable.create(originBigService, {
-        group: 'origin',
-        handle: '.glyphicon-move',
-        animation: 150,
-        onStart: function (/**Event*/evt) {
-            $("#ashbin").css("display","block");
-            bigserviceLiId=evt.item.id;  // element index within parent
-        },
-        onEnd: function (/**Event*/evt) {
-            $("#ashbin").css("display","none");
-        },
-    });
+    // Sortable.create(originBigService, {
+    //     group: 'origin',
+    //     handle: '.glyphicon-move',
+    //     animation: 150,
+    //     onStart: function (/**Event*/evt) {
+    //         $("#ashbin").css("display","block");
+    //         bigserviceLiId=evt.item.id;  // element index within parent
+    //     },
+    //     onEnd: function (/**Event*/evt) {
+    //         $("#ashbin").css("display","none");
+    //     },
+    // });
 
     //可以移动到垃圾堆哦~
-    Sortable.create(ashbin, {
-        group: {
-            name: 'ashbin',
-            put:putIntoAshbin,
-        },
-        animation: 100
-    });
+    // Sortable.create(ashbin, {
+    //     group: {
+    //         name: 'ashbin',
+    //         put:putIntoAshbin,
+    //     },
+    //     animation: 100
+    // });
 
     /**
      * 电脑端拖动删除

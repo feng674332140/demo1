@@ -1,10 +1,7 @@
 package com.yzt.zhmp.service.UserService.Impl;
 
-import com.yzt.zhmp.beans.DeptUser;
 import com.yzt.zhmp.beans.User;
-import com.yzt.zhmp.beans.UserCounty;
-import com.yzt.zhmp.dao.UserDao.UserCountyDao;
-import com.yzt.zhmp.dao.UserDao.UserLoginDao;
+import com.yzt.zhmp.dao.UserLoginDao;
 import com.yzt.zhmp.service.UserService.UserLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,14 +20,13 @@ public class UserLoginServiceImpl implements UserLoginService {
     @Autowired
     UserLoginDao userLoginDao;
 
-
     @Override
     public User login(User user) {
         return userLoginDao.login(user);
     }
 
     @Override
-    public int selectByUserid(int userid) {
+    public Integer selectByUserid(int userid) {
         return userLoginDao.selectDeptUserbyUserid(userid);
     }
 

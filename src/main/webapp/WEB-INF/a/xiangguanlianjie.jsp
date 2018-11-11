@@ -1,3 +1,7 @@
+<%--
+    磐安县的相关链接
+--%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -12,9 +16,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>智慧门牌服务管理</title>
+    <title>智慧门牌</title>
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="/static/style/weui.css"/>
     <link rel="stylesheet" type="text/css" href="/static/style/example.css"/>
+
     <%--<script type="text/javascript" src="/static/js/zepto.min.js"></script>--%>
     <script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="/static/js/common/common.js"></script>
@@ -52,26 +58,42 @@
 <div class="page">
 
 
-    <div class="pageContent"style="display:block;">
-        <div class="weui-cells weui-cells_form">
+    <%--<div class="pageContent" >--%>
+        <%--<div class="weui-cells weui-cells_form">--%>
 
-            <div class="weui-grids" onClick="javascript :history.back(-1);">
+            <%--<div class="weui-grids" onClick="javascript :history.back(-1);">--%>
 
-                <a href="javascript:void(0);" class="weui-grid">
-                    <div class="weui-grid__icon" >
-                        <img src="/static/images/fanhui.png" style="" alt="">
+                <%--<a href="javascript:void(0);" class="weui-grid">--%>
+                    <%--<div class="weui-grid__icon" >--%>
+                        <%--<img src="/static/images/fanhui.png" style="" alt="">--%>
 
+                    <%--</div>--%>
+
+                <%--</a>--%>
+
+            <%--</div>--%>
+                <%--头部--%>
+                <div class="row top">
+                    <div class="col-xs-3 heig" onClick="history.back(-1);">
+
+                        <span class="glyphicon glyphicon-arrow-left"></span>
                     </div>
+                    <div class="col-xs-6 text-center heig"><b>相关链接</b></div>
+                    <div class="col-xs-3 text-center heig" >
+                        <%--<c:if test="${not empty existUser}">--%>
+                            <%--<a href="pananHouTai">--%>
+                                    <%--&lt;%&ndash;<span class="glyphicon glyphicon-cog"></span><br>&ndash;%&gt;--%>
+                                <%--后台管理--%>
+                            <%--</a>--%>
+                        <%--</c:if>--%>
+                    </div>
+                </div>
+        <%--</div>--%>
+    <%--</div>--%>
 
-                </a>
 
-            </div>
-        </div>
-    </div>
 
-    <div class="pageContent" id="tpl_qrcode" style="display:block;">
 
-        <div class="pageContent" id="tpl_rcode" style="display:block;">
             <div class="weui-cells weui-cells_form">
                 <div class="weui-panel weui-panel_access">
                     <div class="weui-panel__hd">磐安便民</div>
@@ -94,7 +116,7 @@
                 </c:forEach>
         </div>
         </div>
-    </div>
+
 
 
 
@@ -170,17 +192,17 @@
                 <%--</div>--%>
             <%--</div>--%>
 
-        </div>
+
 
 
         <br><br><br><br>
 
-    <c:if test="${empty existUser}">
-        <a href="login" class="weui-btn weui-btn_primary">用户登录</a>
-    </c:if>
-    <c:if test="${not empty existUser}">
-        <a href="system" class="weui-btn weui-btn_primary">退出登录</a>
-    </c:if>
+        <c:if test="${empty existUser}">
+            <a href="login" class="btn btn-success btn-block btn-lg">用户登录</a>
+        </c:if>
+        <c:if test="${not empty existUser}">
+            <a href="system" class="btn btn-danger btn-block btn-lg">退出登录</a>
+        </c:if>
     </div>
 
 

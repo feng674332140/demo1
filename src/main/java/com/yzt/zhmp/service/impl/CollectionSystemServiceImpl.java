@@ -13,10 +13,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author .
+ */
 @Service
 public class CollectionSystemServiceImpl implements CollectionSystemService {
 
-    //这里的单引号不能少，否则会报错，被识别是一个对象
+    /**
+     * 这里的单引号不能少，否则会报错，被识别是一个对象
+     */
     private static final String CACHE_KEY = "'cbuilding'";
     private static final String DEMO_CACHE_NAME = "cbuilding";
 
@@ -50,19 +55,16 @@ public class CollectionSystemServiceImpl implements CollectionSystemService {
 
 
     @Override
-    @Cacheable(value = DEMO_CACHE_NAME,key = "'cbuilding_'+#disCode")
     public List<Cbuilding> selectBuildingBycode(String disCode) {
         return collectionSystemDao.selectBuildingBycode(disCode);
     }
 
     @Override
-    @CacheEvict(value = DEMO_CACHE_NAME,key = "'cbuilding_'+#buID")
     public int deleteCbuilidingByid(int buID) {
         return collectionSystemDao.deleteCbuilidingByid(buID);
     }
 
     @Override
-    @CachePut(value = DEMO_CACHE_NAME,key = "'cbuilding_'+#cbuilding")
     public int updateCbuidingByfamilyType(Cbuilding cbuilding) {
         return collectionSystemDao.updateCbuidingByfamilyType(cbuilding);
     }

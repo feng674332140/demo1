@@ -19,7 +19,6 @@ public class BackstageServiceImpl implements BackstageService {
     @Autowired
     BackstageDao backstageDao;
 
-
     @Override
     public User login(User user) {
         return backstageDao.login(user);
@@ -31,23 +30,8 @@ public class BackstageServiceImpl implements BackstageService {
     }
 
     @Override
-    public District getDistrict(String discode) {
-        return backstageDao.getDistrict(discode);
-    }
-
-    @Override
-    public List<District> selectAllCounty(String discode) {
-        return backstageDao.selectAllCounty(discode);
-    }
-
-    @Override
     public Department findDept(Integer usrid) {
         return backstageDao.findDept(usrid);
-    }
-
-    @Override
-    public List<DisUser> selectAllProvince(String str) {
-        return backstageDao.selectAllProvince(str) ;
     }
 
     @Override
@@ -80,10 +64,6 @@ public class BackstageServiceImpl implements BackstageService {
         return backstageDao.selectAllArea(discode);
     }
 
-    @Override
-    public List<DisUser> selectAllDisUser() {
-        return backstageDao.selectAllDisUser();
-    }
 
     @Override
     public List<DeptUser> selectAllDeptUser(Integer usrid) {
@@ -91,22 +71,12 @@ public class BackstageServiceImpl implements BackstageService {
     }
 
     @Override
-    public String findDisCode(Integer usrid) {
-        return backstageDao.findDisCode(usrid);
+    public List<Department> selectAllDepartment() {
+        return backstageDao.selectAllDepartment();
     }
 
     @Override
-    public List<DisUser> selectAllProvinceDisUser(String substring) {
-        return backstageDao.selectAllProvinceDisUser(substring);
-    }
-
-    @Override
-    public List<DisUser> selectAllCityDisUser(String substring) {
-        return backstageDao.selectAllCityDisUser(substring);
-    }
-
-    @Override
-    public List<DisUser> selectAllTownDisUser(String substring) {
-        return null;
+    public void updatePassword(Integer userId,String password) {
+        backstageDao.updatePassword(userId,password);
     }
 }
