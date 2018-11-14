@@ -60,24 +60,31 @@
             overflow: auto;
         }
 
+        .right {
+            display: inline-block;
+            width: 65%;
+            text-align: right;
+        }
+
     </style>
 </head>
 <body ontouchstart>
 <div class="page">
     <div class="pageContent" id="tpl_qrcode">
         <div class="weui-panel weui-panel_access">
-            <p style="text-align: center;height: 38px;line-height: 45px;font-family:'MyNewFont';font-size: 17px">群山之祖，诸水之源，大美磐安</p>
+            <p style="text-align: center;height: 38px;line-height: 45px;font-family:'MyNewFont';font-size: 17px">
+                群山之祖，诸水之源，大美磐安</p>
         </div>
         <div class="weui-panel weui-panel_access">
             <div class="weui-panel__bd" style="float: left">
                 <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
                     <div class="weui-media-box__hd">
-                        <img class="weui-media-box__thumb"
+                        <img class="weui-media-box__thumb" style="height: 50px;"
                              src="../static/images/menpai/2c1c1576b4fc5268fd89f17288d1b868.gif" alt="">
                     </div>
                     <div class="weui-media-box__bd">
-                        <h4 class="weui-media-box__title ">磐安县海螺街33号民政大楼</h4>
-                        <p class="weui-media-box__desc" style="font-size: 10px">管理单位:磐安县民政局</p>
+                        <h4 class="weui-media-box__title " id="name"></h4>
+                        <p class="weui-media-box__desc" id="address" style="font-size: 10px"></p>
                     </div>
                 </a>
             </div>
@@ -147,8 +154,8 @@
         <a href="informationError" style="float:right;color: red;font-size: 13px;text-decoration: none">信息报错&nbsp;&nbsp;&nbsp;</a>
 
         <div class="svg-container" style="overflow-x: hidden">
-            <svg width="350" height="300" viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg" id="svggroup">
-                <g >
+            <%--<svg width="350" height="300" viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg" id="svggroup">
+                <g>
                     <title>Layer 1</title>
                     <polygon fill="rgba(94,193,240,1)" stroke="rgb(155,155,155)" stroke-width="5" fill-opacity="0.1"
                              stroke-opacity="0.9" points="106,16 106,96 226,96 226,16 " class="svg_item" id="element0"/>
@@ -192,7 +199,7 @@
                         2 单元
                     </text>
                 </g>
-            </svg>
+            </svg>--%>
         </div>
 
         <br>
@@ -210,23 +217,57 @@
     //v2.0版本的引用方式：src="http://api.map.baidu.com/api?v=2.0&ak=您的密钥"
 </script>
 <script>
+    // var dataX = null;//经度
+    // var dataY = null;//纬度
 
+    var back = null;
     $(function () {
         //后台请求房屋信息
+        back = function (data) {
+            console.log(data);
+        }
         $.ajax({
-            type: "POST",
-            url: "${pageContext.request.contextPath}/fangwuInfo",
-            data: {discode: "33072700000000000"},
-            dataType: "json",
+            type: "GET",
+            <%--url: "${pageContext.request.contextPath}/fangwuInfo",--%>
+            url: "http://60.191.224.190:38008//placename/searchPlacename!getBaseInfoByUniqueCode",
+
+            data: {uniqueCode: "3307021001", outputFormat: "text/javascript"},
+            async: false,
+            crossDomain: true,
+            dataType: 'jsonp',
+            jsonp: 'callback',
+            jsonpCallback: 'back',
             success: function (data) {
-                var json = eval(data);
+
+                //地名
+                var info = data.address;
+                var name = info.split("-")[0];
+                var address = info.split("-")[1];
+                $("#name").html(name);
+                $("#address").html(address);
+
+                //地址详细信息
+                var details = data.datas;
                 var html = '';
-                for (var key in json) {
+                for (var key in details) {
                     html += '<div class="col-xs-12">' + key +
-                        '<span class="pull-right">' + json[key] + '</span></div>'
+                        '<span class="pull-right right"">' + details[key] + '</span></div>'
                 }
                 $('.look').html(html);
-            }
+
+                //地图
+                var jingweidu = data.location;
+                var dataY = jingweidu.split(",")[0].substr(1, 13);
+                var dataX = jingweidu.split(",")[1].substr(0, 14);
+                var map = new BMap.Map("container");
+                // 创建地图实例
+                var point = new BMap.Point(dataX, dataY);
+                alert("地图");
+                // 创建点坐标
+                map.centerAndZoom(point, 16);
+                var marker = new BMap.Marker(point);        // 创建标注
+                map.addOverlay(marker);
+            },
         });
 
         var svgActive = false, svgHovered = false
@@ -239,12 +280,13 @@
             fit: 1,
             center: 1,
             customEventsHandler: {
-                init: function(options){
-                    function updateSvgClassName(){
-                        options.svgElement.setAttribute('class', '' + (svgActive ? 'active':'') + (svgHovered ? ' hovered':''))
+                init: function (options) {
+                    function updateSvgClassName() {
+                        options.svgElement.setAttribute('class', '' + (svgActive ? 'active' : '') + (svgHovered ? ' hovered' : ''))
                     }
+
                     this.listeners = {
-                        click: function(){
+                        click: function () {
                             if (svgActive) {
                                 options.instance.disableZoom();
                                 svgActive = false;
@@ -254,11 +296,11 @@
                             }
                             updateSvgClassName()
                         },
-                        mouseenter: function(){
+                        mouseenter: function () {
                             svgHovered = true;
                             updateSvgClassName()
                         },
-                        mouseleave: function(){
+                        mouseleave: function () {
                             svgActive = false;
                             svgHovered = false;
                             options.instance.disableZoom();
@@ -266,16 +308,17 @@
                         }
                     }
                     this.listeners.mousemove = this.listeners.mouseenter;
-                    for (var eventName in this.listeners){
+                    for (var eventName in this.listeners) {
                         options.svgElement.addEventListener(eventName, this.listeners[eventName])
                     }
                 }
-                , destroy: function(options){
-                    for (var eventName in this.listeners){
+                , destroy: function (options) {
+                    for (var eventName in this.listeners) {
                         options.svgElement.removeEventListener(eventName, this.listeners[eventName])
                     }
                 }
-            }});
+            }
+        });
     });
 
     $("#zhengfu").click(function () {
@@ -308,21 +351,11 @@
         $("#tpl_rcode").css("display", "block");
     }
 
-    var dataX = 120.4507351963;//经度
-    var dataY = 29.0596338332;//纬度
 
     function toMap() {
         window.location.href = "http://api.map.baidu.com/marker?location=" + dataY + "," + dataX + "" +
             "&title=我的位置&content=磐安县公安局&output=html&src=webapp.baidu.openAPIdemo "
     }
-    var map = new BMap.Map("container");
-    // 创建地图实例
-    var point = new BMap.Point(dataX, dataY);
-    // 创建点坐标
-    map.centerAndZoom(point, 16);
-    var marker = new BMap.Marker(point);        // 创建标注
-    map.addOverlay(marker);
-
 
 
 </script>

@@ -22,9 +22,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class SystemController {
@@ -268,15 +266,32 @@ public class SystemController {
     @RequestMapping("fangwuInfo")
     public void fangwuInfo(String discode, HttpServletResponse response) throws IOException {
         response.setContentType("text/json;charset=UTF-8");
+
+
+       /*
+       {"address":"盘镇饭店 - 浙江省金华市磐安县盘山中路127号",
+       "datas":"{'产权人':'汪爱青',
+                '申请时间':'2018-10-09 15:52:35',
+                '申请人':'周字得',
+                '是否打印门牌证':'是',
+                '备注':'是磐安县十分出名的一座饭店，让人常常流连忘返'}",
+                "c":"127",
+                "location":"(29.0067850148,120.5719663071)",
+                "result":"01",
+                "resultMsg":"获取信息成功"}*/
         JSONObject json = new JSONObject();
-        json.put("联系电话", "13900000000");
-        json.put("房主竣工日期", "1999");
-        json.put("门牌编号", "00000000000");
-        json.put("家庭类别", "农家乐");
-        json.put("经营特色", "价格实惠");
-        json.put("客房数量", "10");
-        json.put("床位数量", "10");
-        json.put("餐位数量", "10");
+        json.put("name","盘镇饭店");
+        json.put("address", "浙江省金华市磐安县盘山中路127号");
+        json.put("location","(29.0067850148,120.5719663071)");
+
+        HashMap<String, String> dataMap = new HashMap<>();
+        dataMap.put("产权人","汪爱青");
+        dataMap.put("申请时间","2018-10-09 15:52:35");
+        dataMap.put("申请人","周字得");
+        dataMap.put("是否打印门牌证","是");
+        dataMap.put("备注","是磐安县十分出名的一座饭店，让人常常流连忘返");
+        json.put("datas",dataMap);
+
         response.getWriter().write(json.toString());
     }
 
