@@ -1,9 +1,9 @@
 package com.yzt.zhmp.service;
 
-import com.yzt.zhmp.beans.Cbuilding;
-import com.yzt.zhmp.beans.Feedback;
+import com.yzt.zhmp.beans.*;
 import com.yzt.zhmp.beans.System;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,88 +13,109 @@ public interface SystemService {
     /**
      * 查询民政模块功能状态
      *
+     * @param deptID 部门ID
      * @return
      */
-    public List selectSystem();
+    List selectSystem(Integer deptID);
 
     /**
-     * 开启民政功能模块状态
+     * 根据ID查询户主信息
      *
-     * @param list
+     * @param buID 部门ID
      * @return
      */
-    public int addOrgmicroservice(List list);
+    Cbuilding selectCBuilding(Integer buID);
 
     /**
-     * 关闭民政功能模块
+     * 用户登录
      *
-     * @param list
+     * @param username 用户名
+     * @param password 密码
      * @return
      */
-    public int deleteOrgmicroservice(List list);
+    User login(String username, String password);
 
     /**
-     * 添加新的模块功能
+     * 查询行政用户
      *
-     * @param system
+     * @param usrid 用户ID
      * @return
      */
-    public int addnewFeatures(System system);
+    DisUser disUser(Integer usrid);
 
     /**
-     * 查询公安模块
+     * 查询部门用户
      *
+     * @param userID 用户ID
      * @return
      */
-    public List selectPoliceSystem();
-
+    DeptUser deptUser(Integer userID);
 
     /**
-     * 查询首页显示服务有几大类
+     * 获取验证码
      *
-     * @param disCode
+     * @param vcode 验证码
+     * @param telephone 手机号
+     */
+    void generateVerificationCode(String vcode, String telephone);
+
+    /**
+     * 通过name查询userid
+     *
+     * @param name 用户名或者手机号
      * @return
      */
-    public List<String> selectDeptNamebuDisCode(String disCode);
+    Integer selectUseridbyName(String name);
 
     /**
-     * 根据传入县区码查询部门功能模块
+     * 查询手机验证码记录
      *
-     * @param code 区域编码
+     * @param vcode     验证码
+     * @param telephone 手机号
      * @return
      */
-    public List<System> selectAll(String code);
+    List<String> checkVerificationCode(String vcode, String telephone);
 
     /**
-     * 添加反馈信息
+     * 保存用户
      *
-     * @param feedback
+     * @param user 用户
      */
-    void addFeedback(Feedback feedback);
+    void registered(User user);
 
     /**
-     * 查询用户名或手机号有没有提交过信息
-     *
-     * @param feedback
-     * @return
+     * 查询改号码最后一次发送时间
+     * @param telephone 电话号码
+     * @return 最后发送时间
      */
-    Feedback findFeedbackByUsernameOrPhone(Feedback feedback);
-
-    List<Feedback> selectAllFeedback();
+    Date getLast(String telephone);
 
     /**
-     * 添加回复信息
-     *
-     * @param feedback
+     * 根据房屋id查询所在的区域名称
+     * @param buID 房屋编号
+     * @return 行政区名称
      */
-    void updateFeedbackByUsernameOrPhone(Feedback feedback);
+    String getAreaName(Integer buID);
 
     /**
-     * 根据页面的数据查询数据库中对应的唯一数据
-     * @param feedback
-     * @return
+     * 查询当前行政区信息
+     * @param disCode 区域编码
+     * @return 行政区信息
      */
-    Feedback findOnlyFeedback(Feedback feedback);
+    Cdistrict disInfo(String disCode);
 
-    Cbuilding selectCBuilding(String s);
+    /**
+     * 查询行政区宣传标语
+     * @param buID 建筑ID
+     * @return 宣传标语
+     */
+    String title(Integer buID);
+
+    /**
+     * 查询户主手机号
+     * @param buID 信息编号
+     * @return 手机号
+     */
+    String phoneNum(Integer buID);
+
 }

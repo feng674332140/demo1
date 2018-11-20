@@ -19,7 +19,8 @@
         display: inline-block;
         vertical-align: middle;
     }
-    .textarea1{
+
+    .textarea1 {
         resize: none;
     }
 </style>
@@ -29,29 +30,40 @@
     <legend>当前行政区介绍</legend>
 </fieldset>
 
-<form class="layui-form" id="mytable" method="post" action="${pageContext.request.contextPath}/control/uptadeCdisture">
+<form class="layui-form" id="mytable" method="post" action="${pageContext.request.contextPath}/control/uptadeCdisture" onsubmit="return checkLength()">
+    <div class="layui-form-item layui-form-text" style="width: 1200px;">
+        <label class="layui-form-label" style="line-height: 6"><span class="txt3">宣传标语</span></label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入内容(不超过15字),不输入默认为'xx欢迎您'" id="title" name="name"
+                      class="layui-textarea textarea1">${cdistrict.name}</textarea>
+        </div>
+    </div>
     <div class="layui-form-item layui-form-text" style="width: 1200px;">
         <label class="layui-form-label" style="line-height: 6"><span class="txt3">总体介绍</span></label>
         <div class="layui-input-block">
-                <textarea placeholder="请输入内容" name="introduction" class="layui-textarea textarea1" required>${cdistrict.introduction}</textarea>
+            <textarea placeholder="请输入内容" name="introduction" class="layui-textarea textarea1"
+                      required>${cdistrict.introduction}</textarea>
         </div>
     </div>
     <div class="layui-form-item layui-form-text" style="width: 1200px;">
         <label class="layui-form-label" style="line-height: 6"><span class="txt3">交通状况</span></label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入内容" name="traffic" class="layui-textarea textarea1" required>${cdistrict.traffic}</textarea>
+            <textarea placeholder="请输入内容" name="traffic" class="layui-textarea textarea1"
+                      required>${cdistrict.traffic}</textarea>
         </div>
     </div>
     <div class="layui-form-item layui-form-text" style="width: 1200px;">
         <label class="layui-form-label" style="line-height: 6"><span class="txt3">旅游介绍</span></label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入内容" name="travel" class="layui-textarea textarea1" required>${cdistrict.travel}</textarea>
+            <textarea placeholder="请输入内容" name="travel" class="layui-textarea textarea1"
+                      required>${cdistrict.travel}</textarea>
         </div>
     </div>
     <div class="layui-form-item layui-form-text" style="width: 1200px;">
         <label class="layui-form-label" style="line-height: 6"><span class="txt3">名胜古迹</span></label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入内容" name="memo" class="layui-textarea textarea1" required>${cdistrict.memo}</textarea>
+            <textarea placeholder="请输入内容" name="memo" class="layui-textarea textarea1"
+                      required>${cdistrict.memo}</textarea>
         </div>
     </div>
 
@@ -83,6 +95,17 @@
 <script>
     function toBack() {
         window.history.go(-1);
+    }
+
+    function checkLength() {
+        var title=$("#title").val();
+        if (title.length>15){
+            $("#txt").text("请输入不超过15个字的宣传标语");
+            $("#box").show(500);
+            return false;
+        }else{
+            return true;
+        }
     }
 
     function ifhide() {
@@ -125,7 +148,5 @@
 
     });
 </script>
-
 </body>
-
 </html>

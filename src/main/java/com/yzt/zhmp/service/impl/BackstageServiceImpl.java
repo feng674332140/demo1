@@ -71,11 +71,6 @@ public class BackstageServiceImpl implements BackstageService {
     }
 
     @Override
-    public List<Department> selectAllDepartment() {
-        return backstageDao.selectAllDepartment();
-    }
-
-    @Override
     public void updatePassword(Integer userId,String password) {
         backstageDao.updatePassword(userId,password);
     }

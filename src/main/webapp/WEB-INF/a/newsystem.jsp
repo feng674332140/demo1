@@ -262,7 +262,6 @@
                 var map = new BMap.Map("container");
                 // 创建地图实例
                 var point = new BMap.Point(dataX, dataY);
-                alert("地图");
                 // 创建点坐标
                 map.centerAndZoom(point, 16);
                 var marker = new BMap.Marker(point);        // 创建标注

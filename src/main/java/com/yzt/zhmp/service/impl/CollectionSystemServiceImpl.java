@@ -49,12 +49,6 @@ public class CollectionSystemServiceImpl implements CollectionSystemService {
     }
 
     @Override
-    public Cbuilding selectBuildingByid(int buID) {
-        return collectionSystemDao.selectCbuildingByid(buID);
-    }
-
-
-    @Override
     public List<Cbuilding> selectBuildingBycode(String disCode) {
         return collectionSystemDao.selectBuildingBycode(disCode);
     }

@@ -38,7 +38,7 @@ public class BackstageController {
 
     /**
      * 跳转登陆页面
-     *
+     * @param request
      * @return 如果session中有登录用户跳转到index页面, 否则跳转登录页面
      */
     @RequestMapping("/control/index")
@@ -54,6 +54,7 @@ public class BackstageController {
      * 注销用户 清空session
      *
      * @param request
+     * @return 跳转login01.jsp
      */
     @RequestMapping("/control/Logout")
     public String toLogout(HttpServletRequest request) {
@@ -69,7 +70,7 @@ public class BackstageController {
      * @param checkCode 验证码
      * @param model
      * @param request
-     * @return
+     * @return 成功跳转index.jsp,失败返回login01.jsp
      */
     @RequestMapping("/control/login")
     public String login(String name, String password, String checkCode, Model model, HttpServletRequest request, HttpSession session) {
@@ -189,6 +190,7 @@ public class BackstageController {
      * @param deptID   创建部门账号的ID
      * @param disCode  创建行政用户对应的区域ID
      * @param request
+     * @return 跳转form.jsp
      */
     @RequestMapping("/control/register")
     public String registered(String username, String password, Integer deptID, String disCode, Model model, HttpServletRequest request) {

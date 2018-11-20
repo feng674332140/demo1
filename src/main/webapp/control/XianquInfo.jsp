@@ -32,7 +32,12 @@
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
     <legend>当前行政区介绍</legend>
 </fieldset>
-
+<div class="layui-form-item layui-form-text" style="width: 1000px;">
+    <label class="layui-form-label " style="line-height: 100px;padding:0" ><span class="txt3">宣传标语</span></label>
+    <div class="layui-input-block">
+        <p class="txt2" id="name"></p>
+    </div>
+</div>
 <div class="layui-form-item layui-form-text" style="width: 1000px;">
     <label class="layui-form-label " style="line-height: 100px;padding:0" ><span class="txt3">总体介绍</span></label>
     <div class="layui-input-block">
@@ -71,8 +76,8 @@
         $.post("${pageContext.request.contextPath}/xianquData", function (data) {
             var i = eval("(" + data + ")");
             if (i.cdistrict != null) {
-                // $("#buttonId").text("修改");
                 $("#divID").html("<button class=\"layui-btn\" lay-filter=\"demo1\" onclick=\"toadd()\" id=\"buttonId\">修改</button>");
+                $("#name").html(i.cdistrict.name);
                 $("#introduction").html(i.cdistrict.introduction);
                 $("#traffic").html(i.cdistrict.traffic);
                 $("#travel").html(i.cdistrict.travel);

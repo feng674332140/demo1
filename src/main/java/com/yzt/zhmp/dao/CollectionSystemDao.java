@@ -17,8 +17,8 @@ public interface CollectionSystemDao {
     /**
      * 根据登入的用户id查询此行政区下属行政区用户账号
      *
-     * @param usrID
-     * @return
+     * @param usrID 用户ID
+     * @return 行政用户集合
      */
     @Select("SELECT @rowNum:=@rowNum+1 as rowNo , t1.`name`,t2.usrID,t3.`name` username,t2.priviligeTime,t2.memo," +
             "case when t2.ifValid=1 then '有效' else  '无效' end ifValid FROM d_district t1,d_disUser t2 ,d_user t3, " +
@@ -29,8 +29,8 @@ public interface CollectionSystemDao {
     /**
      * 根据登入的用户id查询所属地名
      *
-     * @param usrID
-     * @return
+     * @param usrID 用户ID
+     * @return 地名
      */
     @Select("SELECT t1.`name`\n" +
             "FROM d_district t1,d_disUser t2 \n" +
@@ -40,26 +40,18 @@ public interface CollectionSystemDao {
     /**
      * 添加民众信息
      *
-     * @param cbuilding
-     * @return
+     * @param cbuilding 农户信息类的对象
+     * @return 插入成功返回1,失败返回0
      */
     @InsertProvider(type = FarmerProvider.class, method = "addFarmerInfo")
     int addFarmerInfo(Cbuilding cbuilding);
 
-    /**
-     * 查询民众信息
-     *
-     * @param buID
-     * @return
-     */
-    @Select("SELECT * FROM c_building WHERE buID=#{buID}")
-    Cbuilding selectCbuildingByid(int buID);
 
     /**
      * 删除选中的农户信息
      *
-     * @param buID
-     * @return
+     * @param buID 农户信息的编号
+     * @return 删除成功返回1,失败返回0
      */
     @Delete("DELETE FROM c_building WHERE buID=#{buID}")
     int deleteCbuilidingByid(int buID);
@@ -67,8 +59,8 @@ public interface CollectionSystemDao {
     /**
      * 更新农户信息
      *
-     * @param cbuilding
-     * @return
+     * @param cbuilding 农户信息类的对象
+     * @return 更新成功返回1,失败返回0
      */
     @UpdateProvider(type = FarmerProvider.class, method = "updateCbuidingByfamilyType")
     int updateCbuidingByfamilyType(Cbuilding cbuilding);
@@ -77,8 +69,8 @@ public interface CollectionSystemDao {
     /**
      * 查询一地区所有建筑信息
      *
-     * @param disCode
-     * @return
+     * @param disCode 区域编号
+     * @return 农户信息类的集合
      */
     @Select("SELECT buID, disCode, name, phoneNum, familyType, population, roomNum, floorNum,landArea, buildArea, yardArea, \n" +
             "       numberOfRoom, numberOfBed, mealDigits, feature,case busiType when '1' then '普通农户' when '2' then '农家乐' \n" +
@@ -89,8 +81,8 @@ public interface CollectionSystemDao {
     /**
      * 添加县区信息介绍
      *
-     * @param cdistrict
-     * @return
+     * @param cdistrict 行政区
+     * @return 插入成功返回1,失败返回0
      */
     @InsertProvider(type = FarmerProvider.class, method = "addCountyInfo")
     int addCountyInfo(Cdistrict cdistrict);
@@ -98,8 +90,8 @@ public interface CollectionSystemDao {
     /**
      * 查询行政区介绍
      *
-     * @param disCode
-     * @return
+     * @param disCode 区域编号
+     * @return 区域对象
      */
     @Select("SELECT * FROM c_district WHERE disCode=#{disCode}")
     Cdistrict selectCdistrict(String disCode);
@@ -107,8 +99,8 @@ public interface CollectionSystemDao {
     /**
      * 更新行政区介绍
      *
-     * @param cdistrict
-     * @return
+     * @param cdistrict 区域对象
+     * @return 更新成功返回1,失败返回0
      */
     @UpdateProvider(type = FarmerProvider.class, method = "updateCountyInfo")
     int updateCdistrict(Cdistrict cdistrict);
@@ -126,8 +118,8 @@ public interface CollectionSystemDao {
         /**
          * 添加县区介绍
          *
-         * @param cdistrict
-         * @return
+         * @param cdistrict 行政区信息
+         * @return sql
          */
         public String addCountyInfo(Cdistrict cdistrict) {
             return new SQL() {{
@@ -140,8 +132,8 @@ public interface CollectionSystemDao {
         /**
          * 更新县区介绍
          *
-         * @param cdistrict
-         * @return
+         * @param cdistrict 行政区信息
+         * @return sql
          */
         public String updateCountyInfo(Cdistrict cdistrict) {
             return new SQL() {{
@@ -154,13 +146,14 @@ public interface CollectionSystemDao {
         /**
          * 更新农户信息
          *
-         * @param cbuilding
-         * @return
+         * @param cbuilding 行政区信息
+         * @return sql
          */
         public String updateCbuidingByfamilyType(Cbuilding cbuilding) {
             return new SQL() {{
                 UPDATE("c_building");
-                SET("name=#{name},phoneNum=#{phoneNum},familyType=#{familyType},population=#{population},roomNum=#{roomNum},floorNum=#{floorNum},landArea=#{landArea},buildArea=#{buildArea},buildingYear=#{buildingYear}");
+                SET("name=#{name},phoneNum=#{phoneNum},familyType=#{familyType},population=#{population}," +
+                        "roomNum=#{roomNum},floorNum=#{floorNum},landArea=#{landArea},buildArea=#{buildArea},buildingYear=#{buildingYear}");
                 if (cbuilding.getAddress().length() > 0) {
                     SET("address=#{address}");
                 }

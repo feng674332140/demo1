@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * @author wangyinglong
+ */
 @Controller
 public class CollectionController {
 
@@ -29,12 +32,11 @@ public class CollectionController {
      * 添加农户信息
      *
      * @param cbuilding
-     * @param bindingResult
      * @param request
-     * @return
+     * @return 跳转formNonghu.jsp
      */
     @RequestMapping("/control/addFarmerBuildingInfo")
-    public ModelAndView addFarmer(Cbuilding cbuilding, BindingResult bindingResult, HttpServletRequest request) {
+    public ModelAndView addFarmer(Cbuilding cbuilding, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         String discode = (String) request.getSession().getAttribute("discode");
         cbuilding.setDisCode(discode);
@@ -53,8 +55,8 @@ public class CollectionController {
      * 添加县区信息
      *
      * @param request
-     * @param cdistrict
-     * @return
+     * @param cdistrict 行政区信息
+     * @return 跳转XianquInfo.jsp
      */
     @RequestMapping("/control/addCounty")
     public String addCountry(HttpServletRequest request, Cdistrict cdistrict, Model model) {
@@ -76,7 +78,7 @@ public class CollectionController {
      * 删除选中农户信息
      *
      * @param msg 删除农户的id
-     * @return
+     * @return 删除成功返回1
      */
     @ResponseBody
     @RequestMapping("/control/deleteCbuilding")
@@ -105,9 +107,9 @@ public class CollectionController {
     /**
      * 更新农户建筑信息
      *
-     * @param cbuilding
+     * @param cbuilding 农户信息
      * @param request
-     * @return
+     * @return 跳转buildingList.jsp
      */
     @RequestMapping("/control/uptadeCbuilding")
     public String uptadeCbuilding(Cbuilding cbuilding, HttpServletRequest request, Model model) {
@@ -128,7 +130,7 @@ public class CollectionController {
      * 显示需要更新的行政区信息
      *
      * @param request
-     * @return
+     * @return 跳转formUpadteXianqu.jsp
      */
     @RequestMapping("/control/formUpadteXianqu")
     public ModelAndView formUpadteXianqu(HttpServletRequest request) {
@@ -144,8 +146,8 @@ public class CollectionController {
      * 更新行政区介绍
      *
      * @param request
-     * @param cdistrict
-     * @return
+     * @param cdistrict 行政区信息
+     * @return 跳转XianquInfo.jsp
      */
     @RequestMapping("/control/uptadeCdisture")
     public String updateCdistrict(HttpServletRequest request, Cdistrict cdistrict, Model model) {
@@ -176,7 +178,7 @@ public class CollectionController {
 
     /**
      * 页面初始化加载数据
-     *
+     * @param request
      * @param response
      */
     @RequestMapping("/xianquData")

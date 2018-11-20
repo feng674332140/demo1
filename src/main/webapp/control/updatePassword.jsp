@@ -99,7 +99,6 @@
 
     var msg = '${msg}';
     if (msg.length > 0) {
-        console.log(msg)
         $("#box").show(500)
     }
 

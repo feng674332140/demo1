@@ -17,7 +17,7 @@ public interface BackstageDao {
     /**
      * 用户登陆
      *
-     * @param user
+     * @param user 用户
      * @return
      */
     @Select("SELECT * FROM d_user WHERE name=#{name} and password=#{password}")
@@ -26,7 +26,7 @@ public interface BackstageDao {
     /**
      * 查找行政用户
      *
-     * @param usrid
+     * @param usrid 用户ID
      * @return
      */
     @Select("SELECT * FROM d_disUser WHERE usrID=#{usrid}")
@@ -35,7 +35,7 @@ public interface BackstageDao {
     /**
      * 查询区域
      *
-     * @param discode
+     * @param discode 区域编码
      * @return
      */
     @Select("SELECT * FROM d_district WHERE disCode=#{discode}")
@@ -44,7 +44,7 @@ public interface BackstageDao {
     /**
      * 查询市下面的所有县区-动态拼接
      *
-     * @param discode
+     * @param discode 区域编码
      * @return
      */
     @SelectProvider(type = SelectAllCounty.class, method = "selectAllCounty")
@@ -61,8 +61,8 @@ public interface BackstageDao {
     /**
      * 修改用户密码
      *
-     * @param userId
-     * @param password
+     * @param userId   用户ID
+     * @param password 密码
      */
     @Update("UPDATE d_user SET password = #{password} WHERE usrID = #{userId};")
     void updatePassword(@Param("userId") Integer userId, @Param("password") String password);
@@ -81,7 +81,7 @@ public interface BackstageDao {
     /**
      * 查询所有的省
      *
-     * @param str
+     * @param str 0000
      * @return
      */
     @SelectProvider(type = SelectAllProvince.class, method = "selectAllProvince")
@@ -101,7 +101,7 @@ public interface BackstageDao {
     /**
      * 查找对应的县
      *
-     * @param usrid
+     * @param usrid 用户ID
      * @return
      */
     @Select("SELECT * FROM d_department t1,d_deptUser t2 WHERE t2.usrID=#{usrid} and t1.deptID=t2.deptID")
@@ -110,7 +110,7 @@ public interface BackstageDao {
     /**
      * 用户注册
      *
-     * @param user
+     * @param user 用户
      */
     @Insert("INSERT INTO d_user (name,password) values(#{name},#{password})")
     void registered(User user);
@@ -118,7 +118,7 @@ public interface BackstageDao {
     /**
      * 查询注册的用户id
      *
-     * @param username
+     * @param username 用户名
      * @return
      */
     @Select("SELECT usrID FROM d_user WHERE name=#{username}")
@@ -127,7 +127,7 @@ public interface BackstageDao {
     /**
      * 保存行政用户
      *
-     * @param disUser
+     * @param disUser 行政用户
      */
     @Insert("INSERT INTO d_disUser (disCode,usrID,priviligeTime,priviUsrID,ifValid,memo) " +
             "values(#{discode},#{usrid},#{priviligetime},#{priviusrid},#{ifvalid},#{memo})")
@@ -144,7 +144,7 @@ public interface BackstageDao {
     /**
      * 保存部门用户
      *
-     * @param deptUser
+     * @param deptUser 部门用户
      */
     @Insert("INSERT INTO d_deptUser (usrID,deptID,dptUsrID,priviligeTime,priviUsrID,ifValid,memo)" +
             "values(#{usrid},#{deptid},#{dptusrid},#{priviligetime},#{priviusrid},#{ifvalid},#{memo})")
@@ -153,7 +153,7 @@ public interface BackstageDao {
     /**
      * 查询所属区域的下级地区
      *
-     * @param discode
+     * @param discode 行政用户
      * @return
      */
     @Select("select * from d_district where upDistCode=#{discode}")
@@ -161,7 +161,8 @@ public interface BackstageDao {
 
     /**
      * 查询所有部门用户
-     * @param usrid
+     *
+     * @param usrid 用户ID
      * @return
      */
     @Select("SELECT @rowNum := @rowNum + 1 AS rowNo,t3.NAME username, " +
@@ -185,7 +186,7 @@ public interface BackstageDao {
     /**
      * 行政用户对应的区域
      *
-     * @param usrid
+     * @param usrid 用户ID
      * @return
      */
     @Select("select disCode from d_disUser where usrID=#{usrid}")
@@ -194,7 +195,7 @@ public interface BackstageDao {
     /**
      * 查找省下面的行政区
      *
-     * @param substring
+     * @param substring 区域编码的子串
      * @return
      */
     @Select("select (\n" +
@@ -207,7 +208,7 @@ public interface BackstageDao {
     /**
      * 查找市下面的行政区
      *
-     * @param substring
+     * @param substring 区域编码的子串
      * @return
      */
     @Select("select (\n" +
@@ -219,6 +220,9 @@ public interface BackstageDao {
 
     /**
      * 查找县下面的行政区
+     *
+     * @param substring 区域编码的子串
+     * @return
      */
     @Select("select (\n" +
             "select t2.name from d_district t2 where t1.discode=t2.disCode\n" +

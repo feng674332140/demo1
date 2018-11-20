@@ -12,7 +12,7 @@ public interface BackstageService {
     /**
      * 后台系统登陆
      *
-     * @param user
+     * @param user 用户
      * @return
      */
     User login(User user);
@@ -20,7 +20,7 @@ public interface BackstageService {
     /**
      * 根据用户id查询行政角色
      *
-     * @param usrid
+     * @param usrid 用户ID
      * @return
      */
     DisUser selectDisUser(Integer usrid);
@@ -29,7 +29,7 @@ public interface BackstageService {
     /**
      * 查询所有的部门
      *
-     * @param usrid
+     * @param usrid 用户ID
      * @return
      */
     Department findDept(Integer usrid);
@@ -38,14 +38,14 @@ public interface BackstageService {
     /**
      * 保存用户
      *
-     * @param user
+     * @param user 用户
      */
     void registered(User user);
 
     /**
      * 查询用户id
      *
-     * @param username
+     * @param username 用户名
      * @return
      */
     Integer selectUserId(String username);
@@ -53,7 +53,7 @@ public interface BackstageService {
     /**
      * 保存行政用户
      *
-     * @param disUser
+     * @param disUser 行政用户
      */
     void saveDisUser(DisUser disUser);
 
@@ -67,14 +67,14 @@ public interface BackstageService {
     /**
      * 保存部门用户
      *
-     * @param deptUser
+     * @param deptUser 部门用户
      */
     void saveDeptUser(DeptUser deptUser);
 
     /**
      * 查询省下面所有的市
      *
-     * @param discode
+     * @param discode 区域编码
      * @return
      */
     List<District> selectAllArea(String discode);
@@ -82,24 +82,17 @@ public interface BackstageService {
 
     /**
      * 查询所有部门用户
-     * @param usrid
+     * @param usrid 用户ID
      * @return
      */
     List<DeptUser> selectAllDeptUser(Integer usrid);
 
 
     /**
-     * 查询所有的部门
-     *
-     * @return
-     */
-    List<Department> selectAllDepartment();
-
-    /**
      * 修改用户密码
      *
-     * @param userId
-     * @param password
+     * @param userId 用户ID
+     * @param password 新密码
      */
     void updatePassword(Integer userId,String password);
 }

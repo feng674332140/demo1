@@ -10,7 +10,6 @@ import java.util.Properties;
 
 /**
  * @author wang
- * @Description: 读取config.properties配置文件信息
  */
 public class PropertiesUtil {
 
@@ -60,8 +59,7 @@ public class PropertiesUtil {
 	}
 	
 	public static void main(String[] args) {
-		
-	System.out.println(getProperty("SMS.UserName"));	
+
 	}
 
 }

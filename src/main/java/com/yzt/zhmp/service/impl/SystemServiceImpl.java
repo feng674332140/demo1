@@ -1,15 +1,20 @@
 package com.yzt.zhmp.service.impl;
 
-import com.yzt.zhmp.beans.Cbuilding;
-import com.yzt.zhmp.beans.Feedback;
+import com.yzt.zhmp.beans.*;
 import com.yzt.zhmp.beans.System;
 import com.yzt.zhmp.dao.SystemDao;
 import com.yzt.zhmp.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+/**
+ * @author wangyinglong
+ */
 @Service
 public class SystemServiceImpl implements SystemService {
 
@@ -17,67 +22,81 @@ public class SystemServiceImpl implements SystemService {
     private SystemDao systemDao;
 
     @Override
-    public List selectSystem() {
-        return systemDao.selectSystem();
+    public List selectSystem(Integer deptID) {
+        return systemDao.selectSystem(deptID);
     }
 
     @Override
-    public int addOrgmicroservice(List list) {
-        return systemDao.addOrgmicroservice(list);
+    public Cbuilding selectCBuilding(Integer buID) {
+        return systemDao.selectCBuilding(buID);
     }
 
     @Override
-    public int deleteOrgmicroservice(List list) {
-        return systemDao.deleteOrgmicroservice(list);
+    public User login(String username, String password) {
+        return systemDao.login(username, password);
     }
 
     @Override
-    public int addnewFeatures(System system) {
-        return systemDao.addnewFeatures(system);
+    public DisUser disUser(Integer userID) {
+        return systemDao.disUser(userID);
     }
 
     @Override
-    public List selectPoliceSystem() {
-        return systemDao.selectPoliceSystem();
+    public DeptUser deptUser(Integer userID) {
+        return systemDao.deptUser(userID);
     }
 
     @Override
-    public List<String> selectDeptNamebuDisCode(String disCode) {
-        return systemDao.selectDeptNamebuDisCode(disCode);
+    public void generateVerificationCode(String vcode, String telephone) {
+        systemDao.generateVerificationCode(vcode, telephone);
     }
 
     @Override
-    public List<System> selectAll(String code) {
-        return systemDao.selectAll(code);
+    public Integer selectUseridbyName(String name) {
+        return systemDao.selectUseridbyName(name);
     }
 
     @Override
-    public void addFeedback(Feedback feedback) {
-        systemDao.addFeedback(feedback);
+    public List<String> checkVerificationCode(String vcode, String telephone) {
+        return systemDao.checkVerificationCode(vcode, telephone);
     }
 
     @Override
-    public Feedback findFeedbackByUsernameOrPhone(Feedback feedback) {
-        return systemDao.findFeedbackByUsernameOrPhone(feedback);
+    public void registered(User user) {
+        systemDao.registered(user);
     }
 
     @Override
-    public List<Feedback> selectAllFeedback() {
-        return systemDao.selectAllFeedback();
+    public Date getLast(String telephone) {
+        return systemDao.getLast(telephone);
     }
 
     @Override
-    public void updateFeedbackByUsernameOrPhone(Feedback feedback) {
-        systemDao.updateFeedbackByUsernameOrPhone(feedback);
+    public String getAreaName(Integer buID) {
+        return systemDao.getAreaName(buID);
     }
 
     @Override
-    public Feedback findOnlyFeedback(Feedback feedback) {
-        return systemDao.findOnlyFeedback(feedback);
+    public Cdistrict disInfo(String disCode) {
+        return systemDao.disInfo(disCode);
     }
 
     @Override
-    public Cbuilding selectCBuilding(String s) {
-        return systemDao.selectCBuilding(s);
+    public String title(Integer buID) {
+        return systemDao.title(buID);
     }
+
+    @Override
+    public String phoneNum(Integer buID) {
+        return systemDao.phoneNum(buID);
+    }
+
+    /**
+     * 定时任务,每天凌晨一点清空缓存短信验证码的数据表
+     */
+    @Scheduled(cron = "0 0 1 * * ?")
+    public void deleteVCode() {
+        systemDao.deleteVCode();
+    }
+
 }

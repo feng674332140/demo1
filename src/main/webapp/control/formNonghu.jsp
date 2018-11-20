@@ -22,7 +22,7 @@
     <legend>添加农户信息</legend>
 </fieldset>
 
-<form class="layui-form" id="mytable" action="addFarmerBuildingInfo" method="post" onsubmit="return check()">
+<form class="layui-form" id="mytable" action="/control/addFarmerBuildingInfo" method="post" onsubmit="return check()">
     <div class="layui-form-item layui-form" style="width: 300px;">
         <label class="layui-form-label">户主姓名</label>
         <div class="layui-input-block">
@@ -116,8 +116,8 @@
         <div class="layui-inline " id="radioBox">
             <label class="layui-form-label">农户信息是否公开</label>
             <div class="layui-input-block">
-                <input type="radio" name="ifOpen" value="1" title="公开" checked="checked">
-                <input type="radio" name="ifOpen" value="2" title="私密">
+                <input type="radio" name="ifOpen" value="0" title="公开" checked="checked">
+                <input type="radio" name="ifOpen" value="1" title="私密">
             </div>
         </div>
     </div>

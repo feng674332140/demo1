@@ -31,4 +31,13 @@ public class MyWebMvcConfigurerAdapter implements WebMvcConfigurer {
 
         interceptorRegistration.excludePathPatterns("/control/login");
     }
+
+    /**
+     * 配置全局跨域访问
+     * @param registry
+     */
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**");
+    }
 }
